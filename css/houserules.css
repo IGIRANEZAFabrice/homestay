@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --color-bg: #f7f5f2;
+  --color-primary: #b85c19;
+  --color-secondary: #f2c572;
+  --color-accent: #2d3a3a;
+  --color-card: #fff;
+  --color-text: #2d3a3a;
+  --color-muted: #8a8a8a;
+  --color-highlight: #fffbe6;
+  --shadow: 0 4px 24px 0 rgba(184,92,25,0.08);
+  --radius: 18px;
+  --transition: 0.3s cubic-bezier(.4,2,.6,1);
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.houserules-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  padding: 3rem 2rem 2rem 2rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2.5rem;
+}
+
+.hero-content {
+  flex: 1 1 350px;
+  min-width: 300px;
+  max-width: 500px;
+  color: var(--color-card);
+  z-index: 2;
+}
+.hero-content h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+.hero-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+.hero-image {
+  flex: 1 1 320px;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.hero-image img {
+  width: 100%;
+  max-width: 370px;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 32px 0 rgba(45,58,58,0.10);
+  object-fit: cover;
+}
+
+.houserules-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.2rem;
+  max-width: 1100px;
+  margin: 0 auto 2.5rem auto;
+  padding: 0 1.5rem;
+}
+.info-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.3rem;
+  font-size: 1.08rem;
+  color: var(--color-accent);
+  font-weight: 500;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.info-card i {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+.info-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 32px 0 rgba(184,92,25,0.13);
+}
+
+.houserules-main {
+  max-width: 900px;
+  margin: 0 auto 3rem auto;
+  padding: 0 1.5rem;
+}
+.houserules-main h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.rules-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 900px) {
+  .rules-list {
+    grid-template-columns: 1fr;
+  }
+}
+.rule-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem 1.3rem 1.2rem 1.3rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+}
+.rule-card h3 {
+  font-size: 1.18rem;
+  color: var(--color-primary);
+  margin: 0 0 0.7rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+.rule-card i {
+  font-size: 1.2rem;
+}
+.rule-card p {
+  color: var(--color-text);
+  font-size: 1.02rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.rule-card .highlight {
+  display: block;
+  background: var(--color-highlight);
+  color: var(--color-primary);
+  border-left: 4px solid var(--color-primary);
+  padding: 0.5rem 1rem;
+  margin-top: 0.7rem;
+  font-weight: 500;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.98rem;
+}
+.rule-card:hover {
+  box-shadow: 0 10px 36px 0 rgba(184,92,25,0.16);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 700px) {
+  .houserules-hero {
+    flex-direction: column;
+    padding: 2rem 1rem 1.5rem 1rem;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .houserules-main h2 {
+    font-size: 1.4rem;
+  }
+  .rules-list {
+    gap: 1rem;
+  }
+  .rule-card {
+    padding: 1.1rem 0.9rem 1rem 0.9rem;
+    min-height: 120px;
+  }
+}
+
+/* Subtle fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.houserules-hero, .info-card, .rule-card {
+  animation: fadeInUp 0.8s cubic-bezier(.4,2,.6,1);
+}

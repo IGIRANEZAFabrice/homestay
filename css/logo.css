@@ -1,0 +1,53 @@
+.header-logo {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding: 0 16px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.15s cubic-bezier(0.4, 2, 0.6, 1);
+}
+.logo-link:hover {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.logo-image {
+  height: 54px;
+  width: auto;
+  max-width: 180px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 4px 10px;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.logo-link:hover .logo-image {
+  box-shadow: 0 4px 24px rgba(10, 123, 131, 0.18);
+}
+
+.logo-image-small {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .header-logo {
+    height: 48px;
+    padding: 0 6px;
+  }
+  .logo-image {
+    display: none;
+  }
+  .logo-image-small {
+    display: inline-block;
+    height: 36px;
+    width: auto;
+    max-width: 60px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 2px 4px;
+    vertical-align: middle;
+  }
+}

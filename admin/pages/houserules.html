@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage House Rules | Admin</title>
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <?php include 'sidebar.php'; ?>
+     <?php include 'header.php'; ?>
+    <div class="admin-container">
+        <div class="admin-content">
+            <div class="content-header">
+                <h1>Manage House Rules</h1>
+                <button class="btn btn-primary" onclick="saveAllChanges()">
+                    <i class="fas fa-save"></i> Save All Changes
+                </button>
+            </div>
+
+            <!-- Hero Section Edit -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Hero Section</h3>
+                </div>
+                <div class="form-group">
+                    <label for="heroTitle">Hero Title</label>
+                    <input type="text" id="heroTitle" class="form-control" value="Welcome to Virunga Homestay">
+                </div>
+                <div class="form-group">
+                    <label for="heroDescription">Hero Description</label>
+                    <textarea id="heroDescription" class="form-control">Enjoy a unique and immersive experience blending nature, culture, adventure, and conservation. Please review our house rules to ensure a comfortable stay for everyone.</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="heroImage">Hero Image URL</label>
+                    <input type="text" id="heroImage" class="form-control" value="../img/homestay.jpg">
+                    <div class="image-preview" id="heroImagePreview" style="background-image: url('../img/homestay.jpg')"></div>
+                </div>
+            </div>
+
+            <!-- Info Cards Edit -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Info Cards</h3>
+                    <button class="btn btn-primary" onclick="addInfoCard()">
+                        <i class="fas fa-plus"></i> Add Card
+                    </button>
+                </div>
+                <div id="infoCardsContainer">
+                    <!-- Info cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Rules Edit -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>House Rules</h3>
+                    <button class="btn btn-primary" onclick="addRuleCard()">
+                        <i class="fas fa-plus"></i> Add Rule
+                    </button>
+                </div>
+                <div id="rulesContainer">
+                    <!-- Rule cards will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data structure
+        let infoCards = [
+            { icon: 'clock', text: 'Check-In: 12:00 PM' },
+            { icon: 'sign-out-alt', text: 'Check-Out: 12:00 PM' },
+            { icon: 'moon', text: 'Quiet Hours: 10:00 PM - 7:00 AM' },
+            { icon: 'user-shield', text: 'Respect Privacy Policy' },
+            { icon: 'ban', text: 'No Smoking' },
+            { icon: 'paw', text: 'No Pets' },
+            { icon: 'users-slash', text: 'No Unapproved Guests' },
+            { icon: 'exclamation-triangle', text: 'Guest Liable for Damage' },
+            { icon: 'parking', text: 'Free Parking' },
+            { icon: 'wifi', text: 'Free Wifi' },
+            { icon: 'tshirt', text: 'Laundry Service' },
+            { icon: 'lock', text: 'Lock Room, Not Responsible for Loss' }
+        ];
+
+        let rules = [
+            {
+                icon: 'utensils',
+                title: 'Breakfast',
+                description: 'The breakfast is served from 6:00 AM to 8:00 AM.\nNote: Hosts can offer a complimentary light breakfast at their discretion. All other meals, including a full breakfast, might incur an additional cost, if offered. Meals and any additional payment should be arranged directly with your host.'
+            },
+            {
+                icon: 'volume-mute',
+                title: 'Quiet Hours',
+                description: 'Observe quiet hours (starting from 10:00 PM to 7:00 AM). Respect the host\'s and other guests\' right to peace and quiet during specified hours. Avoid loud noise or music that may disturb others at any time.'
+            },
+            // Add more rules here
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderInfoCards();
+            renderRules();
+            setupImagePreview();
+        });
+
+        function setupImagePreview() {
+            const heroImageInput = document.getElementById('heroImage');
+            const heroImagePreview = document.getElementById('heroImagePreview');
+
+            heroImageInput.addEventListener('input', function() {
+                heroImagePreview.style.backgroundImage = `url(${this.value})`;
+            });
+        }
+
+        function renderInfoCards() {
+            const container = document.getElementById('infoCardsContainer');
+            container.innerHTML = infoCards.map((card, index) => `
+                <div class="form-group">
+                    <div class="d-flex gap-2">
+                        <input type="text" class="form-control" value="${card.icon}" 
+                               onchange="updateInfoCard(${index}, 'icon', this.value)" placeholder="Icon class">
+                        <input type="text" class="form-control" value="${card.text}" 
+                               onchange="updateInfoCard(${index}, 'text', this.value)" placeholder="Card text">
+                        <button class="btn btn-danger" onclick="removeInfoCard(${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRules() {
+            const container = document.getElementById('rulesContainer');
+            container.innerHTML = rules.map((rule, index) => `
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Icon</label>
+                            <input type="text" class="form-control" value="${rule.icon}" 
+                                   onchange="updateRule(${index}, 'icon', this.value)" placeholder="Icon class">
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" value="${rule.title}" 
+                                   onchange="updateRule(${index}, 'title', this.value)" placeholder="Rule title">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" onchange="updateRule(${index}, 'description', this.value)" 
+                                      placeholder="Rule description">${rule.description}</textarea>
+                        </div>
+                        <button class="btn btn-danger" onclick="removeRule(${index})">
+                            <i class="fas fa-trash"></i> Remove Rule
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addInfoCard() {
+            infoCards.push({ icon: '', text: '' });
+            renderInfoCards();
+        }
+
+        function addRuleCard() {
+            rules.push({ icon: '', title: '', description: '' });
+            renderRules();
+        }
+
+        function updateInfoCard(index, field, value) {
+            infoCards[index][field] = value;
+        }
+
+        function updateRule(index, field, value) {
+            rules[index][field] = value;
+        }
+
+        function removeInfoCard(index) {
+            infoCards.splice(index, 1);
+            renderInfoCards();
+        }
+
+        function removeRule(index) {
+            rules.splice(index, 1);
+            renderRules();
+        }
+
+        function saveAllChanges() {
+            // Here you would typically send the data to your backend
+            const data = {
+                hero: {
+                    title: document.getElementById('heroTitle').value,
+                    description: document.getElementById('heroDescription').value,
+                    image: document.getElementById('heroImage').value
+                },
+                infoCards: infoCards,
+                rules: rules
+            };
+
+            // For now, just show a success message
+            alert('Changes saved successfully!');
+            console.log('Data to save:', data);
+        }
+    </script>
+</body>
+</html>
+

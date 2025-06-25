@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --color-bg: #f8f6f3;
+  --color-primary: #b85c19;
+  --color-secondary: #f2c572;
+  --color-card: #fff;
+  --color-text: #2d3a3a;
+  --color-muted: #8a8a8a;
+  --color-success: #4caf50;
+  --color-warning: #ffb300;
+  --color-danger: #e74c3c;
+  --shadow: 0 4px 24px 0 rgba(184,92,25,0.08);
+  --radius: 18px;
+  --transition: 0.3s cubic-bezier(.4,2,.6,1);
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.rooms-hero {
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../img/house.jpg') center center/cover no-repeat;
+  color: var(--color-card);
+  text-align: center;
+  padding: 3rem 1rem 2rem 1rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2.5rem;
+  padding-top: 100px;
+}
+.rooms-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+}
+.rooms-hero p {
+  font-size: 1.15rem;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Room Grid and Cards */
+.rooms-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.room-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px 0 rgba(184,92,25,0.15);
+}
+
+.room-image {
+  height: 200px;
+  background-color: transparent;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.room-card:hover .room-image img {
+  transform: scale(1.1);
+}
+
+.room-content {
+  padding: 1.5rem;
+}
+
+.room-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--color-primary);
+}
+
+.room-description {
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.room-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #a04e14;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-secondary:hover {
+  background: rgba(184,92,25,0.1);
+  transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+}
+
+.modal-content {
+  background: var(--color-card);
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 600px;
+  box-shadow: var(--shadow);
+  position: relative;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+.close-modal {
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: var(--color-primary);
+}
+
+/* No Rooms Message */
+.no-rooms-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.no-rooms-message p {
+  color: var(--color-muted);
+  font-size: 1.1rem;
+}
+
+/* View All Rooms Button */
+.view-all-rooms {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.view-all-rooms .btn {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.view-all-rooms .btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px 0 rgba(184,92,25,0.2);
+}
