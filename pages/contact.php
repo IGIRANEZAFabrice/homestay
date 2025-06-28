@@ -1,45 +1,14 @@
 <?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Handle form submission
+// Contact page - form submission is handled via AJAX
 $success = false;
 $error = '';
-$debug = '';
-require_once '../include/connection.php';
-if (!$conn) {
-    die('<div class="error-message">Database connection failed: ' . mysqli_connect_error() . '</div>');
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $subject = trim($_POST['subject'] ?? '');
-    $message = trim($_POST['message'] ?? '');
-    $debug .= 'POST: ' . print_r($_POST, true) . '<br>';
-    if ($name && $email && $message && $subject) {
-        $fullMessage = '';
-        if ($phone) $fullMessage .= "Phone: $phone\n";
-        if ($subject) $fullMessage .= "Subject: $subject\n";
-        $fullMessage .= $message;
-        $sql = "INSERT INTO contact_messages (name, email, message, created_at) VALUES (?, ?, ?, NOW())";
-        $stmt = $conn->prepare($sql);
-        if ($stmt) {
-            $stmt->bind_param('sss', $name, $email, $fullMessage);
-            if ($stmt->execute()) {
-                $success = true;
-            } else {
-                $error = 'Failed to save your message. Please try again. Error: ' . $stmt->error;
-            }
-            $stmt->close();
-        } else {
-            $error = 'Database error: ' . $conn->error;
-        }
-    } else {
-        $error = 'Please fill in all required fields.';
-    }
+
+// Handle URL parameters for fallback (non-AJAX) submissions
+if (isset($_GET['success'])) {
+    $success = true;
+    $success_message = $_GET['success'];
+} elseif (isset($_GET['error'])) {
+    $error = $_GET['error'];
 }
 ?>
 <!DOCTYPE html>
@@ -99,39 +68,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <!-- Contact Form -->
           <div class="contact-form-container">
             <h2>Send us a Message</h2>
-            <?php if ($success): ?>
-              <div class="success-message">Thank you! Your message has been sent.</div>
-            <?php elseif ($error): ?>
-              <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
-            <?php else: ?>
-              <div class="info-message">Please fill out the form below to contact us.</div>
-            <?php endif; ?>
-            <form id="contactForm" class="contact-form" method="post" action="">
+            <div id="form-messages" class="<?php
+                if ($success) echo 'success-message';
+                elseif ($error) echo 'error-message';
+                else echo 'info-message';
+            ?>">
+                <?php
+                    if ($success) echo htmlspecialchars($success_message ?? 'Thank you! Your message has been sent successfully.');
+                    elseif ($error) echo htmlspecialchars($error);
+                    else echo 'Please fill out the form below to contact us.';
+                ?>
+            </div>
+            <form id="contactForm" class="contact-form" method="post" action="../backend/contact_handler.php">
               <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
+                <input type="text" id="name" name="name" required>
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
+                <input type="email" id="email" name="email" required>
               </div>
               <div class="form-group">
                 <label for="subject">Subject</label>
                 <select id="subject" name="subject" required>
                   <option value="">Select a subject</option>
-                  <option value="booking" <?php if(($_POST['subject'] ?? '')==='booking') echo 'selected'; ?>>Booking Inquiry</option>
-                  <option value="information" <?php if(($_POST['subject'] ?? '')==='information') echo 'selected'; ?>>General Information</option>
-                  <option value="feedback" <?php if(($_POST['subject'] ?? '')==='feedback') echo 'selected'; ?>>Feedback</option>
-                  <option value="other" <?php if(($_POST['subject'] ?? '')==='other') echo 'selected'; ?>>Other</option>
+                  <option value="Booking Inquiry">Booking Inquiry</option>
+                  <option value="General Information">General Information</option>
+                  <option value="Feedback">Feedback</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" required><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
+                <textarea id="message" name="message" rows="5" required></textarea>
               </div>
               <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i>
@@ -210,13 +179,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </a>
 <?php include 'include/footer.php'; ?>
 
-    <div id="popupMsg" class="popup-message<?php if ($success) echo ''; elseif ($error) echo ' error'; ?>">
+    <div id="popupMsg" class="popup-message<?php if ($error) echo ' error'; ?>">
       <span id="popupMsgText">
-        <?php if ($success) echo 'Thank you! Your message has been sent.'; elseif ($error) echo htmlspecialchars($error); ?>
+        <?php
+            if ($success) echo htmlspecialchars($success_message ?? 'Thank you! Your message has been sent successfully.');
+            elseif ($error) echo htmlspecialchars($error);
+        ?>
       </span>
       <button class="close-btn" onclick="document.getElementById('popupMsg').style.display='none'">&times;</button>
     </div>
+
     <script>
+      // Show popup for URL parameters (fallback mode)
       window.onload = function() {
         var msg = document.getElementById('popupMsg');
         var txt = document.getElementById('popupMsgText').innerText.trim();
@@ -225,6 +199,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           setTimeout(function(){ msg.style.display = 'none'; }, 6000);
         }
       };
+
+      // AJAX form submission
+      // AJAX form submission
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('.submit-btn');
+        const formMessages = document.getElementById('form-messages');
+        const popupMsg = document.getElementById('popupMsg');
+        const popupMsgText = document.getElementById('popupMsgText');
+
+        // Disable submit button and show loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        formMessages.className = 'info-message';
+        formMessages.textContent = 'Sending your message...';
+
+        // Send AJAX request
+        fetch(form.action, {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Success
+            formMessages.className = 'success-message';
+            formMessages.textContent = data.message;
+            popupMsgText.textContent = data.message;
+            popupMsg.className = 'popup-message';
+            popupMsg.style.display = 'block';
+            form.reset(); // Clear the form
+
+            // Hide popup after 6 seconds
+            setTimeout(() => {
+              popupMsg.style.display = 'none';
+            }, 6000);
+          } else {
+            // Error
+            formMessages.className = 'error-message';
+            formMessages.textContent = data.message;
+            popupMsgText.textContent = data.message;
+            popupMsg.className = 'popup-message error';
+            popupMsg.style.display = 'block';
+
+            // Hide popup after 8 seconds for errors
+            setTimeout(() => {
+              popupMsg.style.display = 'none';
+            }, 8000);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          const errorMsg = 'Sorry, there was an error sending your message. Please try again.';
+          formMessages.className = 'error-message';
+          formMessages.textContent = errorMsg;
+          popupMsgText.textContent = errorMsg;
+          popupMsg.className = 'popup-message error';
+          popupMsg.style.display = 'block';
+
+          setTimeout(() => {
+            popupMsg.style.display = 'none';
+          }, 8000);
+        })
+        .finally(() => {
+          // Re-enable submit button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+        });
+      });
     </script>
     <script src="../js/contact.js"></script>
   </body>

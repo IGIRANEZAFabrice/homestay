@@ -1,225 +1,291 @@
 <?php
-session_start();
-require_once '../../include/connection.php';
+/**
+ * Admin Login Page
+ * Professional login interface for Virunga Homestay Admin
+ */
 
-$error = '';
+// Include authentication middleware (which defines ADMIN_ACCESS and starts session)
+require_once '../backend/api/utils/auth_middleware.php';
+
+// Redirect if already logged in
+if (isAuthenticated()) {
+    $redirect_url = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+    unset($_SESSION['redirect_after_login']);
+    header("Location: $redirect_url");
+    exit();
+}
+
+$error_message = '';
+$success_message = '';
+
+// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-    if ($username && $password) {
-        $stmt = $conn->prepare('SELECT id, password FROM admin_users WHERE username = ? LIMIT 1');
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $stmt->store_result();
-        if ($stmt->num_rows > 0) {
-            $stmt->bind_result($user_id, $db_password);
-            $stmt->fetch();
-            // For demo: plain text, for production use password_verify
-            if ($password === $db_password) {
-                $_SESSION['admin_user_id'] = $user_id;
-                $_SESSION['admin_username'] = $username;
-                header('Location: ../index.php');
-                exit;
-            } else {
-                $error = 'Invalid username or password';
-            }
-        } else {
-            $error = 'Invalid username or password';
-        }
-        $stmt->close();
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $csrf_token = $_POST['csrf_token'] ?? '';
+    
+    // Verify CSRF token
+    if (!verifyCSRFToken($csrf_token)) {
+        $error_message = 'Invalid security token. Please try again.';
     } else {
-        $error = 'Please enter both username and password.';
+        // Attempt login
+        $login_result = loginUser($username, $password);
+        
+        if ($login_result['success']) {
+            $success_message = $login_result['message'];
+
+            // Redirect after successful login
+            $redirect_url = $_SESSION['redirect_after_login'] ?? 'dashboard.php';
+            unset($_SESSION['redirect_after_login']);
+
+            // Add a small delay to show success message
+            header("refresh:2;url=$redirect_url");
+        } else {
+            $error_message = $login_result['message'];
+        }
     }
 }
+
+// Generate CSRF token
+$csrf_token = generateCSRFToken();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Virunga Homestay</title>
-    <link rel="stylesheet" href="../../css/admin.css">
+    <title>Login - Virunga Homestay Admin</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/forms.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        .login-container {
+        body {
+            background: var(--primary-color);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .login-page {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-            padding: 2rem;
+            padding: 20px;
         }
-
-        .login-card {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        
+        .login-container {
             width: 100%;
             max-width: 400px;
-            padding: 2rem;
         }
-
+        
+        .login-card {
+            background: var(--white);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            overflow: hidden;
+        }
+        
         .login-header {
+            background: var(--gray-50);
+            padding: 40px 30px 30px;
             text-align: center;
-            margin-bottom: 2rem;
         }
-
-        .login-header img {
-            width: 120px;
-            height: auto;
-            margin-bottom: 1rem;
+        
+        .login-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
         }
-
-        .login-header h1 {
-            color: #2c3e50;
-            font-size: 1.8rem;
+        
+        .login-logo i {
+            font-size: 32px;
+            color: var(--primary-color);
+        }
+        
+        .login-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0 0 5px 0;
+        }
+        
+        .login-subtitle {
+            color: var(--gray-600);
+            font-size: 14px;
             margin: 0;
         }
-
-        .login-form .form-group {
-            margin-bottom: 1.5rem;
+        
+        .login-form {
+            padding: 30px;
         }
-
-        .login-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        .login-form .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .login-form .form-control:focus {
-            border-color: #3498db;
-            outline: none;
-        }
-
-        .password-field {
-            position: relative;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            padding: 0;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .login-btn:hover {
-            background-color: #2980b9;
-        }
-
-        .back-to-website {
-            display: block;
+        
+        .login-footer {
+            background: var(--gray-50);
+            padding: 20px 30px;
             text-align: center;
-            margin-top: 1.5rem;
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .back-to-website:hover {
-            color: #3498db;
-        }
-
-        .back-to-website i {
-            margin-right: 0.5rem;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 0.75rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 1.5rem;
-            }
-
-            .login-header h1 {
-                font-size: 1.5rem;
-            }
+            font-size: 12px;
+            color: var(--gray-500);
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <img src="../../img/logo.png" alt="Virunga Homestay Logo">
-                <h1>Admin Login</h1>
-            </div>
-            <?php if ($error): ?>
-            <div class="error-message" id="errorMessage" style="display:block;">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
-            <?php endif; ?>
-            <form class="login-form" method="post" autocomplete="off">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" required autofocus>
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <i class="fas fa-mountain"></i>
+                        <span>Virunga Homestay</span>
+                    </div>
+                    <h1 class="login-title">Admin Login</h1>
+                    <p class="login-subtitle">Sign in to your account</p>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-field">
-                        <input type="password" id="password" name="password" class="form-control" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword()">
-                            <i class="fas fa-eye"></i>
-                        </button>
+                
+                <div class="login-form">
+                    <?php if ($error_message): ?>
+                        <div class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle alert-icon"></i>
+                            <?= htmlspecialchars($error_message) ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <?php if ($success_message): ?>
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle alert-icon"></i>
+                            <?= htmlspecialchars($success_message) ?>
+                            <br><small>Redirecting to dashboard...</small>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <form method="POST" action="" data-validate="true">
+                        <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
+                        
+                        <div class="form-group">
+                            <label for="username" class="form-label required">Username</label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                class="form-control" 
+                                required 
+                                data-min-length="3"
+                                value="<?= htmlspecialchars($_POST['username'] ?? '') ?>"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label required">Password</label>
+                            <div class="password-input-container" style="position: relative;">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-control" 
+                                    required 
+                                    data-min-length="6"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                >
+                                <button 
+                                    type="button" 
+                                    class="password-toggle" 
+                                    onclick="togglePassword()"
+                                    style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray-400); cursor: pointer;"
+                                >
+                                    <i class="fas fa-eye" id="password-toggle-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input 
+                                    type="checkbox" 
+                                    id="remember_me" 
+                                    name="remember_me" 
+                                    class="form-check-input"
+                                    <?= isset($_POST['remember_me']) ? 'checked' : '' ?>
+                                >
+                                <label for="remember_me" class="form-check-label">
+                                    Remember me
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="#" style="color: var(--secondary-color); text-decoration: none; font-size: 14px;">
+                            Forgot your password?
+                        </a>
                     </div>
                 </div>
-                <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-            <a href="../../index.html" class="back-to-website">
-                <i class="fas fa-arrow-left"></i> Back to Website
-            </a>
+                
+                <div class="login-footer">
+                    <p>&copy; <?= date('Y') ?> Virunga Homestay. All rights reserved.</p>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script src="../assets/js/forms.js"></script>
+    
     <script>
+        // Password toggle functionality
         function togglePassword() {
             const passwordInput = document.getElementById('password');
-            const toggleButton = document.querySelector('.toggle-password i');
+            const toggleIcon = document.getElementById('password-toggle-icon');
+            
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                toggleButton.classList.remove('fa-eye');
-                toggleButton.classList.add('fa-eye-slash');
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
             } else {
                 passwordInput.type = 'password';
-                toggleButton.classList.remove('fa-eye-slash');
-                toggleButton.classList.add('fa-eye');
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
             }
         }
+        
+        // Auto-focus username field
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameField = document.getElementById('username');
+            if (usernameField && !usernameField.value) {
+                usernameField.focus();
+            }
+        });
+        
+        // Handle form submission with loading state
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            
+            // Re-enable button after 5 seconds as fallback
+            setTimeout(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }, 5000);
+        });
     </script>
 </body>
 </html>
-

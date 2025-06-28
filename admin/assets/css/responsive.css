@@ -1,0 +1,383 @@
+/* Responsive Design Styles */
+
+/* Mobile First Approach */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .container-sm {
+        max-width: 540px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-4);
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    /* Sidebar responsive behavior */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar.collapsed + .main-content {
+        margin-left: 0;
+    }
+    
+    /* Mobile menu toggle */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    /* Header adjustments */
+    .main-header {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+    
+    .header-left h1 {
+        font-size: var(--font-size-xl);
+    }
+    
+    /* Dashboard content */
+    .dashboard-content {
+        padding: var(--spacing-4);
+    }
+    
+    /* Statistics grid */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-4);
+    }
+    
+    .stat-card {
+        padding: var(--spacing-4);
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .stat-icon i {
+        font-size: var(--font-size-xl);
+    }
+    
+    .stat-info h3 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* Quick actions */
+    .action-buttons {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3);
+    }
+    
+    .action-btn {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+    
+    /* Data tables */
+    .data-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .data-table {
+        min-width: 600px;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-xs);
+    }
+    
+    /* Form adjustments */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group {
+        margin-bottom: var(--spacing-4);
+    }
+    
+    /* Button groups */
+    .action-buttons-group {
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+    }
+    
+    .btn {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-2) var(--spacing-4);
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    .btn-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    /* Sidebar adjustments */
+    .sidebar-header {
+        padding: var(--spacing-4);
+    }
+    
+    .sidebar-header .logo span {
+        font-size: var(--font-size-base);
+    }
+    
+    .menu-link {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+    
+    .sidebar-footer {
+        padding: var(--spacing-4);
+    }
+    
+    /* Recent activities */
+    .activity-item {
+        padding: var(--spacing-3);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-2);
+    }
+    
+    .activity-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .activity-info h4 {
+        font-size: var(--font-size-xs);
+    }
+    
+    .activity-info p {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .container-lg {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-4);
+    }
+    
+    /* Enhanced grid layouts */
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .action-buttons {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* Form layouts */
+    .form-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-6);
+    }
+    
+    .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: var(--spacing-6);
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .container-xl {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-4);
+    }
+    
+    /* Larger sidebar */
+    .sidebar {
+        width: 320px;
+    }
+    
+    .main-content {
+        margin-left: 320px;
+    }
+    
+    .sidebar.collapsed {
+        width: 80px;
+    }
+    
+    .sidebar.collapsed + .main-content {
+        margin-left: 80px;
+    }
+    
+    /* Enhanced dashboard layout */
+    .dashboard-content {
+        padding: var(--spacing-8);
+    }
+    
+    .stats-grid {
+        gap: var(--spacing-8);
+    }
+    
+    .stat-card {
+        padding: var(--spacing-8);
+    }
+}
+
+/* Extra extra large devices (1400px and up) */
+@media (min-width: 1400px) {
+    .container-xxl {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-4);
+    }
+}
+
+/* Print styles */
+@media print {
+    .sidebar,
+    .mobile-menu-toggle,
+    .connectivity-indicator,
+    .action-buttons,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+    }
+    
+    .main-header {
+        border-bottom: 2px solid var(--gray-900);
+        margin-bottom: var(--spacing-4);
+    }
+    
+    .data-table {
+        box-shadow: none;
+        border: 1px solid var(--gray-900);
+    }
+    
+    .data-table th {
+        background-color: var(--gray-200) !important;
+        color: var(--gray-900) !important;
+    }
+    
+    .stat-card {
+        border: 1px solid var(--gray-300);
+        box-shadow: none;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    :root {
+        --gray-100: #e5e5e5;
+        --gray-200: #cccccc;
+        --gray-300: #b3b3b3;
+        --gray-400: #999999;
+        --gray-500: #808080;
+        --gray-600: #666666;
+        --gray-700: #4d4d4d;
+        --gray-800: #333333;
+        --gray-900: #1a1a1a;
+    }
+    
+    .btn {
+        border-width: 2px;
+    }
+    
+    .form-input:focus {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .loading-spinner i {
+        animation: none;
+    }
+}
+
+/* Dark mode support (if needed in future) */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles would go here */
+    /* Currently maintaining light theme for professional appearance */
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 600px) {
+    .sidebar {
+        width: 240px;
+    }
+    
+    .main-content {
+        margin-left: 240px;
+    }
+    
+    .sidebar.collapsed {
+        width: 60px;
+    }
+    
+    .sidebar.collapsed + .main-content {
+        margin-left: 60px;
+    }
+    
+    .sidebar-header,
+    .sidebar-footer {
+        padding: var(--spacing-3);
+    }
+    
+    .menu-link {
+        padding: var(--spacing-2) var(--spacing-4);
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .btn,
+    .menu-link,
+    .action-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .btn-icon {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .tooltip-trigger {
+        cursor: default;
+    }
+    
+    /* Increase touch targets */
+    .data-table td {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+    
+    .checkbox-label {
+        padding: var(--spacing-2) 0;
+    }
+    
+    .checkmark {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
