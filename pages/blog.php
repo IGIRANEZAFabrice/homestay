@@ -42,7 +42,7 @@ if ($result && $result->num_rows > 0) {
         <?php foreach ($blogs as $blog): ?>
           <article class="blog-card">
             <div class="blog-image">
-              <img src="../<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
+              <img src="../<?php echo buildImageUrl($blog['image'], 'blogs'); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
             </div>
             <div class="blog-content">
               <h2 class="blog-title"><?php echo htmlspecialchars($blog['title']); ?></h2>

@@ -14,6 +14,9 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
@@ -415,10 +418,10 @@ $breadcrumbs = [
                                     <div class="drag-handle">
                                         <i class="fas fa-grip-vertical"></i>
                                     </div>
-                                    
+                                    <!-- update the pathway to be /homestay/uploads/ -->
                                     <div class="hero-image-preview <?= empty($image['image']) ? 'no-image-placeholder' : '' ?>"
                                          <?php if (!empty($image['image'])): ?>
-                                         style="background-image: url('/homestay/<?= htmlspecialchars($image['image']) ?>')"
+                                         style="background-image: url('<?= buildAdminImageUrl($image['image'], 'hero') ?>');"
                                          <?php endif; ?>>
 
                                         <?php if (empty($image['image'])): ?>
@@ -450,9 +453,9 @@ $breadcrumbs = [
                                             <a href="edit.php?id=<?= $image['id'] ?>" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <a href="delete.php?id=<?= $image['id'] ?>" 
-                                               class="btn btn-sm btn-outline-danger"
-                                               data-item-name="<?= htmlspecialchars($image['title']) ?>">
+                                            <a href="delete.php?id=<?= $image['id'] ?>"
+                                               class="btn btn-sm btn-outline-danger hero-delete-btn"
+                                               onclick="return confirm('Are you sure you want to delete this hero image: <?= htmlspecialchars($image['title']) ?>? This action cannot be undone.')">
                                                 <i class="fas fa-trash"></i> Delete
                                             </a>
                                         </div>

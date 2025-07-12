@@ -14,6 +14,9 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
@@ -401,7 +404,7 @@ $breadcrumbs = [
                             <?php if (!empty($event['image'])): ?>
                                 <div class="current-image-container">
                                     <div class="current-image">
-                                        <img src="/homestay/<?= htmlspecialchars($event['image']) ?>" alt="Current event image" class="current-image-preview">
+                                        <img src="<?= buildAdminImageUrl($event['image'], 'events') ?>" alt="Current event image" class="current-image-preview">
                                         <div class="current-image-info">
                                             <span class="current-image-label">Current Image</span>
                                             <label class="delete-image-checkbox">

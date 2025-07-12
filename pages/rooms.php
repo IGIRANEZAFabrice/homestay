@@ -1,6 +1,7 @@
 <?php
 // Include database connection
 require_once '../include/connection.php';
+require_once '../include/image_helpers.php';
 
 // Fetch all rooms from the database
 $sql = "SELECT * FROM rooms ORDER BY created_at DESC";
@@ -35,9 +36,7 @@ $result = $conn->query($sql);
             <div class="room-card">
               <div class="room-image">
                 <?php if($room['image'] && $room['image'] != 'default-room.jpg'): ?>
-                  <?php $imagePath = "../uploads/rooms/" . $room['image']; ?>
-                  <img src="<?php echo $imagePath; ?>" alt="<?php echo $room['title']; ?>" style="max-width: 100%; max-height: 100%; object-fit: cover;">
-                  <!-- Debug: <?php echo $imagePath; ?> -->
+                  <img src="../<?php echo buildImageUrl($room['image'], 'rooms'); ?>" alt="<?php echo $room['title']; ?>" style="max-width: 100%; max-height: 100%; object-fit: cover;">
                 <?php else: ?>
                   <!-- No image available -->
                 <?php endif; ?>

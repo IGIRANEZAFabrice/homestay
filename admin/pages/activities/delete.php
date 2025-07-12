@@ -251,8 +251,8 @@ if (!isAjaxRequest()) {
                         <div class="row">
                             <div class="col-md-3">
                                 <?php if (!empty($activity['image'])): ?>
-                                    <img src="/homestay/<?= htmlspecialchars($activity['image']) ?>" 
-                                         alt="<?= htmlspecialchars($activity['title']) ?>" 
+                                    <img src="<?= buildAdminImageUrl($activity['image'], 'activities') ?>"
+                                         alt="<?= htmlspecialchars($activity['title']) ?>"
                                          class="img-fluid rounded shadow-sm">
                                 <?php else: ?>
                                     <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 150px;">

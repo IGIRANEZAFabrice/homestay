@@ -16,6 +16,7 @@
     <?php
     // Fetch hero slides from the database
     require_once 'include/connection.php';
+    require_once 'include/image_helpers.php';
     $heroSlides = [];
     $sql = "SELECT * FROM hero_images WHERE is_active = 1 ORDER BY display_order ASC LIMIT 3";
     $result = $conn->query($sql);
@@ -37,7 +38,7 @@
       <div class="hero-slider">
         <?php foreach ($heroSlides as $idx => $slide): ?>
           <div class="hero-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
-            <img src="<?php echo (strpos($slide['image'], 'uploads/') === 0 || strpos($slide['image'], '../uploads/') === 0) ? $slide['image'] : $slide['image']; ?>" alt="Homestay View <?php echo $idx+1; ?>" />
+            <img src="<?php echo buildImageUrl($slide['image'], 'hero'); ?>" alt="Homestay View <?php echo $idx+1; ?>" />
             <div class="hero-content">
               <h1 class="hero-title"><?php echo htmlspecialchars($slide['title']); ?></h1>
               <p class="hero-subtitle"><?php echo htmlspecialchars($slide['paragraph']); ?></p>
@@ -151,7 +152,7 @@
         </div>
         <div class="about-image">
           <img
-            src="<?php echo !empty($about['image']) ? $about['image'] : 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 400\'><rect fill=\'%23f4f4f4\' width=\'400\' height=\'400\'/><rect fill=\'%23e0e0e0\' x=\'50\' y=\'100\' width=\'300\' height=\'200\' rx=\'10\'/><circle fill=\'%23d0d0d0\' cx=\'200\' cy=\'200\' r=\'50\'/><rect fill=\'%23c0c0c0\' x=\'100\' y=\'320\' width=\'200\' height=\'30\' rx=\'5\'/></svg>' ?>"
+            src="uploads/homeabout/<?php echo !empty($about['image']) ? $about['image'] : 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 400\'><rect fill=\'%23f4f4f4\' width=\'400\' height=\'400\'/><rect fill=\'%23e0e0e0\' x=\'50\' y=\'100\' width=\'300\' height=\'200\' rx=\'10\'/><circle fill=\'%23d0d0d0\' cx=\'200\' cy=\'200\' r=\'50\'/><rect fill=\'%23c0c0c0\' x=\'100\' y=\'320\' width=\'200\' height=\'30\' rx=\'5\'/></svg>' ?>"
             alt="Homestay Interior"
           />
         </div>
@@ -186,7 +187,7 @@
               <div class="service-item<?php echo $idx % 2 === 1 ? ' reverse' : ''; ?>">
                 <div class="service-image">
                   <img
-                    src="<?php echo (preg_match('/^(http|\/)/', $service['image']) ? $service['image'] : './' . $service['image']); ?>"
+                    src="<?php echo buildImageUrl($service['image'], 'services'); ?>"
                     alt="<?php echo htmlspecialchars($service['title']); ?>"
                   />
                 </div>
@@ -223,7 +224,7 @@
             <div class="room-card">
               <div class="room-image">
                 <?php if($room['image'] && $room['image'] != 'default-room.jpg'): ?>
-                  <img src="uploads/rooms/<?php echo $room['image']; ?>" alt="<?php echo $room['title']; ?>">
+                  <img src="<?php echo buildImageUrl($room['image'], 'rooms'); ?>" alt="<?php echo $room['title']; ?>">
                 <?php endif; ?>
               </div>
               <div class="room-content">
@@ -284,7 +285,7 @@
           <a href="pages/activities.php?id=<?php echo $activity['id']; ?>" class="experience-card-link">
             <div class="experience-card<?php echo $idx > 5 ? ' hidden' : ''; ?>">
               <div class="card-image">
-                  <img src="uploads/activities/<?php echo htmlspecialchars($activity['image']); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?>" />
+                  <img src="<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?>" />
                 <div class="card-overlay"></div>
               </div>
               <div class="card-content">

@@ -14,10 +14,14 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
 require_once '../../backend/api/utils/validation.php';
+require_once '../../backend/api/utils/image-handler.php';
 require_once '../../backend/api/utils/image-handler.php';
 
 // Get current user
@@ -39,9 +43,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $homepage_about = $result->fetch_assoc();
         $is_edit = true;
     } else {
-        setFlashMessage('Homepage about content not found.', 'error');
-        header('Location: index.php');
-        exit();
+        redirectWithMessage('index.php', 'Homepage about content not found.', 'danger');
     }
 } else {
     // Check if content already exists (only one record allowed)
@@ -80,7 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image_path = $homepage_about['image'] ?? '';
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $upload_result = handleImageUpload($_FILES['image'], 'homepage-about');
+            $upload_result = uploadImage($_FILES['image'], 'uploads/homeabout/', [
+                'max_width' => 1200,
+                'max_height' => 800,
+                'quality' => 85,
+                'optimize' => true
+            ]);
 
             if ($upload_result['success']) {
                 // Delete old image if exists and different
@@ -110,11 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($result) {
                     $success_message = $is_edit ? 'Homepage about content updated successfully!' : 'Homepage about content created successfully!';
-                    setFlashMessage($success_message, 'success');
-
-                    // Redirect to index page
-                    header('Location: index.php');
-                    exit();
+                    redirectWithMessage('index.php', $success_message, 'success');
                 } else {
                     $errors[] = 'Failed to save homepage about content. Please try again.';
                 }

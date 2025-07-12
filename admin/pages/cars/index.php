@@ -14,6 +14,9 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
@@ -274,8 +277,8 @@ $breadcrumbs = [
                                     <tr>
                                         <td>
                                             <?php if (!empty($car['image'])): ?>
-                                                <img src="/homestay/<?= htmlspecialchars($car['image']) ?>" 
-                                                     alt="<?= htmlspecialchars($car['name']) ?>" 
+                                                <img src="<?= buildAdminImageUrl($car['image'], 'cars') ?>"
+                                                     alt="<?= htmlspecialchars($car['name']) ?>"
                                                      class="table-image">
                                             <?php else: ?>
                                                 <div class="table-image" style="background-color: var(--gray-200); display: flex; align-items: center; justify-content: center;">

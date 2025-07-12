@@ -93,7 +93,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 <body>
 <?php include 'include/header.php'; ?>
 <?php if ($activity): ?>
-    <img class="activity-cover" src="../uploads/activities/<?php echo htmlspecialchars($activity['image']); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?> Cover">
+    <img class="activity-cover" src="../<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?> Cover">
     <div class="activity-container">
         <a href="../index.php#experiencesGrid" class="back-link"><i class="fas fa-arrow-left"></i>Back to Home</a>
         <h1 class="activity-title"><?php echo htmlspecialchars($activity['title']); ?></h1>

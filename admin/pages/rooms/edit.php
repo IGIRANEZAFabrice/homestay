@@ -23,6 +23,27 @@ require_once '../../backend/api/utils/helpers.php';
 require_once '../../backend/api/utils/validation.php';
 require_once '../../backend/api/utils/image-handler.php';
 
+// Try to include image helpers, with fallback function
+if (file_exists('../../../include/image_helpers.php')) {
+    require_once '../../../include/image_helpers.php';
+} else {
+    // Fallback function if image helpers not found
+    function buildAdminImageUrl($filename, $category) {
+        if (empty($filename)) {
+            return '';
+        }
+
+        // Handle both filename-only and full path cases
+        if (strpos($filename, 'uploads/') === 0) {
+            // Already a full path
+            return '/homestay/' . $filename;
+        } else {
+            // Build path from filename
+            return '/homestay/uploads/' . $category . '/' . $filename;
+        }
+    }
+}
+
 // Get current user
 $current_user = getCurrentUser();
 
@@ -218,6 +239,146 @@ $breadcrumbs = [
             font-size: 0.875rem;
             color: var(--gray-600);
             margin-top: 5px;
+        }
+
+        /* Enhanced Image Upload Styles */
+        .image-upload-area {
+            position: relative;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .image-upload-area:hover {
+            border-color: #6366f1;
+            background-color: #f1f5f9;
+        }
+
+        .image-upload-area.dragover {
+            border-color: #6366f1;
+            background-color: #f1f5f9;
+            transform: scale(1.02);
+        }
+
+        .image-upload-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .upload-placeholder {
+            pointer-events: none;
+            color: #475569;
+        }
+
+        .upload-placeholder i {
+            font-size: 2rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .upload-placeholder p {
+            margin: 10px 0 5px 0;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .upload-placeholder small {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .image-preview-area {
+            margin-top: 15px;
+        }
+
+        .image-preview {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--gray-300);
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: cover;
+        }
+
+        .image-preview .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-preview .remove-image:hover {
+            background: var(--danger);
+        }
+
+        /* Enhanced Button Styles */
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .btn-outline-secondary {
+            background: transparent;
+            border: 2px solid var(--gray-400);
+            color: var(--gray-600);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-500);
+            color: var(--gray-700);
+        }
+
+        /* Loading state for buttons */
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn .fa-spinner {
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -417,14 +578,19 @@ $breadcrumbs = [
                                 <label class="form-label">Current Image</label>
                                 <div class="current-image">
                                     <?php
-                                        // Handle both filename-only and full path cases
-                                        $image_src = (strpos($room['image'], 'uploads/') === 0)
-                                            ? '/homestay/' . $room['image']
-                                            : '/homestay/uploads/rooms/' . $room['image'];
+                                    $image_url = buildAdminImageUrl($room['image'], 'rooms');
+                                    // Debug: Show the image URL being generated
+                                    // echo "<!-- Debug: Image URL: " . htmlspecialchars($image_url) . " -->";
                                     ?>
-                                    <img src="<?= htmlspecialchars($image_src) ?>"
+                                    <img src="<?= $image_url ?>"
                                         alt="Current room image"
-                                        style="max-width: 300px; height: auto; border-radius: 8px;">
+                                        style="max-width: 300px; height: auto; border-radius: 8px;"
+                                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <div style="display: none; padding: 20px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; text-align: center;">
+                                        <i class="fas fa-image" style="font-size: 2rem; color: #6c757d; margin-bottom: 10px;"></i>
+                                        <p style="margin: 0; color: #6c757d;">Image not found</p>
+                                        <small style="color: #6c757d;">File: <?= htmlspecialchars($room['image']) ?></small>
+                                    </div>
                                     <div class="image-actions">
                                         <label class="checkbox-label">
                                             <input type="checkbox" name="delete_existing_image" value="1">
@@ -434,15 +600,29 @@ $breadcrumbs = [
                                     </div>
                                 </div>
                             </div>
+                        <?php else: ?>
+                            <div class="form-group">
+                                <label class="form-label">Current Image</label>
+                                <div style="padding: 20px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; text-align: center;">
+                                    <i class="fas fa-image" style="font-size: 2rem; color: #6c757d; margin-bottom: 10px;"></i>
+                                    <p style="margin: 0; color: #6c757d;">No image uploaded</p>
+                                </div>
+                            </div>
                         <?php endif; ?>
 
                         <!-- New Image Upload -->
                         <div class="form-group">
                             <label for="image" class="form-label">Upload New Image</label>
-                            <input type="file" id="image" name="image"
-                                class="form-control <?= isset($errors['image']) ? 'error' : '' ?>" accept="image/*">
-                            <div class="form-help">
-                                Supported formats: JPG, PNG, GIF. Maximum size: 5MB.
+                            <div class="image-upload-area">
+                                <input type="file" id="image" name="image"
+                                    class="form-control <?= isset($errors['image']) ? 'error' : '' ?>"
+                                    accept="image/*" data-upload="image">
+                                <div class="upload-placeholder">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Click to select image or drag and drop</p>
+                                    <small>Supported formats: JPG, PNG, GIF. Maximum size: 5MB.</small>
+                                </div>
+                                <div class="image-preview-area"></div>
                             </div>
                             <?php if (isset($errors['image'])): ?>
                                 <div class="form-error"><?= htmlspecialchars($errors['image']) ?></div>
@@ -451,12 +631,15 @@ $breadcrumbs = [
 
                         <!-- Form Actions -->
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary btn-lg" id="updateRoomBtn">
                                 <i class="fas fa-save"></i> Update Room
                             </button>
-                            <a href="index.php" class="btn btn-secondary">
-                                <i class="fas fa-times"></i> Cancel
+                            <a href="index.php" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-arrow-left"></i> Back to Rooms
                             </a>
+                            <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                                <i class="fas fa-undo"></i> Reset Changes
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -467,6 +650,67 @@ $breadcrumbs = [
     <!-- JavaScript Files -->
     <script src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/forms.js"></script>
+    <script src="../../assets/js/image-upload.js"></script>
+
+    <script>
+        // Enhanced form functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.admin-form');
+            const updateBtn = document.getElementById('updateRoomBtn');
+            const originalFormData = new FormData(form);
+
+            // Initialize image upload
+            if (typeof ImageUpload !== 'undefined') {
+                ImageUpload.init();
+            }
+
+            // Form submission handling
+            form.addEventListener('submit', function(e) {
+                updateBtn.disabled = true;
+                updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            });
+
+            // Reset form function
+            window.resetForm = function() {
+                if (confirm('Are you sure you want to reset all changes?')) {
+                    form.reset();
+                    // Reset image preview
+                    const previewArea = document.querySelector('.image-preview-area');
+                    if (previewArea) {
+                        previewArea.innerHTML = '';
+                    }
+                    // Clear validation errors
+                    const errorElements = form.querySelectorAll('.form-error');
+                    errorElements.forEach(error => error.remove());
+
+                    const errorInputs = form.querySelectorAll('.error');
+                    errorInputs.forEach(input => input.classList.remove('error'));
+                }
+            };
+
+            // Track form changes
+            let hasChanges = false;
+            const inputs = form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    hasChanges = true;
+                });
+            });
+
+            // Warn before leaving with unsaved changes
+            window.addEventListener('beforeunload', function(e) {
+                if (hasChanges) {
+                    e.preventDefault();
+                    e.returnValue = '';
+                }
+            });
+
+            // Remove warning after successful submission
+            form.addEventListener('submit', function() {
+                hasChanges = false;
+            });
+        });
+    </script>
 </body>
 
 </html>

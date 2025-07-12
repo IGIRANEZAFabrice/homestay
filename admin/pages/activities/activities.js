@@ -235,7 +235,7 @@ class ActivitiesManager {
         const activitiesHtml = this.activities.map(activity => `
             <tr>
                 <td>
-                    <img src="${activity.image || 'https://via.placeholder.com/60x60?text=No+Image'}" 
+                    <img src="${activity.image ? '/homestay/uploads/activities/' + activity.image : 'https://via.placeholder.com/60x60?text=No+Image'}"
                          alt="${activity.title}" class="image-preview">
                 </td>
                 <td>

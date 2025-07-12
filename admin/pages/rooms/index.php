@@ -17,6 +17,9 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
@@ -418,12 +421,8 @@ $breadcrumbs = [
                                             <div class="room-images">
                                                 <?php if (!empty($room['image']) && $room['image'] !== 'default-room.jpg'): ?>
                                                     <?php
-                                                        // Handle both filename-only and full path cases
-                                                        $image_src = (strpos($room['image'], 'uploads/') === 0)
-                                                            ? '/homestay/' . $room['image']
-                                                            : '/homestay/uploads/rooms/' . $room['image'];
                                                     ?>
-                                                    <img src="<?= htmlspecialchars($image_src) ?>"
+                                                    <img src="<?= buildAdminImageUrl($room['image'], 'rooms') ?>"
                                                          alt="Room image"
                                                          class="room-image-thumb">
                                                 <?php else: ?>

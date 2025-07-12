@@ -221,7 +221,7 @@ foreach ($contentBlocks as $index => $block) {
       
       <?php if ($blog['image']): ?>
         <div class="blog-featured-image">
-          <img src="../<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
+          <img src="../<?php echo buildImageUrl($blog['image'], 'blogs'); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
         </div>
       <?php endif; ?>
       
@@ -235,7 +235,7 @@ foreach ($contentBlocks as $index => $block) {
               </div>
             <?php elseif ($block['content_type'] === 'image' && !empty($block['content_image'])): ?>
               <div class="content-block image-block">
-                <img src="../<?php echo htmlspecialchars($block['content_image']); ?>" 
+                <img src="../<?php echo buildImageUrl($block['content_image'], 'blog-content'); ?>"
                      alt="<?php echo htmlspecialchars($block['image_alt_text'] ?? 'Blog image'); ?>">
                 <?php if (!empty($block['image_alt_text'])): ?>
                   <p class="image-caption"><?php echo htmlspecialchars($block['image_alt_text']); ?></p>

@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
             (blog) => `
           <div class="blog-card">
             <a href="blogsopen.php?id=${blog.id}">
-              <img src="../${blog.image}" alt="${
+              <img src="../uploads/blogs/${blog.image}" alt="${
               blog.title
             }" class="blog-card-image" />
               <div class="blog-card-content">

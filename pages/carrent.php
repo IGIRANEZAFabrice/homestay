@@ -83,7 +83,7 @@ while ($row = $result->fetch_assoc()) {
                 ?>
                 <div class="car-card" data-type="<?php echo htmlspecialchars($car['type']); ?>" data-price="<?php echo $priceRange; ?>" data-transmission="<?php echo htmlspecialchars($car['transmission']); ?>">
                     <div class="car-image">
-                        <img src="<?php echo '../' . htmlspecialchars($car['image']); ?>" alt="<?php echo htmlspecialchars($car['name']); ?>">
+                        <img src="<?php echo '../uploads/cars/' . htmlspecialchars($car['image']); ?>" alt="<?php echo htmlspecialchars($car['name']); ?>">
                         <?php if ($car['badge']): ?>
                             <div class="car-badge"><?php echo htmlspecialchars($car['badge']); ?></div>
                         <?php endif; ?>

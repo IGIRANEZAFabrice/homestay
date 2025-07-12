@@ -59,7 +59,7 @@
               }
               return `
               <div class="event-card" data-event-date="${event.event_date}">
-                <img src="../${event.image}" alt="${event.title}" class="event-image" onerror="this.onerror=null;this.src='../img/placeholder-room.jpg';" />
+                <img src="../uploads/events/${event.image}" alt="${event.title}"/>
                 ${status}
                 <div class="event-content">
                   <h3 class="event-title">${event.title}</h3>

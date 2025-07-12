@@ -14,6 +14,9 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
@@ -84,12 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($upload_result['success']) {
             // Delete old image if exists
             if (!empty($activity['image'])) {
-                $old_image_path = $_SERVER['DOCUMENT_ROOT'] . '/homestay/' . $activity['image'];
+                // Construct full path for deletion - handle both old and new formats
+                $old_image_path = (strpos($activity['image'], 'uploads/') === 0)
+                    ? $_SERVER['DOCUMENT_ROOT'] . '/homestay/' . $activity['image']
+                    : $_SERVER['DOCUMENT_ROOT'] . '/homestay/uploads/activities/' . $activity['image'];
                 if (file_exists($old_image_path)) {
                     unlink($old_image_path);
                 }
             }
-            $image_path = $upload_result['path'];
+            $image_path = $upload_result['filename'];
         } else {
             $errors['image'] = $upload_result['message'];
         }
@@ -360,8 +366,8 @@ $breadcrumbs = [
                             
                             <?php if (!empty($activity['image'])): ?>
                                 <div class="existing-image-preview" style="margin-bottom: 15px;">
-                                    <img src="/homestay/<?= htmlspecialchars($activity['image']) ?>" 
-                                         alt="Current image" 
+                                    <img src="<?= buildAdminImageUrl($activity['image'], 'activities') ?>"
+                                         alt="Current image"
                                          style="max-width: 200px; max-height: 150px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                     <div style="margin-top: 10px;">
                                         <label style="display: flex; align-items: center; gap: 8px; font-size: 14px;">

@@ -481,10 +481,10 @@ $current_section = "homepage-about";
                                             <span>Featured Image</span>
                                         </div>
                                         <div class="image-container">
-                                            <img src="../../../<?php echo htmlspecialchars($homepage_about['image']); ?>"
+                                            <img src="/homestay/uploads/homeabout/<?php echo htmlspecialchars($homepage_about['image']); ?>"
                                                 alt="Homepage about image" class="content-image">
                                             <div class="image-overlay">
-                                                <a href="../../../<?php echo htmlspecialchars($homepage_about['image']); ?>"
+                                                <a href="/homestay/uploads/homeabout/<?php echo htmlspecialchars($homepage_about['image']); ?>"
                                                     target="_blank" class="btn btn-sm btn-light">
                                                     <i class="fas fa-expand"></i> View Full Size
                                                 </a>

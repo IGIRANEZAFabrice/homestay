@@ -14,10 +14,14 @@ require_once '../../backend/api/utils/auth_middleware.php';
 // Require authentication
 requireAuth();
 
+// Include image helpers
+require_once '../../../include/image_helpers.php';
+
 // Include database connection and helpers
 require_once '../../backend/database/connection.php';
 require_once '../../backend/api/utils/helpers.php';
 require_once '../../backend/api/utils/validation.php';
+require_once '../../backend/api/utils/image-handler.php';
 require_once '../../backend/api/utils/image-handler.php';
 
 // Get current user
@@ -39,7 +43,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $about_us = $result->fetch_assoc();
         $is_edit = true;
     } else {
-        setFlashMessage('About us content not found.', 'error');
+        redirectWithMessage('index.php', 'About us content not found.', 'danger');
         header('Location: index.php');
         exit();
     }
@@ -100,7 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image_path = $about_us['image'] ?? '';
         
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $upload_result = handleImageUpload($_FILES['image'], 'about-us');
+            $upload_result = uploadImage($_FILES['image'], 'uploads/about/', [
+                'max_width' => 1200,
+                'max_height' => 800,
+                'quality' => 85,
+                'optimize' => true
+            ]);
             
             if ($upload_result['success']) {
                 // Delete old image if exists and different
@@ -130,11 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 if ($result) {
                     $success_message = $is_edit ? 'About us content updated successfully!' : 'About us content created successfully!';
-                    setFlashMessage($success_message, 'success');
-                    
-                    // Redirect to index page
-                    header('Location: index.php');
-                    exit();
+                    redirectWithMessage('index.php', $success_message, 'success');
                 } else {
                     $errors[] = 'Failed to save about us content. Please try again.';
                 }
