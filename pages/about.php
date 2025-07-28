@@ -1,154 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About Us - Virunga Homestay</title>
-    <link rel="stylesheet" href="../css/about.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Virunga Homestay - Authentic Rwandan Experience</title>
+    
+     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <link rel="stylesheet" href="../css/logo.css">
+    <link rel="stylesheet" href="../css/rooms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  </head>
-  <body>
-    <?php include 'include/header.php'; ?>
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Our Story</h1>
-        <p>Discover the heart behind Virunga Homestay</p>
-      </div>
-    </section>
+</head>
+<body>
+  <?php include 'include/header.php'; ?>
+    <section class="rooms-hero">
+    <h1>About Us</h1>
+   <p>About Virunga Homestay</p>
+  </section>
+    <main class="main-content">
+        <div class="container">
+            <section class="section fade-in">
+                <div class="mission-grid">
+                    <div class="mission-text">
+                        <h2 class="section-title">Our Mission</h2>
+                        <p>Virunga Homestay offers travellers an authentic cultural immersion beyond ordinary tourism. Guests engage in traditional ceremonies, learn age-old Rwandan recipes, and share meaningful conversations that deepen their understanding of Rwandan life and values.</p>
+                        <br>
+                        <p>Each homestay is carefully selected to provide both modern comfort and a genuine glimpse into Rwanda's vibrant heritage, whether in peaceful villages or lively towns. We prioritise safety and warm hospitality to ensure guests feel completely at home.</p>
+                        <br>
+                        <p>Our mission is to promote sustainable tourism by empowering local communities, training women and youth in hospitality and tourism skills, and creating livelihood opportunities that reduce rural-to-urban migration.</p>
+                    </div>
+                    
+                    <div class="mission-image">
+                        <img src="../img/house.jpg" />
+                    </div>
+                </div>
+            </section>
 
-    <!-- Story Section -->
-    <section class="story-section">
-      <div class="container">
-        <div class="story-content">
-          <div class="story-text">
-            <h2>Welcome to Virunga Homestay</h2>
-            <p class="subtitle">Where Tradition Meets Modern Comfort</p>
-            <p class="description">
-              Nestled in the heart of Rwanda, Virunga Homestay was born from a passion for sharing the rich cultural heritage and natural beauty of our country with the world. Our journey began with a simple vision: to create a space where travelers could experience authentic Rwandan hospitality while enjoying modern comforts.
-            </p>
-            <p class="description">
-              What started as a small family project has grown into a beloved destination for travelers seeking an immersive cultural experience. Our homestay combines traditional Rwandan architecture with contemporary design, creating a unique atmosphere that honors our heritage while embracing modern living.
-            </p>
-          </div>
-          <div class="story-image">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Virunga Homestay">
-          </div>
+            <section class="guidelines-section fade-in">
+                <div class="section-header">
+                    <h2 class="section-title">Be a Responsible Guest</h2>
+                    <p style="font-size: 1.1rem; color: #666; max-width: 600px; margin: 0 auto;">
+                        Staying at Virunga Homestay means becoming part of a Rwandan home and community. Here's how to make the most of your authentic experience.
+                    </p>
+                </div>
+
+                <div class="guidelines-grid">
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Maintain Hygiene</h3>
+                        <p class="guideline-text">
+                            Unlike hotels, Virunga Homestays have dedicated family members, not housekeeping staff. Please keep your room and common areas clean at all times and dispose of rubbish responsibly in the provided bins.
+                        </p>
+                    </div>
+
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Follow House Rules</h3>
+                        <p class="guideline-text">Your cooperation ensures comfort for everyone:</p>
+                        <ul class="guideline-list">
+                            <li>Inform your host about late returns or overnight stays</li>
+                            <li>Give advance notice if eating outside</li>
+                            <li>Ask permission before smoking or consuming alcohol</li>
+                            <li>Get approval for parties or gatherings</li>
+                        </ul>
+                    </div>
+
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Manage Expectations</h3>
+                        <p class="guideline-text">
+                            Meals follow a fixed daily menu rather than hotel-style selection. Discuss allergies or dietary needs with your host ahead of time. Note that room service isn't available as hosts personally care for guests.
+                        </p>
+                    </div>
+
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Use Resources Wisely</h3>
+                        <p class="guideline-text">
+                            Respect the amenities provided. Turn off taps, lights, and appliances when not in use to avoid wastage and maintain sustainability within the homestay environment.
+                        </p>
+                    </div>
+
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Be Considerate</h3>
+                        <p class="guideline-text">
+                            Your behavior reflects on your hosts. Avoid activities that may disturb neighbors, and if issues arise, seek your host's assistance in resolving them calmly and respectfully.
+                        </p>
+                    </div>
+
+                    <div class="guideline-card">
+                        <h3 class="guideline-title">Embrace the Experience</h3>
+                        <p class="guideline-text">
+                            You'll experience genuine hospitality and daily life. Maintain dignity throughout your stay while enjoying this unique opportunity to connect with Rwandan culture and community.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </div>
-      </div>
-    </section>
 
-    <!-- Mission Section -->
-    <section class="mission-section">
-      <div class="container">
-        <div class="mission-grid">
-          <div class="mission-card">
-            <i class="fas fa-heart"></i>
-            <h3>Our Mission</h3>
-            <p>To provide an authentic Rwandan experience while promoting sustainable tourism and supporting local communities.</p>
-          </div>
-          <div class="mission-card">
-            <i class="fas fa-eye"></i>
-            <h3>Our Vision</h3>
-            <p>To be the leading homestay destination that showcases Rwanda's culture, nature, and warm hospitality.</p>
-          </div>
-          <div class="mission-card">
-            <i class="fas fa-handshake"></i>
-            <h3>Our Values</h3>
-            <p>Authenticity, sustainability, community support, and exceptional guest experiences guide everything we do.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team-section">
-      <div class="container">
-        <h2>Meet Our Team</h2>
-        <p class="section-subtitle">The passionate people behind Virunga Homestay</p>
-        <div class="team-grid">
-          <div class="team-member">
-            <div class="member-image">
-              <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team Member">
+        <section class="experience-section">
+            <div class="container">
+                <div class="experience-content fade-in">
+                    <h2 class="experience-title">More Than Just Accommodation</h2>
+                    <p class="experience-text">
+                        By staying with us, travelers contribute directly to local economic growth while enjoying a transformative, memorable experience rooted in true Rwandan culture. You're not just a guest – you're part of the family, part of the community, and part of a sustainable future for Rwanda.
+                    </p>
+                </div>
             </div>
-            <h3>John Doe</h3>
-            <p class="position">Founder & Host</p>
-            <p class="bio">With over 15 years of experience in hospitality, John brings warmth and expertise to every guest interaction.</p>
-          </div>
-          <div class="team-member">
-            <div class="member-image">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team Member">
+        </section>
+
+        <section class="cta-section fade-in">
+            <div class="container">
+                <h2 style="font-size: 2.5rem; color: #DA7D2F; margin-bottom: 30px;">Ready for Your Authentic Experience?</h2>
+                <p style="font-size: 1.2rem; color: #666; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Join us for an unforgettable journey into the heart of Rwandan culture and hospitality.
+                </p>
+                <a href="#contact" class="cta-button">Book Your Stay</a>
             </div>
-            <h3>Sarah Smith</h3>
-            <p class="position">Cultural Director</p>
-            <p class="bio">Sarah ensures that every guest experiences the authentic culture and traditions of Rwanda.</p>
-          </div>
-          <div class="team-member">
-            <div class="member-image">
-              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Team Member">
-            </div>
-            <h3>Michael Johnson</h3>
-            <p class="position">Operations Manager</p>
-            <p class="bio">Michael oversees the smooth running of our homestay, ensuring every detail is perfect.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
+    </main>
+<?php include 'include/footer.php'; ?>
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-    <!-- Values Section -->
-    <section class="values-section">
-      <div class="container">
-        <h2>Our Core Values</h2>
-        <div class="values-grid">
-          <div class="value-card">
-            <i class="fas fa-leaf"></i>
-            <h3>Sustainability</h3>
-            <p>We are committed to eco-friendly practices and minimizing our environmental impact.</p>
-          </div>
-          <div class="value-card">
-            <i class="fas fa-users"></i>
-            <h3>Community</h3>
-            <p>We actively support and engage with our local community through various initiatives.</p>
-          </div>
-          <div class="value-card">
-            <i class="fas fa-star"></i>
-            <h3>Excellence</h3>
-            <p>We strive for excellence in every aspect of our service and guest experience.</p>
-          </div>
-          <div class="value-card">
-            <i class="fas fa-book"></i>
-            <h3>Heritage</h3>
-            <p>We preserve and celebrate Rwanda's rich cultural heritage through our activities.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-      <div class="container">
-        <h2>Experience Our Hospitality</h2>
-        <p>Join us for an unforgettable stay at Virunga Homestay</p>
-        <a href="https://wa.me/+250788123456?text=Hi! I'd like to know more about Virunga Homestay" class="cta-button">
-          <i class="fab fa-whatsapp"></i>
-          Contact Us
-        </a>
-      </div>
-    </section>
-    <?php include 'include/footer.php'; ?>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-    <!-- Floating WhatsApp Button -->
-    <a
-      href="https://wa.me/+250788123456?text=Hello! I'd like to know more about Virunga Homestay"
-      class="floating-whatsapp"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.688"
-        />
-      </svg>
-    </a>
-  </body>
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroSection = document.querySelector('.hero-section');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (heroSection && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add interactive hover effects to guideline cards
+        document.querySelectorAll('.guideline-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-5px) scale(1)';
+            });
+        });
+
+        // Dynamic color changes on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            const hue = Math.floor(100 + (scrollPercent * 50)); // Green to blue-green spectrum
+            
+            document.documentElement.style.setProperty('--dynamic-color', `hsl(${hue}, 35%, 45%)`);
+        });
+
+        // Add some interactive particles on hover over hero section
+        const heroSection = document.querySelector('.hero-section');
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            heroSection.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(218, 125, 47, 0.15) 0%, transparent 50%), linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1f2937 100%)`;
+        });
+    </script>
+</body>
 </html>

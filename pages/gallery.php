@@ -14,6 +14,7 @@ $galleries[] = $row; } ?>
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/gallery.css" />
+    <link rel="stylesheet" href="../css/logo.css">
   </head>
   <body>
     <section class="rooms-hero">

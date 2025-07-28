@@ -1,5 +1,6 @@
 <?php
 require_once '../include/connection.php';
+require_once '../include/image_helpers.php';
 
 // Fetch published blogs from database
 $sql = "SELECT * FROM blogs WHERE is_published = 1 ORDER BY published_at DESC, created_at DESC";
@@ -22,13 +23,14 @@ if ($result && $result->num_rows > 0) {
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/rooms.css">
+  <link rel="stylesheet" href="../css/logo.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <?php include './include/header.php'; ?>
    <section class="rooms-hero">
-    <h1>Our Rooms</h1>
+    <h1>Stories</h1>
     <p>Experience comfort and culture in our thoughtfully designed rooms</p>
   </section>
   <main class="blogs-list-container">
@@ -42,7 +44,7 @@ if ($result && $result->num_rows > 0) {
         <?php foreach ($blogs as $blog): ?>
           <article class="blog-card">
             <div class="blog-image">
-              <img src="../<?php echo buildImageUrl($blog['image'], 'blogs'); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
+              <img src="../homestay/<?php echo buildImageUrl($blog['image'], 'blogs'); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
             </div>
             <div class="blog-content">
               <h2 class="blog-title"><?php echo htmlspecialchars($blog['title']); ?></h2>
@@ -87,5 +89,6 @@ if ($result && $result->num_rows > 0) {
         />
       </svg>
     </a>
+    
 </body>
 </html>

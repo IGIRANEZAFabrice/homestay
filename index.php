@@ -7,8 +7,11 @@
     <title>Virunga Homestay - Modern Experience</title>
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="stylesheet" href="./css/hero.css" />
-    <link rel="stylesheet" href="css/style.css">
-      <link rel="stylesheet" href="css/rooms.css">
+    <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="./css/rooms.css">
+      <link rel="stylesheet" href="./css/logo.css">
+      <link rel="stylesheet" href="./css/dropdown.css">
+      
   </head>
   <body>
     <?php include 'include/header.php'; ?>
@@ -125,6 +128,8 @@
       </div>
     </section>
 
+    
+
     <!-- About Section -->
     <?php
     // Fetch about section from the database
@@ -162,7 +167,7 @@
       <div class="container">
         <div class="section-header">
           <h2 class="section-title">
-            The unrivalled Travel Information Center
+            Virunga Homestay services
           </h2>
           <p class="section-subtitle">
             Discover comprehensive travel services and comfortable
@@ -380,7 +385,89 @@
         <button class="review-us-btn" id="openReviewModalBtn">Review Us</button>
       </div>
     </section>
+      <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Why Choose Virunga Homestay in Musanze, Rwanda?</h2>
+          <p class="section-subtitle">Experience authentic Rwandan hospitality with professional tourist services</p>
+        </div>
 
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-home"></i>
+            </div>
+            <h3>Authenticity and Warmth</h3>
+            <p>Integrated within a local family residence, offering a welcoming, informal atmosphere that fosters genuine human connection.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-concierge-bell"></i>
+            </div>
+            <h3>Personalized Hospitality</h3>
+            <p>Deeply committed to personalized guest care, from lending bicycles to preparing home-cooked meals with thoughtful attention to detail.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h3>Local Expertise</h3>
+            <p>Access to insider knowledge about Musanze and the Virunga Massif region, with guidance from accredited bilingual specialists.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <h3>Traditional Cuisine</h3>
+            <p>Experience freshly prepared Rwandan dishes made from local ingredients, with opportunities to learn traditional recipes.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Community Connection</h3>
+            <p>Foster meaningful relationships and create lasting friendships within our warm community atmosphere.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Peaceful Setting</h3>
+            <p>Enjoy tranquility away from urban noise, perfect for rest and reflection after wilderness adventures.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Safety & Trust</h3>
+            <p>Experience peace of mind with our strong community reputation and commitment to guest wellbeing.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-hand-holding-heart"></i>
+            </div>
+            <h3>Responsible Tourism</h3>
+            <p>Support local communities and cultural preservation through sustainable tourism practices.</p>
+          </div>
+        </div>
+
+        <div class="why-choose-content">
+          <p class="intro-text">Virunga Homestay offers a unique fusion of authentic local hospitality and professional tourist services in the heart of Musanze, the gateway to the majestic Virunga Massif. Our Tourist Information Centre is staffed by accredited bilingual specialists who provide tailored guidance for exploring Rwanda, Uganda, and the Democratic Republic of Congo.</p>
+          
+          <div class="commitment-statement">
+            <p>In essence, we represent an ideal choice for travelers seeking an authentic, professionally supported, and culturally rich experience in Musanze. We combine heartfelt hospitality with expert tourist assistance, ensuring every visit to the Virunga Massif is memorable, meaningful, and responsibly engaged.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Review Modal -->
     <div id="reviewModal" class="modal">
       <div class="modal-content">

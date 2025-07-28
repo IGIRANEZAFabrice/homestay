@@ -17,6 +17,7 @@ $result = $conn->query($sql);
   <link rel="stylesheet" href="../css/rooms.css">
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/logo.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">

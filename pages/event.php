@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/room.css">
+    <link rel="stylesheet" href="../css/logo.css">
   </head>
   <body>
     <?php include 'include/header.php'; ?>

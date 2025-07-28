@@ -1,5 +1,6 @@
 <?php
 require_once '../include/connection.php';
+require_once '../include/image_helpers.php';
 $activity = null;
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -22,6 +23,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/activities.css">
+    <link rel="stylesheet" href="../css/logo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
@@ -88,7 +90,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
       .back-link:hover { 
         color: #0a7b83; 
     }
-    </style>
+  </style>
 </head>
 <body>
 <?php include 'include/header.php'; ?>

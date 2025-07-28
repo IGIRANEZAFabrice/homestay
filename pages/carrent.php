@@ -17,6 +17,7 @@ while ($row = $result->fetch_assoc()) {
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/rooms.css">
+    <link rel="stylesheet" href="../css/logo.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
