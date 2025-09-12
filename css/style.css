@@ -246,6 +246,7 @@ body {
   color: var(--white);
   padding: 0;
   margin-top: 4rem;
+  bottom: 0;
 }
 
 .footer-content {
@@ -253,7 +254,6 @@ body {
   margin: 0 auto;
   padding: 0 2rem;
 }
-
 /* Main Footer Sections */
 .footer-main {
   display: grid;
@@ -381,6 +381,10 @@ body {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  color: #bdc3c7;
+  transition: var(--transition);
+}
+.contact-item a{
   color: #bdc3c7;
   transition: var(--transition);
 }
@@ -741,7 +745,7 @@ body {
 }
 
 .commitment-statement {
-  background-color: var(--light-gray);
+  background-color: #212020;
   padding: 30px;
   border-radius: 10px;
   margin-top: 40px;
@@ -749,7 +753,7 @@ body {
 
 .commitment-statement p {
   font-size: 1.1rem;
-  color: var(--text-dark);
+  color: white;
   line-height: 1.7;
   font-style: italic;
 }

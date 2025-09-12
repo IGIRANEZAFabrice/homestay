@@ -14,10 +14,11 @@ $result = $conn->query($sql);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Rooms | Virunga Homestay</title>
-  <link rel="stylesheet" href="../css/rooms.css">
+  
   <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/logo.css">
+  <link rel="stylesheet" href="../css/rooms.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -30,6 +31,46 @@ $result = $conn->query($sql);
   </section>
   
   <main>
+    <!-- New Intro Section -->
+    <section class="rooms-intro">
+      <div class="intro-container">
+        <h2 class="intro-title">Experience Comfort and Culture at Virunga Homestay</h2>
+        <p class="intro-description">Virunga Homestay offers a range of thoughtfully designed accommodations that combine comfort, local charm, and modern amenities, creating an authentic Rwandan experience for every guest.</p>
+        
+        <div class="accommodation-types">
+          <div class="accommodation-card">
+            <div class="accommodation-icon">
+              <i class="fas fa-bed"></i>
+            </div>
+            <h3>Private Rooms</h3>
+            <p>Our private rooms provide a serene retreat with comfortable beds, clean linens, and ensuite bathrooms. Decor inspired by Rwandan heritage adds a warm, welcoming touch, while large windows frame stunning views of the Virunga Massif. Ideal for couples, solo travelers, or anyone seeking privacy and relaxation.</p>
+          </div>
+          
+          <div class="accommodation-card">
+            <div class="accommodation-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Shared Rooms</h3>
+            <p>Perfect for groups, families, or adventurous travelers, our shared rooms offer cozy beds in a safe, friendly environment with shared bathroom facilities. These spaces encourage social interaction while maintaining comfort and convenience for every guest.</p>
+          </div>
+          
+          <div class="accommodation-card">
+            <div class="accommodation-icon">
+              <i class="fas fa-couch"></i>
+            </div>
+            <h3>Communal Spaces</h3>
+            <p>Guests can gather in our inviting shared areas, including the lounge, communal dining area, and conservation-themed sitting room. These spaces provide opportunities to relax, connect with other travelers, and immerse in local culture, making each stay more engaging and memorable.</p>
+          </div>
+        </div>
+        
+        <p class="intro-footer">At Virunga Homestay, every room and shared space is designed to ensure comfort, connection, and a true taste of life near the breathtaking Virunga Massif.</p>
+        
+        <a href="booking.php" class="booking-button">
+          <i class="fas fa-calendar-check"></i> View Booking Information
+        </a>
+      </div>
+    </section>
+    
     <section class="rooms-container">
       <div class="rooms-grid">
         <?php if($result && $result->num_rows > 0): ?>
@@ -49,7 +90,7 @@ $result = $conn->query($sql);
                 </p>
                 <div class="room-buttons">
                   <a
-                    href="https://wa.me/+250784444314?text=I'm interested in the <?php echo $room['title']; ?>"
+                    href="https://wa.me/+250784513435?text=I'm interested in the <?php echo $room['title']; ?>"
                     class="btn btn-primary"
                     >Book Now</a
                   >
@@ -129,5 +170,8 @@ $result = $conn->query($sql);
       }
     });
   </script>
+  <script src="../js/header.js"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </body>
 </html>

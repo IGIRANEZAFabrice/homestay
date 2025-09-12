@@ -52,10 +52,12 @@ if ($result && $result->num_rows > 0) {
                 <?php 
                 // Display content or excerpt
                 $content = $blog['content'];
-                if (strlen($content) > 200) {
-                    echo htmlspecialchars(substr($content, 0, 200)) . '...';
+                // Strip HTML tags for excerpt and limit length
+                $plain_content = strip_tags($content);
+                if (strlen($plain_content) > 200) {
+                    echo substr($plain_content, 0, 200) . '...';
                 } else {
-                    echo htmlspecialchars($content);
+                    echo $plain_content;
                 }
                 ?>
               </div>
@@ -89,6 +91,6 @@ if ($result && $result->num_rows > 0) {
         />
       </svg>
     </a>
-    
+  <script src="./js/header.js"></script>  
 </body>
 </html>

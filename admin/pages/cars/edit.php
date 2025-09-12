@@ -49,7 +49,6 @@ $form_data = [
     'type' => $car['type'],
     'transmission' => $car['transmission'],
     'fuel_type' => $car['fuel_type'],
-    'price' => $car['price'],
     'features' => json_decode($car['features'], true) ?? [],
     'badge' => $car['badge'] ?? '',
     'status' => $car['status'] ?? 'active'
@@ -65,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'type' => trim($_POST['type'] ?? ''),
         'transmission' => trim($_POST['transmission'] ?? ''),
         'fuel_type' => trim($_POST['fuel_type'] ?? ''),
-        'price' => floatval($_POST['price'] ?? 0),
         'features' => array_filter(array_map('trim', $_POST['features'] ?? [])),
         'badge' => trim($_POST['badge'] ?? ''),
         'status' => trim($_POST['status'] ?? 'active')
@@ -74,8 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validation rules
     $validation_rules = [
         'name' => ['required' => true, 'length' => [2, 255]],
-        'description' => ['required' => true, 'length' => [10, 2000]],
-        'price_per_day' => ['required' => true, 'number' => [0, 9999.99]]
+        'description' => ['required' => true, 'length' => [10, 2000]]
     ];
     
     // Validate form data
@@ -141,17 +138,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $features_json = json_encode($form_data['features']);
             
             $query = "UPDATE cars
-                      SET name = ?, make = ?, model = ?, type = ?, transmission = ?, fuel_type = ?, price = ?, image = ?, features = ?, badge = ?, status = ?
+                      SET name = ?, make = ?, model = ?, type = ?, transmission = ?, fuel_type = ?, image = ?, features = ?, badge = ?, status = ?
                       WHERE id = ?";
 
-            $result = updateData($query, 'ssssssdsssi', [
+            $result = updateData($query, 'sssssssssi', [
                 $form_data['name'],
                 $form_data['make'],
                 $form_data['model'],
                 $form_data['type'],
                 $form_data['transmission'],
                 $form_data['fuel_type'],
-                $form_data['price'],
                 $image_path,
                 $features_json,
                 $form_data['badge'],
@@ -391,47 +387,22 @@ $breadcrumbs = [
                     <?php endif; ?>
 
                     <form method="POST" action="" enctype="multipart/form-data" data-validate="true">
-                        <div class="form-row">
-                            <div class="form-col-8">
-                                <div class="form-group">
-                                    <label for="name" class="form-label required">Car Name</label>
-                                    <input 
-                                        type="text" 
-                                        id="name" 
-                                        name="name" 
-                                        class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>" 
-                                        value="<?= htmlspecialchars($form_data['name']) ?>"
-                                        required
-                                        data-min-length="2"
-                                        data-max-length="255"
-                                        placeholder="Enter car name"
-                                    >
-                                    <?php if (isset($errors['name'])): ?>
-                                        <div class="invalid-feedback"><?= htmlspecialchars($errors['name']) ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            
-                            <div class="form-col-4">
-                                <div class="form-group">
-                                    <label for="price_per_day" class="form-label required">Price per Day ($)</label>
-                                    <input 
-                                        type="number" 
-                                        id="price_per_day" 
-                                        name="price_per_day" 
-                                        class="form-control <?= isset($errors['price_per_day']) ? 'is-invalid' : '' ?>" 
-                                        value="<?= $form_data['price_per_day'] ?>"
-                                        required
-                                        min="0"
-                                        max="9999.99"
-                                        step="0.01"
-                                        placeholder="0.00"
-                                    >
-                                    <?php if (isset($errors['price_per_day'])): ?>
-                                        <div class="invalid-feedback"><?= htmlspecialchars($errors['price_per_day']) ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="name" class="form-label required">Car Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>" 
+                                value="<?= htmlspecialchars($form_data['name']) ?>"
+                                required
+                                data-min-length="2"
+                                data-max-length="255"
+                                placeholder="Enter car name"
+                            >
+                            <?php if (isset($errors['name'])): ?>
+                                <div class="invalid-feedback"><?= htmlspecialchars($errors['name']) ?></div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="form-group">

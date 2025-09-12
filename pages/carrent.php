@@ -28,41 +28,64 @@ while ($row = $result->fetch_assoc()) {
         <p>Discover our range of reliable, comfortable, and well-maintained vehicles for your travels. Whether you need an SUV for adventure, a sedan for city drives, or a luxury car for special occasions, we have the perfect option for you. All cars are regularly serviced and equipped with modern features to ensure a safe and enjoyable journey.</p>
     </section>
 
-    <!-- Filter Section -->
-    <section class="filter-section">
+
+    <!-- Car Rental Service Info Section -->
+    <section class="rental-info-section">
         <div class="container">
-            <div class="filter-container">
-                <div class="filter-group">
-                    <label for="carType">Vehicle Type</label>
-                    <select id="carType">
-                        <option value="all">All Vehicles</option>
-                        <option value="suv">SUV</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="luxury">Luxury</option>
-                        <option value="4x4">4x4</option>
-                    </select>
+            <div class="rental-info-content">
+                <div class="rental-info-text">
+                    <h2>Car Rental Services at Virunga Homestay – Travel the Virunga Massif with Comfort and Ease</h2>
+                    <p>Virunga Homestay offers professional car rental services with experienced drivers, providing safe, reliable, and comfortable transportation for all your travel needs around the Virunga Massif. Whether you are trekking to see mountain gorillas, exploring natural wonders, or embarking on adventure trips, our fleet is tailored to meet the requirements of every traveler.</p>
+                    <h3>Our Fleet Options:</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-truck-monster"></i>
+                            <strong>4x4 SUVs</strong>
+                            Designed for off-road adventures, rugged terrain, and national park excursions. Ideal for trekkers and adventure travelers seeking comfort and reliability in challenging landscapes.
+                        </li>
+                        <li>
+                            <i class="fas fa-car"></i>
+                            <strong>Sedans</strong>
+                            Perfect for couples or small groups looking for efficient and comfortable transportation for city tours, airport transfers, or short journeys.
+                        </li>
+                        <li>
+                            <i class="fas fa-shuttle-van"></i>
+                            <strong>Minivans & Coasters</strong>
+                            Spacious and versatile, these vehicles accommodate larger groups, families, or student tours, offering ample room for passengers and luggage.
+                        </li>
+                        <li>
+                            <i class="fas fa-truck-pickup"></i>
+                            <strong>Pickups & Specialized Off-Road Vehicles</strong>
+                            Ideal for trekking expeditions, photographers, or guests with equipment requiring extra cargo space and maneuverability.
+                        </li>
+                    </ul>
+                    <h3>Professional Drivers:</h3>
+                    <p>Our drivers are licensed, highly trained, and intimately familiar with the Virunga region. They ensure safe travel while sharing local knowledge, cultural insights, and tips to enhance your journey.</p>
+                    <h3>Tailored Services:</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-plane-arrival"></i>
+                            <strong>Airport Transfers</strong>
+                            Convenient pickups and drop-offs at local airports with professional drivers and comfortable vehicles.
+                        </li>
+                        <li>
+                            <i class="fas fa-hiking"></i>
+                            <strong>Day Trips</strong>
+                            Exciting excursions for gorilla trekking, nature explorations, and sightseeing around the Virunga region.
+                        </li>
+                        <li>
+                            <i class="fas fa-route"></i>
+                            <strong>Multi-day Excursions</strong>
+                            Comprehensive journeys with planned stops at key attractions and comfortable accommodations.
+                        </li>
+                        <li>
+                            <i class="fas fa-users"></i>
+                            <strong>Custom Itineraries</strong>
+                            Personalized travel plans for schools, student groups, families, and corporate travelers.
+                        </li>
+                    </ul>
+                    <p>At Virunga Homestay, our car rental services combine comfort, safety, and convenience, allowing you to focus entirely on exploring the breathtaking landscapes and unique experiences of the Virunga Massif. Every journey with us is smooth, reliable, and memorable.</p>
                 </div>
-                <div class="filter-group">
-                    <label for="priceRange">Price Range</label>
-                    <select id="priceRange">
-                        <option value="all">All Prices</option>
-                        <option value="budget">Budget ($50-100/day)</option>
-                        <option value="mid">Mid-Range ($100-200/day)</option>
-                        <option value="premium">Premium ($200+/day)</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="transmission">Transmission</label>
-                    <select id="transmission">
-                        <option value="all">All</option>
-                        <option value="automatic">Automatic</option>
-                        <option value="manual">Manual</option>
-                    </select>
-                </div>
-                <button class="filter-btn">
-                    <i class="fas fa-filter"></i>
-                    Apply Filters
-                </button>
             </div>
         </div>
     </section>
@@ -70,6 +93,8 @@ while ($row = $result->fetch_assoc()) {
     <!-- Cars Grid Section -->
     <section class="cars-section">
         <div class="container">
+        
+           
             <div class="cars-grid">
                 <?php if (count($cars) === 0): ?>
                     <div style="padding:2rem;text-align:center;color:#888;">No cars available at the moment.</div>
@@ -84,7 +109,7 @@ while ($row = $result->fetch_assoc()) {
                 ?>
                 <div class="car-card" data-type="<?php echo htmlspecialchars($car['type']); ?>" data-price="<?php echo $priceRange; ?>" data-transmission="<?php echo htmlspecialchars($car['transmission']); ?>">
                     <div class="car-image">
-                        <img src="<?php echo '../uploads/cars/' . htmlspecialchars($car['image']); ?>" alt="<?php echo htmlspecialchars($car['name']); ?>">
+                        <img src="<?php echo '../homestay/uploads/cars/' . htmlspecialchars($car['image']); ?>" alt="<?php echo htmlspecialchars($car['name']); ?>">
                         <?php if ($car['badge']): ?>
                             <div class="car-badge"><?php echo htmlspecialchars($car['badge']); ?></div>
                         <?php endif; ?>
@@ -110,13 +135,10 @@ while ($row = $result->fetch_assoc()) {
                                 <span><i class="fas fa-<?php echo $icons[$feature] ?? 'check'; ?>"></i> <?php echo htmlspecialchars($feature); ?></span>
                             <?php endforeach; ?>
                         </div>
-                        <div class="car-price">
-                            <span class="price">$<?php echo htmlspecialchars($car['price']); ?></span>
-                            <span class="period">/day</span>
-                        </div>
-                        <button class="book-btn" onclick="bookCar('<?php echo htmlspecialchars(addslashes($car['name'])); ?>')">
-                            Book Now
-                        </button>
+                       
+                        <a href="https://wa.me/+250788123456?text=Hello! I'd like to book the <?php echo htmlspecialchars(urlencode($car['name'])); ?> car from Virunga Homestay" class="book-btn">
+                            <i class="fab fa-whatsapp"></i> Book Now
+                        </a>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -125,43 +147,7 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </section>
 
-    <!-- Booking Modal -->
-    <div id="bookingModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Book Your Car</h2>
-            <form id="bookingForm">
-                <div class="form-group">
-                    <label for="carName">Selected Car</label>
-                    <input type="text" id="carName" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="pickupDate">Pickup Date</label>
-                    <input type="date" id="pickupDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="returnDate">Return Date</label>
-                    <input type="date" id="returnDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" id="phone" required>
-                </div>
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-check"></i>
-                    Confirm Booking
-                </button>
-            </form>
-        </div>
-    </div>
+
 <?php include 'include/footer.php'; ?>
 
     <!-- Floating WhatsApp Button -->

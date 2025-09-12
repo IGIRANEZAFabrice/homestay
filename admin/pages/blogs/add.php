@@ -152,21 +152,98 @@ $breadcrumbs = [
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- TinyMCE Rich Text Editor -->
-    <script src="https://cdn.tiny.cloud/1/9zeungj09xa5xpcvfrp4jhl82awjs7se0w9p11lk9bfim0fx/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Custom Rich Text Editor CSS -->
+    <style>
+        .custom-editor-container {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        .custom-editor-toolbar {
+            background: #f5f5f5;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .custom-editor-toolbar button {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-editor-toolbar button:hover {
+            background: #f0f0f0;
+        }
+        .custom-editor-toolbar button.active {
+            background: #e6f2ff;
+            border-color: #99c2ff;
+        }
+        .custom-editor-toolbar .toolbar-group {
+            display: inline-flex;
+            margin-right: 8px;
+            border-right: 1px solid #ddd;
+            padding-right: 8px;
+        }
+        .custom-editor-toolbar .toolbar-group:last-child {
+            border-right: none;
+        }
+        .custom-editor-content {
+            padding: 15px;
+            min-height: 350px;
+            max-height: 600px;
+            overflow-y: auto;
+            background: #fff;
+        }
+        .custom-editor-content:focus {
+            outline: none;
+        }
+        .custom-editor-content img {
+            max-width: 100%;
+            height: auto;
+        }
+        .custom-editor-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .custom-editor-content table, .custom-editor-content th, .custom-editor-content td {
+            border: 1px solid #ddd;
+        }
+        .custom-editor-content th, .custom-editor-content td {
+            padding: 8px;
+            text-align: left;
+        }
+        .color-picker {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 5px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .color-option {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-wrapper">
         <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <a href="../dashboard.php" class="sidebar-logo">
-                    <i class="fas fa-mountain"></i>
-                    <span class="nav-text">Virunga Admin</span>
-                </a>
-            </div>
-            
-            <nav class="sidebar-nav">
+        <?php include '../includes/sidebar.php'; ?>
                 <div class="nav-item">
                     <a href="../dashboard.php" class="nav-link">
                         <i class="fas fa-tachometer-alt"></i>
@@ -415,93 +492,187 @@ $breadcrumbs = [
     <script src="../../assets/js/image-upload.js"></script>
     
     <script>
-        // Initialize TinyMCE Rich Text Editor
-        tinymce.init({
-            selector: '#content',
-            height: 400,
-            menubar: false,
-            plugins: [
-                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
-                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
-                'insertdatetime', 'media', 'table', 'help', 'wordcount'
-            ],
-            toolbar: 'undo redo | blocks | ' +
-                'bold italic forecolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'image link | removeformat | help',
-            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; }',
-            branding: false,
-            promotion: false,
-            // Image upload configuration
-            images_upload_url: '../../backend/api/utils/tinymce-image-upload.php',
-            images_upload_base_path: '../../',
-            images_upload_credentials: true,
-            automatic_uploads: true,
-            file_picker_types: 'image',
-            file_picker_callback: function(callback, value, meta) {
-                if (meta.filetype === 'image') {
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.onchange = function() {
-                        var file = this.files[0];
-                        if (file) {
-                            var reader = new FileReader();
-                            reader.onload = function() {
-                                var id = 'blobid' + (new Date()).getTime();
-                                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                                var base64 = reader.result.split(',')[1];
-                                var blobInfo = blobCache.create(id, file, base64);
-                                blobCache.add(blobInfo);
-                                callback(blobInfo.blobUri(), { title: file.name });
-                            };
-                            reader.readAsDataURL(file);
+        // Create custom rich text editor
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the textarea element
+            const textarea = document.getElementById('content');
+            if (!textarea) return;
+            
+            // Create editor container
+            const editorContainer = document.createElement('div');
+            editorContainer.className = 'custom-editor-container';
+            
+            // Create toolbar
+            const toolbar = document.createElement('div');
+            toolbar.className = 'custom-editor-toolbar';
+            
+            // Create editable content area
+            const editorContent = document.createElement('div');
+            editorContent.className = 'custom-editor-content';
+            editorContent.contentEditable = true;
+            editorContent.innerHTML = textarea.value;
+            
+            // Hide the original textarea
+            textarea.style.display = 'none';
+            
+            // Add toolbar buttons
+            const toolbarHTML = `
+                <div class="toolbar-group">
+                    <button type="button" data-command="undo" title="Undo"><i class="fas fa-undo"></i></button>
+                    <button type="button" data-command="redo" title="Redo"><i class="fas fa-redo"></i></button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="bold" title="Bold"><i class="fas fa-bold"></i></button>
+                    <button type="button" data-command="italic" title="Italic"><i class="fas fa-italic"></i></button>
+                    <button type="button" data-command="underline" title="Underline"><i class="fas fa-underline"></i></button>
+                    <button type="button" data-command="strikeThrough" title="Strike through"><i class="fas fa-strikethrough"></i></button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="foreColor" title="Text color" class="color-btn"><i class="fas fa-palette"></i></button>
+                    <div class="color-picker">
+                        <div class="color-option" style="background-color: #000000" data-color="#000000"></div>
+                        <div class="color-option" style="background-color: #e60000" data-color="#e60000"></div>
+                        <div class="color-option" style="background-color: #ff9900" data-color="#ff9900"></div>
+                        <div class="color-option" style="background-color: #ffff00" data-color="#ffff00"></div>
+                        <div class="color-option" style="background-color: #008a00" data-color="#008a00"></div>
+                        <div class="color-option" style="background-color: #0066cc" data-color="#0066cc"></div>
+                        <div class="color-option" style="background-color: #9933ff" data-color="#9933ff"></div>
+                        <div class="color-option" style="background-color: #ffffff" data-color="#ffffff"></div>
+                        <div class="color-option" style="background-color: #facccc" data-color="#facccc"></div>
+                        <div class="color-option" style="background-color: #ffebcc" data-color="#ffebcc"></div>
+                        <div class="color-option" style="background-color: #ffffcc" data-color="#ffffcc"></div>
+                        <div class="color-option" style="background-color: #cce8cc" data-color="#cce8cc"></div>
+                        <div class="color-option" style="background-color: #cce0f5" data-color="#cce0f5"></div>
+                        <div class="color-option" style="background-color: #ebd6ff" data-color="#ebd6ff"></div>
+                    </div>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="justifyLeft" title="Align left"><i class="fas fa-align-left"></i></button>
+                    <button type="button" data-command="justifyCenter" title="Align center"><i class="fas fa-align-center"></i></button>
+                    <button type="button" data-command="justifyRight" title="Align right"><i class="fas fa-align-right"></i></button>
+                    <button type="button" data-command="justifyFull" title="Justify"><i class="fas fa-align-justify"></i></button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="insertUnorderedList" title="Bullet list"><i class="fas fa-list-ul"></i></button>
+                    <button type="button" data-command="insertOrderedList" title="Numbered list"><i class="fas fa-list-ol"></i></button>
+                    <button type="button" data-command="outdent" title="Decrease indent"><i class="fas fa-outdent"></i></button>
+                    <button type="button" data-command="indent" title="Increase indent"><i class="fas fa-indent"></i></button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="createLink" title="Insert link"><i class="fas fa-link"></i></button>
+                    <button type="button" data-command="unlink" title="Remove link"><i class="fas fa-unlink"></i></button>
+                    <button type="button" data-command="insertImage" title="Insert image"><i class="fas fa-image"></i></button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" data-command="removeFormat" title="Clear formatting"><i class="fas fa-eraser"></i></button>
+                    <button type="button" data-command="insertTable" title="Insert table"><i class="fas fa-table"></i></button>
+                </div>
+            `;
+            
+            toolbar.innerHTML = toolbarHTML;
+            
+            // Add elements to the DOM
+            editorContainer.appendChild(toolbar);
+            editorContainer.appendChild(editorContent);
+            textarea.parentNode.insertBefore(editorContainer, textarea);
+            
+            // Handle toolbar button clicks
+            toolbar.querySelectorAll('button[data-command]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const command = this.getAttribute('data-command');
+                    
+                    if (command === 'createLink') {
+                        const url = prompt('Enter the link URL:', 'https://');
+                        if (url) {
+                            document.execCommand('createLink', false, url);
                         }
-                    };
-                    input.click();
-                }
-            },
-            // Image upload handler
-            images_upload_handler: function (blobInfo, progress) {
-                return new Promise(function (resolve, reject) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.withCredentials = false;
-                    xhr.open('POST', '../../backend/api/utils/tinymce-image-upload.php');
-
-                    xhr.upload.onprogress = function (e) {
-                        progress(e.loaded / e.total * 100);
-                    };
-
-                    xhr.onload = function() {
-                        if (xhr.status === 403) {
-                            reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-                            return;
+                    } else if (command === 'insertImage') {
+                        // Create a file input
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.click();
+                        
+                        input.onchange = function() {
+                            const file = this.files[0];
+                            if (file) {
+                                // Upload the image
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                
+                                const xhr = new XMLHttpRequest();
+                                xhr.open('POST', '../../backend/api/utils/custom-image-upload.php', true);
+                                xhr.onload = function() {
+                                    if (xhr.status === 200) {
+                                        try {
+                                            const response = JSON.parse(xhr.responseText);
+                                            if (response.location) {
+                                                document.execCommand('insertImage', false, response.location);
+                                            }
+                                        } catch (e) {
+                                            console.error('Error parsing JSON response:', e);
+                                        }
+                                    }
+                                };
+                                xhr.send(formData);
+                            }
+                        };
+                    } else if (command === 'insertTable') {
+                        const rows = prompt('Enter number of rows:', '3');
+                        const cols = prompt('Enter number of columns:', '3');
+                        
+                        if (rows && cols) {
+                            let tableHTML = '<table>';
+                            for (let i = 0; i < parseInt(rows); i++) {
+                                tableHTML += '<tr>';
+                                for (let j = 0; j < parseInt(cols); j++) {
+                                    tableHTML += '<td>Cell</td>';
+                                }
+                                tableHTML += '</tr>';
+                            }
+                            tableHTML += '</table>';
+                            
+                            document.execCommand('insertHTML', false, tableHTML);
                         }
-
-                        if (xhr.status < 200 || xhr.status >= 300) {
-                            reject('HTTP Error: ' + xhr.status);
-                            return;
-                        }
-
-                        var json = JSON.parse(xhr.responseText);
-
-                        if (!json || typeof json.location != 'string') {
-                            reject('Invalid JSON: ' + xhr.responseText);
-                            return;
-                        }
-
-                        resolve(json.location);
-                    };
-
-                    xhr.onerror = function () {
-                        reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-                    };
-
-                    var formData = new FormData();
-                    formData.append('file', blobInfo.blob(), blobInfo.filename());
-                    xhr.send(formData);
+                    } else if (command === 'foreColor') {
+                        // Toggle color picker
+                        const colorPicker = document.querySelector('.color-picker');
+                        colorPicker.style.display = colorPicker.style.display === 'none' ? 'block' : 'none';
+                        
+                        // Position the color picker below the button
+                        const buttonRect = this.getBoundingClientRect();
+                        colorPicker.style.top = (buttonRect.bottom + window.scrollY) + 'px';
+                        colorPicker.style.left = (buttonRect.left + window.scrollX) + 'px';
+                    } else {
+                        document.execCommand(command, false, null);
+                    }
+                    
+                    // Update textarea value
+                    textarea.value = editorContent.innerHTML;
                 });
-            }
+            });
+            
+            // Handle color picker clicks
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const color = this.getAttribute('data-color');
+                    document.execCommand('foreColor', false, color);
+                    document.querySelector('.color-picker').style.display = 'none';
+                    textarea.value = editorContent.innerHTML;
+                });
+            });
+            
+            // Update textarea when content changes
+            editorContent.addEventListener('input', function() {
+                textarea.value = this.innerHTML;
+            });
+            
+            // Close color picker when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.color-btn') && !e.target.closest('.color-picker')) {
+                    document.querySelector('.color-picker').style.display = 'none';
+                }
+            });
         });
 
         // Auto-generate slug from title
@@ -523,16 +694,11 @@ $breadcrumbs = [
             this.dataset.autoGenerate = 'false';
         });
 
-        // Handle form submission - ensure TinyMCE content is synced
+        // Handle form submission
         document.querySelector('form[data-validate="true"]').addEventListener('submit', function(e) {
-            // Sync TinyMCE content to textarea
-            if (tinymce.get('content')) {
-                tinymce.get('content').save();
-            }
-
             // Basic validation
             const title = document.getElementById('title').value.trim();
-            const content = tinymce.get('content') ? tinymce.get('content').getContent() : '';
+            const content = document.getElementById('content').value;
 
             let hasErrors = false;
 
@@ -549,7 +715,7 @@ $breadcrumbs = [
             if (!content || content.replace(/<[^>]*>/g, '').trim().length < 10) {
                 hasErrors = true;
                 document.getElementById('content').classList.add('is-invalid');
-                if (!hasErrors) tinymce.get('content').focus();
+                if (!hasErrors) document.querySelector('.custom-editor-content').focus();
             } else {
                 document.getElementById('content').classList.remove('is-invalid');
             }

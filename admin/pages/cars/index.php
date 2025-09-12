@@ -57,7 +57,7 @@ $total_records = $total_result['total'] ?? 0;
 $total_pages = ceil($total_records / $limit);
 
 // Get cars data
-$query = "SELECT id, name, type, transmission, fuel_type, price, image, features, badge, status, created_at
+$query = "SELECT id, name, type, transmission, fuel_type, image, features, badge, status, created_at
           FROM cars
           $where_clause
           ORDER BY created_at DESC
@@ -90,86 +90,7 @@ $breadcrumbs = [
 <body>
     <div class="admin-wrapper">
         <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <a href="../dashboard.php" class="sidebar-logo">
-                    <i class="fas fa-mountain"></i>
-                    <span class="nav-text">Virunga Admin</span>
-                </a>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-item">
-                    <a href="../dashboard.php" class="nav-link">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../activities/index.php" class="nav-link">
-                        <i class="fas fa-hiking"></i>
-                        <span class="nav-text">Activities</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../blogs/index.php" class="nav-link">
-                        <i class="fas fa-blog"></i>
-                        <span class="nav-text">Blogs</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="index.php" class="nav-link active">
-                        <i class="fas fa-car"></i>
-                        <span class="nav-text">Cars</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../events/index.php" class="nav-link">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span class="nav-text">Events</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../hero-images/index.php" class="nav-link">
-                        <i class="fas fa-images"></i>
-                        <span class="nav-text">Hero Images</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../reviews/index.php" class="nav-link">
-                        <i class="fas fa-star"></i>
-                        <span class="nav-text">Reviews</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../rooms/index.php" class="nav-link">
-                        <i class="fas fa-bed"></i>
-                        <span class="nav-text">Rooms</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../services/index.php" class="nav-link">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span class="nav-text">Services</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../contact-messages/index.php" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        <span class="nav-text">Messages</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
+        <?php include '../includes/sidebar.php'; ?>
 
         <!-- Main Content -->
         <main class="admin-main">
@@ -258,7 +179,7 @@ $breadcrumbs = [
                                     <th width="100">Type</th>
                                     <th width="100">Transmission</th>
                                     <th width="100">Fuel</th>
-                                    <th width="120">Price</th>
+
                                     <th width="100">Status</th>
                                     <th width="150">Created</th>
                                     <th width="120">Actions</th>
@@ -301,9 +222,7 @@ $breadcrumbs = [
                                         <td>
                                             <?= htmlspecialchars(ucfirst($car['fuel_type'])) ?>
                                         </td>
-                                        <td class="table-currency">
-                                            $<?= number_format($car['price'], 2) ?>
-                                        </td>
+                                        
                                         <td>
                                             <?php
                                             $status_class = '';

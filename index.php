@@ -11,6 +11,40 @@
       <link rel="stylesheet" href="./css/rooms.css">
       <link rel="stylesheet" href="./css/logo.css">
       <link rel="stylesheet" href="./css/dropdown.css">
+      <link rel="stylesheet" href="./css/scroll-fix.css">
+      
+    
+    <style>
+      .experience-card-hidden {
+        display: none !important;
+      }
+      
+      .show-more-container {
+        text-align: center;
+        margin-top: 30px;
+      }
+      
+      #showMoreBtn {
+        padding: 12px 30px;
+        font-size: 16px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+      
+      #showMoreBtn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      }
+      
+      #showMoreBtn:active {
+        transform: translateY(0);
+      }
+    </style>
       
   </head>
   <body>
@@ -41,7 +75,7 @@
       <div class="hero-slider">
         <?php foreach ($heroSlides as $idx => $slide): ?>
           <div class="hero-slide<?php echo $idx === 0 ? ' active' : ''; ?>">
-            <img src="<?php echo buildImageUrl($slide['image'], 'hero'); ?>" alt="Homestay View <?php echo $idx+1; ?>" />
+            <img src="../homestay/<?php echo buildImageUrl($slide['image'], 'hero'); ?>" alt="Homestay View <?php echo $idx+1; ?>" />
             <div class="hero-content">
               <h1 class="hero-title"><?php echo htmlspecialchars($slide['title']); ?></h1>
               <p class="hero-subtitle"><?php echo htmlspecialchars($slide['paragraph']); ?></p>
@@ -67,69 +101,27 @@
           </div>
         <?php endforeach; ?>
       </div>
-      <div class="hero-slider-controls">
-        <button class="slider-control prev" aria-label="Previous slide">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m15 18-6-6 6-6"></path>
-          </svg>
+      
+      <div class="hero-slider-controls" style="display: none;">
+        <button class="slider-control prev">
+          <i class="fas fa-chevron-left"></i>
         </button>
         <div class="slider-dots">
-          <button class="slider-dot active" aria-label="Slide 1"></button>
-          <button class="slider-dot" aria-label="Slide 2"></button>
-          <button class="slider-dot" aria-label="Slide 3"></button>
+          <?php foreach ($heroSlides as $idx => $slide): ?>
+            <button class="slider-dot<?php echo $idx === 0 ? ' active' : ''; ?>" data-slide="<?php echo $idx; ?>"></button>
+          <?php endforeach; ?>
         </div>
-        <button class="slider-control next" aria-label="Next slide">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m9 18 6-6-6-6"></path>
-          </svg>
+        <button class="slider-control next">
+          <i class="fas fa-chevron-right"></i>
         </button>
       </div>
+      
+      <a href="#about" class="scroll-down">
+        Scroll Down
+        <span class="arrow"></span>
+      </a>
     </section>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-number">4K+</div>
-          <div class="stat-label">Happy Visitors</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">80+</div>
-          <div class="stat-label">Attractions</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">12</div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">5★</div>
-          <div class="stat-label">Rating</div>
-        </div>
-      </div>
-    </section>
-
     
-
     <!-- About Section -->
     <?php
     // Fetch about section from the database
@@ -144,7 +136,7 @@
         $about = $result->fetch_assoc();
     }
     ?>
-    <section class="about-section">
+    <section id="about" class="about-section">
       <div class="about-grid">
         <div class="about-content">
           <h2><?php echo htmlspecialchars($about['title']); ?></h2>
@@ -157,7 +149,7 @@
         </div>
         <div class="about-image">
           <img
-            src="uploads/homeabout/<?php echo !empty($about['image']) ? $about['image'] : 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 400\'><rect fill=\'%23f4f4f4\' width=\'400\' height=\'400\'/><rect fill=\'%23e0e0e0\' x=\'50\' y=\'100\' width=\'300\' height=\'200\' rx=\'10\'/><circle fill=\'%23d0d0d0\' cx=\'200\' cy=\'200\' r=\'50\'/><rect fill=\'%23c0c0c0\' x=\'100\' y=\'320\' width=\'200\' height=\'30\' rx=\'5\'/></svg>' ?>"
+            src="homestay/<?php echo !empty($about['image']) ? $about['image'] : 'data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 400\'><rect fill=\'%23f4f4f4\' width=\'400\' height=\'400\'/><rect fill=\'%23e0e0e0\' x=\'50\' y=\'100\' width=\'300\' height=\'200\' rx=\'10\'/><circle fill=\'%23d0d0d0\' cx=\'200\' cy=\'200\' r=\'50\'/><rect fill=\'%23c0c0c0\' x=\'100\' y=\'320\' width=\'200\' height=\'30\' rx=\'5\'/></svg>' ?>"
             alt="Homestay Interior"
           />
         </div>
@@ -170,8 +162,7 @@
             Virunga Homestay services
           </h2>
           <p class="section-subtitle">
-            Discover comprehensive travel services and comfortable
-            accommodations designed for the modern traveler
+            Virunga Homestay offers comfortable lodging, local cuisine, guided tours, and cultural experiences near the Virunga Massif, providing an authentic Rwandan stay.
           </p>
         </div>
 
@@ -192,7 +183,7 @@
               <div class="service-item<?php echo $idx % 2 === 1 ? ' reverse' : ''; ?>">
                 <div class="service-image">
                   <img
-                    src="<?php echo buildImageUrl($service['image'], 'services'); ?>"
+                    src="homestay/<?php echo buildImageUrl($service['image'], 'services'); ?>"
                     alt="<?php echo htmlspecialchars($service['title']); ?>"
                   />
                 </div>
@@ -210,16 +201,15 @@
             </div>
           <?php endif; ?>
         </div>
-      </div>
-    </section>
+       </section>
     <!-- Rooms Section -->
     <section class="rooms-section">
       <?php
       // Include database connection
       require_once 'include/connection.php';
 
-      // Fetch rooms from the database (limit to 6 for homepage)
-      $sql = "SELECT * FROM rooms ORDER BY created_at DESC LIMIT 6";
+      // Fetch rooms from the database (limit to 3 for homepage)
+      $sql = "SELECT * FROM rooms ORDER BY created_at DESC LIMIT 3";
       $result = $conn->query($sql);
       ?>
       <h2 class="section-title">Explore Our Rooms</h2>
@@ -229,7 +219,7 @@
             <div class="room-card">
               <div class="room-image">
                 <?php if($room['image'] && $room['image'] != 'default-room.jpg'): ?>
-                  <img src="<?php echo buildImageUrl($room['image'], 'rooms'); ?>" alt="<?php echo $room['title']; ?>">
+                  <img src="homestay/<?php echo buildImageUrl($room['image'], 'rooms'); ?>" alt="<?php echo $room['title']; ?>">
                 <?php endif; ?>
               </div>
               <div class="room-content">
@@ -263,8 +253,12 @@
       <div class="view-all-rooms">
         <a href="pages/rooms.php" class="btn btn-secondary">View All Rooms</a>
       </div>
+      <a href="pages/booking.php" class="booking-button">
+        <i class="fas fa-calendar-check"></i> View Booking Information
+     </a>
+     
     </section>
-
+     
     <!-- Experiences Section -->
     <?php
     // Fetch activities for experiences section
@@ -281,16 +275,17 @@
       <div class="section-header">
         <h2 class="section-title">Things to Do and See at Virunga Homestay</h2>
         <p class="section-subtitle">
-          Guided walks, local cuisine, culture, and nature—unforgettable moments await.
+          Guided walks, local cuisine, culture, and nature-unforgettable moments await.
         </p>
       </div>
 
-      <div class="experiences-grid" id="experiencesGrid">
+
+      <div class="experiences-grid" id="experiencesGrid" style="margin-bottom: 0;">
         <?php foreach ($activities as $idx => $activity): ?>
-          <a href="pages/activities.php?id=<?php echo $activity['id']; ?>" class="experience-card-link">
-            <div class="experience-card<?php echo $idx > 5 ? ' hidden' : ''; ?>">
+          <a href="pages/activities.php?id=<?php echo $activity['id']; ?>" class="experience-card-link <?php echo $idx >= 3 ? 'experience-card-hidden' : ''; ?>" data-index="<?php echo $idx; ?>">
+            <div class="experience-card">
               <div class="card-image">
-                  <img src="<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?>" />
+                  <img src="homestay/<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?>" />
                 <div class="card-overlay"></div>
               </div>
               <div class="card-content">
@@ -300,43 +295,20 @@
           </a>
         <?php endforeach; ?>
       </div>
-      <?php if (count($activities) > 6): ?>
-      <div class="load-more-container" style="display: flex; justify-content: center; margin-top: 5px;">
-        <button class="load-more-btn" id="loadMoreBtn" style="display: inline-flex; align-items: center; gap: 10px; background: #0a7b83; color: #fff; border: none; border-radius: 24px; padding: 12px 32px; font-size: 1.1rem; font-weight: 500; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s;">
-          <div class="loading-spinner" style="display:none;"></div>
-          <span class="btn-text">Show More</span>
-          
-        </button>
-        <br><br><br><br><br><br>
-      </div>
+      
+      <?php if (count($activities) > 3): ?>
+        <div class="show-more-container" style="text-align: center; margin-top: 30px;">
+          <button id="showMoreBtn" class="btn btn-primary" style="padding: 12px 30px; font-size: 16px; border-radius: 25px;">
+            Show More Activities
+          </button>
+        </div>
       <?php endif; ?>
-      <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadMoreBtn = document.getElementById('loadMoreBtn');
-        if (loadMoreBtn) {
-          loadMoreBtn.style.display = 'inline-flex';
-          loadMoreBtn.addEventListener('click', function() {
-            const hiddenCards = document.querySelectorAll('.experience-card.hidden');
-            let shown = 0;
-            hiddenCards.forEach((card, idx) => {
-              if (shown < 6) {
-                card.classList.remove('hidden');
-                shown++;
-              }
-            });
-            // Hide button if no more hidden cards
-            if (document.querySelectorAll('.experience-card.hidden').length === 0) {
-              loadMoreBtn.style.display = 'none';
-            }
-          });
-        }
-      });
-      </script>
+        </br></br>
     </section>
 
     <section class="attractions-section">
       <div class="section-header" style="color: linear-gradient(45deg, #fff, #e0e7ff);">
-        <h2 class="section-title" style="color:whitesmoke;">Eco Adventures Await</h2>
+        <h2 class="section-title-w">Eco Adventures Await</h2>
         <p class="section-subtitle" style="color:whitesmoke;">
           Discover sustainable tourism experiences that connect you with nature
           while supporting local communities
@@ -344,7 +316,7 @@
       </div>
       <div class="attractions-grid">
         <div class="attraction-card">
-          <div class="attraction-icon">🦍</div>
+          <div class="attraction-icon"><i class="fas fa-person-hiking"></i></div>
           <h3>Gorilla Trekking</h3>
           <p>
             Experience the magic of meeting mountain gorillas in their natural
@@ -352,18 +324,18 @@
           </p>
         </div>
         <div class="attraction-card">
-          <div class="attraction-icon">🏔️</div>
+          <div class="attraction-icon"><i class="fas fa-mountain"></i></div>
           <h3>Volcano Hiking</h3>
           <p>Conquer the majestic Virunga Mountains with breathtaking views</p>
         </div>
         <div class="attraction-card">
-          <div class="attraction-icon">🎭</div>
+          <div class="attraction-icon"><i class="fas fa-masks-theater"></i></div>
           <h3>Cultural Experiences</h3>
           <p>Immerse yourself in authentic Rwandan traditions and customs</p>
         </div>
 
         <div class="attraction-card">
-          <div class="attraction-icon">📸</div>
+          <div class="attraction-icon"><i class="fas fa-camera-retro"></i></div>
           <h3>Photography Tours</h3>
           <p>Capture stunning landscapes and wildlife moments</p>
         </div>
@@ -382,10 +354,25 @@
         <div class="reviews-scroller" id="reviewsScroller">
           <!-- Reviews will be loaded here by JS -->
         </div>
-        <button class="review-us-btn" id="openReviewModalBtn">Review Us</button>
+        <a href="https://www.tripadvisor.com/Hotel_Review-g317075-d20326735-Reviews-Virunga_Homestay-Ruhengeri_Musanze_District_Northern_Province.html?m=19905" target="_blank" class="review-us-btn">Review Us on TripAdvisor</a>
+        </br></br>
+      </div>
+    
+    </section>
+
+    <!-- Parallax Image Section -->
+    <section class="parallax-section" style="width: 100%; height: 400px; position: relative; margin: 40px 0; background-image: url('./img/food.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover;">
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));">
+        <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center; color: white; text-align: center; padding: 0 20px;">
+          <div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Experience Local Cuisine</h2>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Savor authentic Rwandan dishes prepared with locally-sourced ingredients</p>
+          </div>
+        </div>
       </div>
     </section>
-      <!-- Why Choose Us Section -->
+
+    <!-- Why Choose Us Section -->
     <section class="why-choose-us">
       <div class="container">
         <div class="section-header">
@@ -462,52 +449,12 @@
         <div class="why-choose-content">
           <p class="intro-text">Virunga Homestay offers a unique fusion of authentic local hospitality and professional tourist services in the heart of Musanze, the gateway to the majestic Virunga Massif. Our Tourist Information Centre is staffed by accredited bilingual specialists who provide tailored guidance for exploring Rwanda, Uganda, and the Democratic Republic of Congo.</p>
           
-          <div class="commitment-statement">
-            <p>In essence, we represent an ideal choice for travelers seeking an authentic, professionally supported, and culturally rich experience in Musanze. We combine heartfelt hospitality with expert tourist assistance, ensuring every visit to the Virunga Massif is memorable, meaningful, and responsibly engaged.</p>
+          <div class="commitment-statement" style="background-color: #212020;">
+            <p style="color: white;">In essence, we represent an ideal choice for travelers seeking an authentic, professionally supported, and culturally rich experience in Musanze. We combine heartfelt hospitality with expert tourist assistance, ensuring every visit to the Virunga Massif is memorable, meaningful, and responsibly engaged.</p>
           </div>
         </div>
       </div>
     </section>
-    <!-- Review Modal -->
-    <div id="reviewModal" class="modal">
-      <div class="modal-content">
-        <span class="close-btn" id="closeReviewModalBtn">&times;</span>
-        <h3>Share Your Experience</h3>
-        <form id="reviewForm">
-          <div class="modal-form-group">
-            <label for="reviewerName">Name or Email:</label>
-            <input type="text" id="reviewerName" name="reviewerName" required />
-          </div>
-          <div class="modal-form-group">
-            <label for="reviewRating">Rating:</label>
-            <div class="rating-input" id="reviewRatingInput">
-              <span class="star-label" data-value="1">★</span>
-              <span class="star-label" data-value="2">★</span>
-              <span class="star-label" data-value="3">★</span>
-              <span class="star-label" data-value="4">★</span>
-              <span class="star-label" data-value="5">★</span>
-            </div>
-            <input
-              type="hidden"
-              id="reviewerRating"
-              name="reviewerRating"
-              value="0"
-              required
-            />
-          </div>
-          <div class="modal-form-group">
-            <label for="reviewContent">Your Review:</label>
-            <textarea
-              id="reviewContent"
-              name="reviewContent"
-              required
-            ></textarea>
-          </div>
-          <button type="submit">Submit Review</button>
-        </form>
-      </div>
-    </div>
-
     <!-- Room Details Modal -->
     <div id="roomDetailsModal" class="modal">
       <div class="modal-content">
@@ -522,9 +469,9 @@
         </div>
       </div>
     </div>
-    <?php include 'include/footer.php'; ?>
+    </div>
+    
 
-    <!-- Floating WhatsApp Button -->
     <a
       href="https://wa.me/+250784513435?text=Hello! I'd like to know more about Virunga Homestay"
       class="floating-whatsapp"
@@ -535,6 +482,8 @@
         />
       </svg>
     </a>
+   
+    <?php include 'include/footer.php'; ?>
 
     <script src="./js/script.js"></script>
     <script src="./js/hero.js"></script>
@@ -596,7 +545,116 @@
             closeRoomDetailsModal();
           }
         });
+
+        // Show More Activities Functionality
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const experienceCards = document.querySelectorAll('.experience-card-link');
+        let currentlyShown = 3;
+        const cardsToShow = 3;
+
+        if (showMoreBtn) {
+          showMoreBtn.addEventListener('click', function() {
+            const hiddenCards = document.querySelectorAll('.experience-card-hidden');
+            const cardsToReveal = Math.min(cardsToShow, hiddenCards.length);
+            
+            for (let i = 0; i < cardsToReveal; i++) {
+              hiddenCards[i].classList.remove('experience-card-hidden');
+            }
+            
+            currentlyShown += cardsToReveal;
+            
+            // Hide button if all cards are shown
+            if (currentlyShown >= experienceCards.length) {
+              showMoreBtn.style.display = 'none';
+            }
+          });
+        }
       });
+
+      // Hero Slider Functionality
+      const heroSlides = document.querySelectorAll(".hero-slide");
+      const heroDots = document.querySelectorAll(".slider-dot");
+      const heroPrevBtn = document.querySelector(".slider-control.prev");
+      const heroNextBtn = document.querySelector(".slider-control.next");
+      let heroCurrentSlide = 0;
+      let heroSlideInterval;
+
+      // Function to show a specific slide
+      function showHeroSlide(index) {
+        // Remove active class from all slides and dots
+        heroSlides.forEach((slide) => slide.classList.remove("active"));
+        heroDots.forEach((dot) => dot.classList.remove("active"));
+
+        // Add active class to current slide and dot
+        heroSlides[index].classList.add("active");
+        heroDots[index].classList.add("active");
+
+        heroCurrentSlide = index;
+      }
+
+      // Function to show next slide
+      function nextHeroSlide() {
+        let next = heroCurrentSlide + 1;
+        if (next >= heroSlides.length) {
+          next = 0;
+        }
+        showHeroSlide(next);
+      }
+
+      // Function to show previous slide
+      function prevHeroSlide() {
+        let prev = heroCurrentSlide - 1;
+        if (prev < 0) {
+          prev = heroSlides.length - 1;
+        }
+        showHeroSlide(prev);
+      }
+
+      // Start automatic sliding with 3-second interval
+      function startHeroSlideInterval() {
+        heroSlideInterval = setInterval(nextHeroSlide, 3000); // Change slide every 3 seconds
+      }
+
+      // Stop automatic sliding
+      function stopHeroSlideInterval() {
+        clearInterval(heroSlideInterval);
+      }
+
+      // Event listeners for controls
+      if (heroPrevBtn) {
+        heroPrevBtn.addEventListener("click", () => {
+          stopHeroSlideInterval();
+          prevHeroSlide();
+          startHeroSlideInterval();
+        });
+      }
+
+      if (heroNextBtn) {
+        heroNextBtn.addEventListener("click", () => {
+          stopHeroSlideInterval();
+          nextHeroSlide();
+          startHeroSlideInterval();
+        });
+      }
+
+      // Event listeners for dots
+      heroDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          stopHeroSlideInterval();
+          showHeroSlide(index);
+          startHeroSlideInterval();
+        });
+      });
+
+      // Start the slider
+      startHeroSlideInterval();
+
+      // Pause slider when hovering over controls
+      const heroControls = document.querySelector(".hero-slider-controls");
+      if (heroControls) {
+        heroControls.addEventListener("mouseenter", stopHeroSlideInterval);
+        heroControls.addEventListener("mouseleave", startHeroSlideInterval);
+      }
     </script>
   </body>
 </html>

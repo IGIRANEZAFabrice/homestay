@@ -198,8 +198,430 @@ body {
   cursor: pointer;
 }
 
+/* Booking Information Section Styles */
+.booking-info {
+  background-color: var(--color-bg);
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.booking-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+}
+
+.booking-title {
+  color: var(--color-primary);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.booking-description {
+  text-align: center;
+  color: var(--color-text);
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.booking-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.booking-step {
+  background: rgba(242, 197, 114, 0.1);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--color-primary);
+  transition: transform 0.3s ease;
+}
+
+.booking-step:hover {
+  transform: translateY(-5px);
+}
+
+.booking-step h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.booking-step p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.booking-step a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.booking-step a:hover {
+  color: #a04e14;
+  text-decoration: underline;
+}
+
+.booking-benefits {
+  background: rgba(184, 92, 25, 0.05);
+  padding: 2rem;
+  border-radius: var(--radius);
+}
+
+.booking-benefits h3 {
+  color: var(--color-primary);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.booking-benefits ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.booking-benefits li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(184, 92, 25, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.booking-benefits li:last-child {
+  border-bottom: none;
+}
+
+.booking-benefits li::before {
+  content: "✓";
+  color: var(--color-primary);
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.booking-footer {
+  text-align: center;
+  font-weight: 500;
+  margin: 1.5rem 0 0;
+  color: var(--color-text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .booking-container {
+    padding: 1.5rem;
+  }
+  
+  .booking-steps {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-title {
+    font-size: 1.75rem;
+  }
+}
+
 .close-modal:hover {
   color: var(--color-primary);
+}
+
+/* Booking Hero Section */
+.booking-hero {
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('../img/house.jpg') center center/cover no-repeat;
+  color: var(--color-card);
+  text-align: center;
+  padding: 3rem 1rem 2rem 1rem;
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2.5rem;
+  padding-top: 100px;
+}
+
+.booking-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  letter-spacing: 1px;
+}
+
+.booking-hero p {
+  font-size: 1.15rem;
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Booking Button */
+.booking-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: var(--color-primary);
+  color: white;
+  text-align: center;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(184, 92, 25, 0.2);
+}
+
+.booking-button:hover {
+  background-color: #a04e14;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(184, 92, 25, 0.3);
+}
+
+/* Booking Information Section Styles */
+.booking-info {
+  background-color: var(--color-bg);
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.booking-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+}
+
+.booking-title {
+  color: var(--color-primary);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.booking-description {
+  text-align: center;
+  color: var(--color-text);
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.booking-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.booking-step {
+  background: rgba(242, 197, 114, 0.1);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--color-primary);
+  transition: transform 0.3s ease;
+}
+
+.booking-step:hover {
+  transform: translateY(-5px);
+}
+
+.booking-step h3 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.booking-step p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.booking-step a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.booking-step a:hover {
+  color: #a04e14;
+  text-decoration: underline;
+}
+
+.booking-benefits {
+  background: rgba(184, 92, 25, 0.05);
+  padding: 2rem;
+  border-radius: var(--radius);
+}
+
+.booking-benefits h3 {
+  color: var(--color-primary);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.booking-benefits ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.booking-benefits li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(184, 92, 25, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.booking-benefits li:last-child {
+  border-bottom: none;
+}
+
+.booking-benefits li::before {
+  content: "✓";
+  color: var(--color-primary);
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.booking-footer {
+  text-align: center;
+  font-weight: 500;
+  margin: 1.5rem 0 0;
+  color: var(--color-text);
+}
+
+/* Payment Methods Section Styles */
+.payment-info {
+  background-color: var(--color-bg);
+  padding: 3rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.payment-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+}
+
+.payment-title {
+  color: var(--color-primary);
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.payment-description {
+  text-align: center;
+  color: var(--color-text);
+  max-width: 800px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.payment-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(184, 92, 25, 0.1);
+}
+
+.payment-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.payment-section h3 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.payment-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(184, 92, 25, 0.05);
+  line-height: 1.5;
+}
+
+.payment-list li:last-child {
+  border-bottom: none;
+}
+
+.payment-method {
+  background: rgba(242, 197, 114, 0.05);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+}
+
+.payment-method:last-child {
+  margin-bottom: 0;
+}
+
+.payment-method h4 {
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.payment-method ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-method li {
+  padding: 0.5rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.5;
+}
+
+.payment-method li::before {
+  content: "•";
+  color: var(--color-primary);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .booking-container,
+  .payment-container {
+    padding: 1.5rem;
+  }
+  
+  .booking-steps {
+    grid-template-columns: 1fr;
+  }
+  
+  .booking-title,
+  .payment-title {
+    font-size: 1.75rem;
+  }
 }
 
 /* No Rooms Message */
@@ -233,4 +655,236 @@ body {
 .view-all-rooms .btn:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 30px 0 rgba(184,92,25,0.2);
+}
+
+/* Modern Intro Section Styles */
+.rooms-intro {
+  padding: 4rem 0 6rem;
+  background: linear-gradient(135deg, var(--color-bg) 0%, #fff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.rooms-intro::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(242, 197, 114, 0.1);
+  z-index: 0;
+}
+
+.rooms-intro::after {
+  content: '';
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(184, 92, 25, 0.05);
+  z-index: 0;
+}
+
+.intro-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-title {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.intro-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+  border-radius: 4px;
+}
+
+.intro-description {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.accommodation-types {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 4rem;
+}
+
+.accommodation-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(242, 197, 114, 0.1);
+}
+
+.accommodation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+}
+
+.accommodation-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 15px 40px rgba(184, 92, 25, 0.15);
+  border-color: rgba(242, 197, 114, 0.3);
+}
+
+.accommodation-card:hover::before {
+  transform: scaleX(1);
+}
+
+.accommodation-icon {
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1.8rem;
+  text-align: center;
+  transition: transform 0.5s ease;
+}
+
+.accommodation-card:hover .accommodation-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.accommodation-card h3 {
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.8rem;
+}
+
+.accommodation-card h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: var(--color-secondary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.accommodation-card:hover h3::after {
+  width: 60px;
+}
+
+.accommodation-card p {
+  color: var(--color-muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.intro-footer {
+  text-align: center;
+  font-size: 1.15rem;
+  color: var(--color-text);
+  font-style: italic;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(184, 92, 25, 0.1);
+  border-bottom: 1px solid rgba(184, 92, 25, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+}
+
+/* Responsive styles for intro section */
+@media (max-width: 992px) {
+  .accommodation-types {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .intro-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .rooms-intro {
+    padding: 3rem 0 4rem;
+  }
+  
+  .intro-title {
+    font-size: 1.9rem;
+    padding-bottom: 1rem;
+  }
+  
+  .intro-description {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+  
+  .accommodation-types {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+  
+  .accommodation-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .intro-footer {
+    font-size: 1rem;
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-title {
+    font-size: 1.7rem;
+  }
+  
+  .accommodation-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .accommodation-card h3 {
+    font-size: 1.3rem;
+  }
 }

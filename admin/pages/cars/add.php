@@ -35,7 +35,6 @@ $form_data = [
     'type' => '',
     'transmission' => '',
     'fuel_type' => '',
-    'price' => '',
     'features' => [],
     'badge' => '',
     'status' => 'active'
@@ -49,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'type' => trim($_POST['type'] ?? ''),
         'transmission' => trim($_POST['transmission'] ?? ''),
         'fuel_type' => trim($_POST['fuel_type'] ?? ''),
-        'price' => floatval($_POST['price'] ?? 0),
         'features' => array_filter(array_map('trim', $_POST['features'] ?? []))
     ];
     
@@ -58,8 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'name' => ['required' => true, 'length' => [2, 255]],
         'type' => ['required' => true, 'length' => [2, 50]],
         'transmission' => ['required' => true, 'length' => [2, 20]],
-        'fuel_type' => ['required' => true, 'length' => [2, 20]],
-        'price' => ['required' => true, 'number' => [0, 9999.99]]
+        'fuel_type' => ['required' => true, 'length' => [2, 20]]
     ];
     
     // Validate form data
@@ -106,21 +103,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'type' => $form_data['type'],
                 'transmission' => $form_data['transmission'],
                 'fuel_type' => $form_data['fuel_type'],
-                'price' => $form_data['price'],
                 'image_path' => $image_path,
                 'features' => $features_json
             ], true));
 
             // Use basic required fields only to ensure compatibility
-            $query = "INSERT INTO cars (name, type, transmission, fuel_type, price, image, features, created_at)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+            $query = "INSERT INTO cars (name, type, transmission, fuel_type, image, features, created_at)
+                      VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
-            $result = insertData($query, 'ssssdss', [
+            $result = insertData($query, 'ssssss', [
                 $form_data['name'],
                 $form_data['type'],
                 $form_data['transmission'],
                 $form_data['fuel_type'],
-                $form_data['price'],
                 $image_path,
                 $features_json
             ]);
@@ -147,7 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'type' => '',
         'transmission' => '',
         'fuel_type' => '',
-        'price' => '',
         'features' => []
     ];
 }
@@ -367,47 +361,22 @@ $breadcrumbs = [
                     <?php endif; ?>
 
                     <form method="POST" action="" enctype="multipart/form-data" data-validate="true">
-                        <div class="form-row">
-                            <div class="form-col-8">
-                                <div class="form-group">
-                                    <label for="name" class="form-label required">Car Name</label>
-                                    <input 
-                                        type="text" 
-                                        id="name" 
-                                        name="name" 
-                                        class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>" 
-                                        value="<?= htmlspecialchars($form_data['name']) ?>"
-                                        required
-                                        data-min-length="2"
-                                        data-max-length="255"
-                                        placeholder="Enter car name"
-                                    >
-                                    <?php if (isset($errors['name'])): ?>
-                                        <div class="invalid-feedback"><?= htmlspecialchars($errors['name']) ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            
-                            <div class="form-col-4">
-                                <div class="form-group">
-                                    <label for="price" class="form-label required">Price per Day ($)</label>
-                                    <input
-                                        type="number"
-                                        id="price"
-                                        name="price"
-                                        class="form-control <?= isset($errors['price']) ? 'is-invalid' : '' ?>"
-                                        value="<?= $form_data['price'] ?>"
-                                        required
-                                        min="0"
-                                        max="9999.99"
-                                        step="0.01"
-                                        placeholder="0.00"
-                                    >
-                                    <?php if (isset($errors['price'])): ?>
-                                        <div class="invalid-feedback"><?= htmlspecialchars($errors['price']) ?></div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="name" class="form-label required">Car Name</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                class="form-control <?= isset($errors['name']) ? 'is-invalid' : '' ?>" 
+                                value="<?= htmlspecialchars($form_data['name']) ?>"
+                                required
+                                data-min-length="2"
+                                data-max-length="255"
+                                placeholder="Enter car name"
+                            >
+                            <?php if (isset($errors['name'])): ?>
+                                <div class="invalid-feedback"><?= htmlspecialchars($errors['name']) ?></div>
+                            <?php endif; ?>
                         </div>
 
                         <div class="form-row">

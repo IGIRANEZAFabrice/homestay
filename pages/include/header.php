@@ -20,21 +20,14 @@
                 <li><a href="./rooms.php" class="nav-link glass-nav-link">
                     <span class="nav-text">Rooms</span>
                 </a></li>
-                <li class="dropdown">
-                    <a href="#" class="nav-link glass-nav-link dropdown-toggle">
-                        <span class="nav-text">Activities</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="./event.php" class="dropdown-item">Events</a></li>
-                        <li><a href="./blog.php" class="dropdown-item">Blogs</a></li>
-                    </ul>
-                </li>
+
                 <li><a href="./contact.php" class="nav-link glass-nav-link">
                     <span class="nav-text">Contact Us</span>
                 </a></li>
                 <li><a href="./houserules.php" class="nav-link glass-nav-link">
                     <span class="nav-text">House rules</span>
                 </a></li>
+                <li><a href="./blog.php" class="nav-link glass-nav-link">Blogs</a></li>
                 <li><a href="./carrent.php" class="nav-link glass-nav-link">
 
                     <span class="nav-text">Car Rent</span>

@@ -175,7 +175,7 @@ class ActivitiesManager {
      * Display demo activities for development
      */
     displayDemoActivities() {
-        const demoActivities = [
+        const allDemoActivities = [
             {
                 id: 1,
                 title: 'Gorilla Trekking Experience',
@@ -205,12 +205,126 @@ class ActivitiesManager {
                 status: 'inactive',
                 image: 'https://via.placeholder.com/60x60?text=Birds',
                 created_at: '2024-01-13 09:15:00'
+            },
+            {
+                id: 4,
+                title: 'Cultural Village Visit',
+                description: 'Experience authentic Rwandan culture and traditions.',
+                duration: '3 Hours',
+                price: 80.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Culture',
+                created_at: '2024-01-12 16:45:00'
+            },
+            {
+                id: 5,
+                title: 'Lake Kivu Boat Tour',
+                description: 'Scenic boat ride on the beautiful Lake Kivu.',
+                duration: '4 Hours',
+                price: 200.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Lake',
+                created_at: '2024-01-11 11:20:00'
+            },
+            {
+                id: 6,
+                title: 'Coffee Plantation Tour',
+                description: 'Learn about Rwandan coffee production and taste local brews.',
+                duration: '2 Hours',
+                price: 60.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Coffee',
+                created_at: '2024-01-10 09:30:00'
+            },
+            {
+                id: 7,
+                title: 'Mountain Biking Adventure',
+                description: 'Explore the scenic trails around Musanze on mountain bikes.',
+                duration: 'Full Day',
+                price: 150.00,
+                status: 'inactive',
+                image: 'https://via.placeholder.com/60x60?text=Biking',
+                created_at: '2024-01-09 14:15:00'
+            },
+            {
+                id: 8,
+                title: 'Photography Workshop',
+                description: 'Professional photography guidance in stunning natural settings.',
+                duration: '6 Hours',
+                price: 300.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Photo',
+                created_at: '2024-01-08 10:00:00'
+            },
+            {
+                id: 9,
+                title: 'Traditional Dance Performance',
+                description: 'Watch and participate in traditional Rwandan dance.',
+                duration: '2 Hours',
+                price: 90.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Dance',
+                created_at: '2024-01-07 18:30:00'
+            },
+            {
+                id: 10,
+                title: 'Sunset Safari',
+                description: 'Evening wildlife viewing in the national park.',
+                duration: '3 Hours',
+                price: 180.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Safari',
+                created_at: '2024-01-06 15:45:00'
+            },
+            {
+                id: 11,
+                title: 'Local Market Tour',
+                description: 'Explore vibrant local markets and taste street food.',
+                duration: '2 Hours',
+                price: 40.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Market',
+                created_at: '2024-01-05 12:00:00'
+            },
+            {
+                id: 12,
+                title: 'Conservation Education',
+                description: 'Learn about wildlife conservation efforts in the region.',
+                duration: '1 Hour',
+                price: 25.00,
+                status: 'active',
+                image: 'https://via.placeholder.com/60x60?text=Conservation',
+                created_at: '2024-01-04 13:20:00'
             }
         ];
 
-        this.activities = demoActivities;
-        this.totalItems = demoActivities.length;
+        // Apply search filter
+        let filteredActivities = allDemoActivities;
+        const searchTerm = document.getElementById('searchActivities')?.value?.toLowerCase() || '';
+        if (searchTerm) {
+            filteredActivities = allDemoActivities.filter(activity => 
+                activity.title.toLowerCase().includes(searchTerm) ||
+                activity.description.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        // Apply status filter
+        const statusFilter = document.getElementById('statusFilter')?.value || '';
+        if (statusFilter) {
+            filteredActivities = filteredActivities.filter(activity => 
+                activity.status === statusFilter
+            );
+        }
+
+        this.totalItems = filteredActivities.length;
+        
+        // Apply pagination
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.activities = filteredActivities.slice(startIndex, endIndex);
+
         this.displayActivities();
+        this.displayDemoPagination();
     }
 
     /**
@@ -300,9 +414,11 @@ class ActivitiesManager {
         // Previous button
         if (has_prev_page) {
             paginationHtml += `
-                <button class="btn btn-secondary" onclick="activitiesManager.goToPage(${current_page - 1})">
-                    <i class="fas fa-chevron-left"></i> Previous
-                </button>
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${current_page - 1}); return false;">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
             `;
         }
 
@@ -311,24 +427,95 @@ class ActivitiesManager {
         const endPage = Math.min(total_pages, current_page + 2);
 
         for (let i = startPage; i <= endPage; i++) {
-            const isActive = i === current_page ? 'btn-primary' : 'btn-secondary';
+            const isActive = i === current_page ? 'active' : '';
             paginationHtml += `
-                <button class="btn ${isActive}" onclick="activitiesManager.goToPage(${i})">
-                    ${i}
-                </button>
+                <li class="page-item ${isActive}">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${i}); return false;">
+                        ${i}
+                    </a>
+                </li>
             `;
         }
 
         // Next button
         if (has_next_page) {
             paginationHtml += `
-                <button class="btn btn-secondary" onclick="activitiesManager.goToPage(${current_page + 1})">
-                    Next <i class="fas fa-chevron-right"></i>
-                </button>
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${current_page + 1}); return false;">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
             `;
         }
 
         paginationHtml += '</div>';
+        container.innerHTML = paginationHtml;
+    }
+
+    /**
+     * Display demo pagination for development
+     */
+    displayDemoPagination() {
+        const container = document.getElementById('paginationContainer');
+        if (!container) return;
+
+        const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+        
+        if (totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+
+        // Add pagination info
+        const startItem = (this.currentPage - 1) * this.itemsPerPage + 1;
+        const endItem = Math.min(this.currentPage * this.itemsPerPage, this.totalItems);
+        
+        let paginationHtml = `
+            <div class="table-pagination">
+                <div class="pagination-info">
+                    Showing ${startItem} to ${endItem} of ${this.totalItems} activities
+                </div>
+                <ul class="pagination">
+        `;
+
+        // Previous button
+        if (this.currentPage > 1) {
+            paginationHtml += `
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${this.currentPage - 1}); return false;">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            `;
+        }
+
+        // Page numbers
+        const startPage = Math.max(1, this.currentPage - 2);
+        const endPage = Math.min(totalPages, this.currentPage + 2);
+
+        for (let i = startPage; i <= endPage; i++) {
+            const isActive = i === this.currentPage ? 'active' : '';
+            paginationHtml += `
+                <li class="page-item ${isActive}">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${i}); return false;">
+                        ${i}
+                    </a>
+                </li>
+            `;
+        }
+
+        // Next button
+        if (this.currentPage < totalPages) {
+            paginationHtml += `
+                <li class="page-item">
+                    <a class="page-link" href="#" onclick="activitiesManager.goToPage(${this.currentPage + 1}); return false;">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            `;
+        }
+
+        paginationHtml += '</ul></div>';
         container.innerHTML = paginationHtml;
     }
 

@@ -90,12 +90,43 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
       .back-link:hover { 
         color: #0a7b83; 
     }
+
+    .book-activity-container {
+        text-align: center;
+        margin-top: 40px;
+        padding: 20px;
+    }
+
+    .book-activity-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: #25d366;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .book-activity-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        background: #128c7e;
+    }
+
+    .book-activity-button i {
+        font-size: 1.3rem;
+    }
   </style>
 </head>
 <body>
 <?php include 'include/header.php'; ?>
 <?php if ($activity): ?>
-    <img class="activity-cover" src="../<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?> Cover">
+    <img class="activity-cover" src="../homestay/<?php echo buildImageUrl($activity['image'], 'activities'); ?>" alt="<?php echo htmlspecialchars($activity['title']); ?> Cover">
     <div class="activity-container">
         <a href="../index.php#experiencesGrid" class="back-link"><i class="fas fa-arrow-left"></i>Back to Home</a>
         <h1 class="activity-title"><?php echo htmlspecialchars($activity['title']); ?></h1>
@@ -112,6 +143,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
               echo '<em>No description available.</em>';
             }
           ?>
+          <div class="book-activity-container">
+            <a href="https://wa.me/+250784513435?text=Hello! I am interested in <?php echo htmlspecialchars($activity['title']); ?> activity" 
+               class="book-activity-button" 
+               target="_blank">
+               <i class="fab fa-whatsapp"></i>
+               Book This Activity
+            </a>
+          </div>
         </div>
 <?php else: ?>
     <div class="activity-container">

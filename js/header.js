@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navMenu = document.querySelector(".nav-menu");
   const body = document.body;
-  const dropdowns = document.querySelectorAll(".dropdown");
 
   // Toggle mobile menu
   if (mobileMenuToggle) {
@@ -15,34 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
         : "auto";
     });
   }
-
-  // Handle dropdowns
-  dropdowns.forEach((dropdown) => {
-    const toggle = dropdown.querySelector(".dropdown-toggle");
-
-    // Toggle dropdown on click
-    toggle.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      // Close other dropdowns
-      dropdowns.forEach((other) => {
-        if (other !== dropdown) {
-          other.classList.remove("active");
-        }
-      });
-
-      dropdown.classList.toggle("active");
-    });
-  });
-
-  // Close dropdowns when clicking outside
-  document.addEventListener("click", function (e) {
-    if (!e.target.closest(".dropdown")) {
-      dropdowns.forEach((dropdown) => {
-        dropdown.classList.remove("active");
-      });
-    }
-  });
 
   // Close mobile menu when clicking on a link
   const navLinks = document.querySelectorAll(".nav-link");

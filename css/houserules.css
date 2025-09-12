@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 :root {
   --color-bg: #f7f5f2;
@@ -9,13 +9,13 @@
   --color-text: #2d3a3a;
   --color-muted: #8a8a8a;
   --color-highlight: #fffbe6;
-  --shadow: 0 4px 24px 0 rgba(184,92,25,0.08);
+  --shadow: 0 4px 24px 0 rgba(184, 92, 25, 0.08);
   --radius: 18px;
-  --transition: 0.3s cubic-bezier(.4,2,.6,1);
+  --transition: 0.3s cubic-bezier(0.4, 2, 0.6, 1);
 }
 
 body {
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: "Poppins", Arial, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   margin: 0;
@@ -28,7 +28,11 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(120deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background: linear-gradient(
+    120deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
   padding: 3rem 2rem 2rem 2rem;
   border-radius: 0 0 var(--radius) var(--radius);
   box-shadow: var(--shadow);
@@ -65,7 +69,7 @@ body {
   width: 100%;
   max-width: 370px;
   border-radius: var(--radius);
-  box-shadow: 0 6px 32px 0 rgba(45,58,58,0.10);
+  box-shadow: 0 6px 32px 0 rgba(45, 58, 58, 0.1);
   object-fit: cover;
 }
 
@@ -96,7 +100,7 @@ body {
 }
 .info-card:hover {
   transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 8px 32px 0 rgba(184,92,25,0.13);
+  box-shadow: 0 8px 32px 0 rgba(184, 92, 25, 0.13);
 }
 
 .houserules-main {
@@ -161,7 +165,79 @@ body {
   font-size: 0.98rem;
 }
 .rule-card:hover {
-  box-shadow: 0 10px 36px 0 rgba(184,92,25,0.16);
+  box-shadow: 0 10px 36px 0 rgba(184, 92, 25, 0.16);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.cancellation-policy {
+  max-width: 1100px;
+  margin: 0 auto 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.cancellation-policy h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.policy-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.policy-card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.policy-card h3 {
+  font-size: 1.18rem;
+  color: var(--color-primary);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.policy-card i {
+  font-size: 1.2rem;
+}
+
+.policy-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.policy-card li {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.policy-card li::before {
+  content: "•";
+  color: var(--color-primary);
+  position: absolute;
+  left: 0;
+}
+
+.policy-card p {
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.policy-card:hover {
+  box-shadow: 0 10px 36px 0 rgba(184, 92, 25, 0.16);
   transform: translateY(-3px) scale(1.02);
 }
 
@@ -197,6 +273,8 @@ body {
     transform: none;
   }
 }
-.houserules-hero, .info-card, .rule-card {
-  animation: fadeInUp 0.8s cubic-bezier(.4,2,.6,1);
+.houserules-hero,
+.info-card,
+.rule-card {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 2, 0.6, 1);
 }

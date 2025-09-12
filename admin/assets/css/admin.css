@@ -1,0 +1,204 @@
+/* Admin Styles for House Rules and other admin pages */
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #34495e;
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+}
+
+/* General Layout */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gray-100);
+    color: var(--gray-800);
+    line-height: 1.5;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+/* Sidebar */
+.col-md-3, .col-lg-2 {
+    padding: 0;
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    background-color: var(--white);
+    min-height: 100vh;
+}
+
+/* Cards */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border: 1px solid var(--gray-200);
+}
+
+.card-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 15px 20px;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: 600;
+    border-bottom: 2px solid var(--gray-300);
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-color);
+    border-color: var(--dark-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: var(--white);
+}
+
+.btn-outline-secondary {
+    color: var(--gray-600);
+    border-color: var(--gray-400);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--gray-200);
+    color: var(--gray-800);
+}
+
+/* Forms */
+.form-control {
+    border-radius: 4px;
+    border: 1px solid var(--gray-300);
+    padding: 8px 12px;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--gray-700);
+}
+
+/* Alerts */
+.alert {
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">";
+}
+
+/* House Rules Specific */
+.section-title {
+    border-bottom: 2px solid var(--gray-200);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.rule-item, .policy-item, .info-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid var(--gray-200);
+}
+
+.rule-title, .policy-title, .card-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.rule-section {
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+}
+
+.rule-content, .policy-content, .card-content {
+    color: var(--gray-700);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+    
+    .admin-main {
+        margin-left: 0;
+    }
+}

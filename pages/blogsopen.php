@@ -61,7 +61,7 @@ if ($slug) {
       max-width: 900px;
     }
     .blog-hero-title {
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
       font-weight: 700;
       margin-bottom: 1rem;
       line-height: 1.1;
@@ -85,18 +85,109 @@ if ($slug) {
       margin-top: -3rem;
       position: relative;
       z-index: 10;
-      font-size: 1.18rem;
+      font-size: 1.35rem;
       color: #2d3a3a;
       line-height: 1.8;
       min-height: 200px;
+    }
+    /* Add spacing for headings and bold text */
+    .blog-content-full h1, .blog-content-full h2, .blog-content-full h3,
+    .blog-content-full h4, .blog-content-full h5, .blog-content-full h6 {
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.3;
+      color: #333;
+    }
+    .blog-content-full h1 {
+      font-size: 3.5rem;
+    }
+    .blog-content-full h2 {
+      font-size: 3.1rem;
+    }
+    .blog-content-full h3 {
+      font-size: 2.7rem;
+    }
+    .blog-content-full h4 {
+      font-size: 2.3rem;
+    }
+    .blog-content-full h5 {
+      font-size: 2rem;
+    }
+    .blog-content-full h6 {
+      font-size: 1.8rem;
+    }
+    .blog-content-full p {
+      margin-bottom: 1.5rem;
+    }
+    /* Add extra spacing after headings */
+    .blog-content-full h1 + p,
+    .blog-content-full h2 + p,
+    .blog-content-full h3 + p,
+    .blog-content-full h4 + p,
+    .blog-content-full h5 + p,
+    .blog-content-full h6 + p {
+      margin-top: 0.8rem;
+    }
+    .blog-content-full b, .blog-content-full strong {
+      font-weight: 600;
+      color: #222;
+    }
+    .blog-content-full ul, .blog-content-full ol {
+      margin: 1.5rem 0 1.5rem 1.5rem;
+    }
+    .blog-content-full li {
+      margin-bottom: 0.8rem;
+    }
+    /* Style blockquotes and code blocks */
+    .blog-content-full blockquote {
+      margin: 2rem 0;
+      padding: 1.2rem 1.5rem;
+      border-left: 4px solid #b85c19;
+      background-color: #f9f7f5;
+      font-style: italic;
+      color: #555;
+      font-size: 1.3rem;
+    }
+    .blog-content-full blockquote p {
+      margin-bottom: 0.5rem;
+    }
+    .blog-content-full blockquote p:last-child {
+      margin-bottom: 0;
+    }
+    .blog-content-full pre, .blog-content-full code {
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 1.2rem;
+    }
+    .blog-content-full pre {
+      padding: 1rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+    }
+    .blog-content-full code {
+      padding: 0.2rem 0.4rem;
     }
     .blog-content-full img {
       max-width: 100%;
       height: auto;
       border-radius: 12px;
-      margin: 2rem 0;
+      margin: 2.5rem 0;
       display: block;
       box-shadow: 0 2px 16px rgba(44,90,160,0.08);
+    }
+    /* Add spacing for horizontal rules */
+    .blog-content-full hr {
+      margin: 3rem 0;
+      border: 0;
+      height: 1px;
+      background-color: #e0e0e0;
+    }
+    /* Improve spacing around images */
+    .blog-content-full p + img,
+    .blog-content-full img + p {
+      margin-top: 2rem;
     }
     .blog-back-btn {
       display: inline-block;
@@ -104,7 +195,7 @@ if ($slug) {
       color: #b85c19;
       background: none;
       border: none;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 500;
       text-decoration: none;
       transition: color 0.2s;
@@ -154,5 +245,6 @@ if ($slug) {
     </main>
   <?php endif; ?>
   <?php include '../include/footer.php'; ?>
+  <script src="./js/header.js"></script>
 </body>
 </html>

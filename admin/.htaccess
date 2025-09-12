@@ -1,0 +1,30 @@
+# Admin Directory Access Control
+# Redirect to login if accessing admin directory directly
+
+DirectoryIndex index.php
+
+# Enable URL rewriting
+RewriteEngine On
+
+# Redirect admin root to index.php (which redirects to login)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^$ index.php [L]
+
+# Security: Prevent direct access to sensitive files
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent access to backend files from web
+<FilesMatch "^(backend|config)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Allow access to assets (CSS, JS, images)
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>

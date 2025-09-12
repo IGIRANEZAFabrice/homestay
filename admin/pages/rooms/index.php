@@ -215,39 +215,7 @@ $breadcrumbs = [
 <body>
     <div class="admin-wrapper">
         <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <a href="../dashboard.php" class="sidebar-logo">
-                    <i class="fas fa-mountain"></i>
-                    <span class="nav-text">Virunga Admin</span>
-                </a>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-item">
-                    <a href="../dashboard.php" class="nav-link">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../activities/index.php" class="nav-link">
-                        <i class="fas fa-hiking"></i>
-                        <span class="nav-text">Activities</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../blogs/index.php" class="nav-link">
-                        <i class="fas fa-blog"></i>
-                        <span class="nav-text">Blogs</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../cars/index.php" class="nav-link">
-                        <i class="fas fa-car"></i>
+        <?php include '../includes/sidebar.php'; ?>
                         <span class="nav-text">Cars</span>
                     </a>
                 </div>

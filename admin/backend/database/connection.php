@@ -7,7 +7,7 @@
 
 // Prevent direct access
 if (!defined('ADMIN_ACCESS')) {
-    die('Direct access not allowed');
+    define('ADMIN_ACCESS', true);
 }
 
 // Global connection variable

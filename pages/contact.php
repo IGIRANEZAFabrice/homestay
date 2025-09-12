@@ -125,43 +125,26 @@ if (isset($_GET['success'])) {
                 <i class="fas fa-phone"></i>
                 <div>
                   <h3>Phone</h3>
-                  <p>(+250) 784 513 435</p>
+                  <p><a href="tel:+250784513435">(+250) 784 513 435</a></p>
                 </div>
               </div>
               <div class="info-item">
                 <i class="fas fa-envelope"></i>
                 <div>
                   <h3>Email</h3>
-                  <p>info@virungaecotours.com</p>
+                  <p><a href="mailto:virungahomestay@gmail.com">virungahomestay@gmail.com</a></p>
                 </div>
               </div>
               <div class="info-item">
                 <i class="fas fa-clock"></i>
                 <div>
                   <h3>Business Hours</h3>
-                  <p>Monday - Sunday: 8:00 AM - 8:00 PM</p>
+                  <p>Monday - Sunday: 8:00 AM - 10:00 PM</p>
                 </div>
               </div>
             </div>
 
-            <!-- Social Media Links -->
-            <div class="social-links">
-              <h3>Follow Us</h3>
-              <div class="social-icons">
-                <a href="#" class="social-icon">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="social-icon">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="social-icon">
-                  <i class="fab fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -274,5 +257,6 @@ if (isset($_GET['success'])) {
       });
     </script>
     <script src="../js/contact.js"></script>
+    <script src="./js/header.js"></script>
   </body>
 </html>

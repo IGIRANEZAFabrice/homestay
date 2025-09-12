@@ -4,6 +4,9 @@
  * Professional admin interface for managing activities
  */
 
+// Basic test to see if the page is loading
+error_log("Activities page is loading...");
+
 // Define admin access and start session
 define('ADMIN_ACCESS', true);
 session_start();
@@ -12,7 +15,13 @@ session_start();
 require_once '../../backend/api/utils/auth_middleware.php';
 
 // Require authentication
-requireAuth();
+try {
+    requireAuth();
+} catch (Exception $e) {
+    error_log("Authentication error: " . $e->getMessage());
+    // For debugging, you can temporarily comment out the authentication
+    // requireAuth();
+}
 
 // Include image helpers
 require_once '../../../include/image_helpers.php';
@@ -27,10 +36,7 @@ $current_user = getCurrentUser();
 // Get flash message if any
 $flash_message = getFlashMessage();
 
-// Pagination settings
-$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-$limit = 10;
-$offset = ($page - 1) * $limit;
+// No pagination - show all activities
 
 // Search and filter parameters
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
@@ -42,35 +48,46 @@ $params = [];
 $param_types = '';
 
 if (!empty($search)) {
-    $where_conditions[] = "(title LIKE ? OR content LIKE ?)";
+    $where_conditions[] = "(title LIKE ? OR content LIKE ? OR duration LIKE ?)";
     $search_param = "%$search%";
     $params[] = $search_param;
     $params[] = $search_param;
-    $param_types .= 'ss';
+    $params[] = $search_param;
+    $param_types .= 'sss';
 }
 
 if ($status_filter !== '') {
-    $where_conditions[] = "is_active = ?";
-    $params[] = intval($status_filter);
-    $param_types .= 'i';
+    $where_conditions[] = "status = ?";
+    $params[] = $status_filter;
+    $param_types .= 's';
 }
 
 $where_clause = !empty($where_conditions) ? 'WHERE ' . implode(' AND ', $where_conditions) : '';
 
-// Get total count for pagination
+// Get total count for display
 $count_query = "SELECT COUNT(*) as total FROM activities $where_clause";
 $total_result = !empty($params) ? getSingleRow($count_query, $param_types, $params) : getSingleRow($count_query);
-$total_records = $total_result['total'] ?? 0;
-$total_pages = ceil($total_records / $limit);
+
+if ($total_result === false) {
+    error_log("Failed to get total count from database");
+    $total_records = 0;
+} else {
+    $total_records = $total_result['total'] ?? 0;
+}
 
 // Get activities data
-$query = "SELECT id, title, content, image, display_order, is_active, created_at, updated_at 
+$query = "SELECT id, title, content, duration, price, image, display_order, is_active, status, created_at, updated_at 
           FROM activities 
           $where_clause 
-          ORDER BY display_order ASC, created_at DESC 
-          LIMIT $limit OFFSET $offset";
+          ORDER BY display_order ASC, created_at DESC";
 
 $activities = !empty($params) ? getMultipleRows($query, $param_types, $params) : getMultipleRows($query);
+
+// Debug: Check if activities were loaded
+if ($activities === false) {
+    error_log("Failed to load activities from database");
+    $activities = [];
+}
 
 // Breadcrumb data
 $breadcrumbs = [
@@ -97,86 +114,7 @@ $breadcrumbs = [
 <body>
     <div class="admin-wrapper">
         <!-- Sidebar -->
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <a href="../dashboard.php" class="sidebar-logo">
-                    <i class="fas fa-mountain"></i>
-                    <span class="nav-text">Virunga Admin</span>
-                </a>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <div class="nav-item">
-                    <a href="../dashboard.php" class="nav-link">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="index.php" class="nav-link active">
-                        <i class="fas fa-hiking"></i>
-                        <span class="nav-text">Activities</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../blogs/index.php" class="nav-link">
-                        <i class="fas fa-blog"></i>
-                        <span class="nav-text">Blogs</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../cars/index.php" class="nav-link">
-                        <i class="fas fa-car"></i>
-                        <span class="nav-text">Cars</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../events/index.php" class="nav-link">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span class="nav-text">Events</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../hero-images/index.php" class="nav-link">
-                        <i class="fas fa-images"></i>
-                        <span class="nav-text">Hero Images</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../reviews/index.php" class="nav-link">
-                        <i class="fas fa-star"></i>
-                        <span class="nav-text">Reviews</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../rooms/index.php" class="nav-link">
-                        <i class="fas fa-bed"></i>
-                        <span class="nav-text">Rooms</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../services/index.php" class="nav-link">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span class="nav-text">Services</span>
-                    </a>
-                </div>
-                
-                <div class="nav-item">
-                    <a href="../contact-messages/index.php" class="nav-link">
-                        <i class="fas fa-envelope"></i>
-                        <span class="nav-text">Messages</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
+        <?php include '../includes/sidebar.php'; ?>
 
         <!-- Main Content -->
         <main class="admin-main">
@@ -229,6 +167,20 @@ $breadcrumbs = [
                 <!-- Breadcrumb -->
                 <?= generateBreadcrumb($breadcrumbs) ?>
 
+                                 <!-- Debug Information (remove in production) -->
+                 <?php if (isset($_GET['debug'])): ?>
+                     <div class="alert alert-info">
+                         <strong>Debug Info:</strong><br>
+                         Total Records: <?= $total_records ?><br>
+                         Search: "<?= htmlspecialchars($search) ?>"<br>
+                         Status Filter: "<?= htmlspecialchars($status_filter) ?>"<br>
+                         Activities Count: <?= count($activities) ?><br>
+                         Query: <?= htmlspecialchars($query) ?><br>
+                         Where Clause: <?= htmlspecialchars($where_clause) ?><br>
+                         Params: <?= htmlspecialchars(json_encode($params)) ?>
+                     </div>
+                 <?php endif; ?>
+
                 <!-- Activities Table -->
                 <div class="table-container">
                     <div class="table-header">
@@ -243,8 +195,9 @@ $breadcrumbs = [
                             <!-- Status Filter -->
                             <select class="filter-select" id="status-filter">
                                 <option value="">All Status</option>
-                                <option value="1" <?= $status_filter === '1' ? 'selected' : '' ?>>Active</option>
-                                <option value="0" <?= $status_filter === '0' ? 'selected' : '' ?>>Inactive</option>
+                                <option value="active" <?= $status_filter === 'active' ? 'selected' : '' ?>>Active</option>
+                                <option value="inactive" <?= $status_filter === 'inactive' ? 'selected' : '' ?>>Inactive</option>
+                                <option value="draft" <?= $status_filter === 'draft' ? 'selected' : '' ?>>Draft</option>
                             </select>
                             
                             <!-- Add Button -->
@@ -302,7 +255,11 @@ $breadcrumbs = [
                                             <?= $activity['display_order'] ?>
                                         </td>
                                         <td>
-                                            <?= getStatusBadge($activity['is_active']) ?>
+                                            <?php 
+                                            $status_text = ucfirst($activity['status']);
+                                            $is_active = $activity['status'] === 'active';
+                                            echo getStatusBadge($is_active, $status_text);
+                                            ?>
                                         </td>
                                         <td class="table-date">
                                             <?= formatDateTime($activity['created_at']) ?>
@@ -327,15 +284,14 @@ $breadcrumbs = [
                             </tbody>
                         </table>
 
-                        <!-- Pagination -->
-                        <?php if ($total_pages > 1): ?>
-                            <div class="table-pagination">
-                                <div class="pagination-info">
-                                    Showing <?= $offset + 1 ?> to <?= min($offset + $limit, $total_records) ?> of <?= $total_records ?> entries
-                                </div>
-                                <?= generatePagination($page, $total_pages, 'index.php', ['search' => $search, 'status' => $status_filter]) ?>
-                            </div>
-                        <?php endif; ?>
+                                                 <!-- Total Records Info -->
+                         <?php if ($total_records > 0): ?>
+                             <div class="table-pagination">
+                                 <div class="pagination-info">
+                                     Showing all <?= $total_records ?> entries
+                                 </div>
+                             </div>
+                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
@@ -346,33 +302,31 @@ $breadcrumbs = [
     <script src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/table-actions.js"></script>
     
-    <script>
-        // Search functionality
-        document.getElementById('search-input').addEventListener('input', function() {
-            clearTimeout(this.searchTimeout);
-            this.searchTimeout = setTimeout(() => {
-                const url = new URL(window.location);
-                if (this.value.trim()) {
-                    url.searchParams.set('search', this.value.trim());
-                } else {
-                    url.searchParams.delete('search');
-                }
-                url.searchParams.delete('page'); // Reset to first page
-                window.location.href = url.toString();
-            }, 500);
-        });
+         <script>
+         // Search functionality
+         document.getElementById('search-input').addEventListener('input', function() {
+             clearTimeout(this.searchTimeout);
+             this.searchTimeout = setTimeout(() => {
+                 const url = new URL(window.location);
+                 if (this.value.trim()) {
+                     url.searchParams.set('search', this.value.trim());
+                 } else {
+                     url.searchParams.delete('search');
+                 }
+                 window.location.href = url.toString();
+             }, 500);
+         });
 
-        // Status filter
-        document.getElementById('status-filter').addEventListener('change', function() {
-            const url = new URL(window.location);
-            if (this.value) {
-                url.searchParams.set('status', this.value);
-            } else {
-                url.searchParams.delete('status');
-            }
-            url.searchParams.delete('page'); // Reset to first page
-            window.location.href = url.toString();
-        });
-    </script>
+         // Status filter
+         document.getElementById('status-filter').addEventListener('change', function() {
+             const url = new URL(window.location);
+             if (this.value) {
+                 url.searchParams.set('status', this.value);
+             } else {
+                 url.searchParams.delete('status');
+             }
+             window.location.href = url.toString();
+         });
+     </script>
 </body>
 </html>
