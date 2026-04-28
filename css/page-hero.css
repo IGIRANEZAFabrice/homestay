@@ -1,0 +1,111 @@
+/* Page hero shared styles */
+.page-hero {
+  position: relative;
+  height: 52vh;
+  min-height: 380px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.page-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  transform: scale(1.06);
+  animation: hero-zoom 12s ease-out forwards;
+}
+@keyframes hero-zoom {
+  to {
+    transform: scale(1);
+  }
+}
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 5, 2, 0.92) 0%,
+    rgba(10, 5, 2, 0.35) 60%,
+    rgba(10, 5, 2, 0.15) 100%
+  );
+}
+.page-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 6vw var(--space-8);
+  width: 100%;
+}
+.page-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-primary-light);
+  margin-bottom: var(--space-3);
+}
+.page-tag::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 1.5px;
+  background: var(--color-primary-light);
+}
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--color-white);
+}
+.page-hero h1 em {
+  font-style: italic;
+  color: var(--color-primary-light);
+}
+.hero-rule {
+  display: block;
+  margin-top: var(--space-4);
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--color-primary), transparent);
+  animation: rule-grow 1.2s 0.6s var(--ease-out) forwards;
+}
+@keyframes rule-grow {
+  to {
+    width: min(420px, 55vw);
+  }
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background: var(--color-dark-2);
+  border-bottom: 1px solid var(--color-border-dark);
+  padding: var(--space-3) 6vw;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.breadcrumb a {
+  color: var(--color-primary-light);
+  text-decoration: none;
+}
+.breadcrumb .sep {
+  color: var(--color-text-on-dark-2);
+}
+
+@media (max-width: 900px) {
+  .page-hero {
+    height: 46vh;
+    min-height: 300px;
+  }
+  .page-hero-content {
+    padding: 0 6vw var(--space-7);
+  }
+}

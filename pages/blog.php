@@ -1,96 +1,101 @@
 <?php
-require_once '../include/connection.php';
-require_once '../include/image_helpers.php';
-
-// Fetch published blogs from database
-$sql = "SELECT * FROM blogs WHERE is_published = 1 ORDER BY published_at DESC, created_at DESC";
-$result = $conn->query($sql);
-$blogs = [];
-if ($result && $result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $blogs[] = $row;
-    }
-}
+  $pageTitle = 'Virunga Homestay - Blog';
+  $pageCss = ['page-hero.css', 'blog.css'];
+  $pageHeroKey = 'blog';
+  $pageScripts = ['blog.js'];
+  include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog | Virunga Homestay</title>
-  <link rel="stylesheet" href="../css/blogs.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/rooms.css">
-  <link rel="stylesheet" href="../css/logo.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-</head>
-<body>
-  <?php include './include/header.php'; ?>
-   <section class="rooms-hero">
-    <h1>Stories</h1>
-    <p>Experience comfort and culture in our thoughtfully designed rooms</p>
-  </section>
-  <main class="blogs-list-container">
-    <div class="blogs-grid">
-      <?php if (empty($blogs)): ?>
-        <div class="no-blogs">
-          <h2>No blog posts yet</h2>
-          <p>Check back soon for exciting stories and updates from Virunga Homestay!</p>
-        </div>
-      <?php else: ?>
-        <?php foreach ($blogs as $blog): ?>
-          <article class="blog-card">
-            <div class="blog-image">
-              <img src="../homestay/<?php echo buildImageUrl($blog['image'], 'blogs'); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
-            </div>
-            <div class="blog-content">
-              <h2 class="blog-title"><?php echo htmlspecialchars($blog['title']); ?></h2>
-              <div class="blog-excerpt">
-                <?php 
-                // Display content or excerpt
-                $content = $blog['content'];
-                // Strip HTML tags for excerpt and limit length
-                $plain_content = strip_tags($content);
-                if (strlen($plain_content) > 200) {
-                    echo substr($plain_content, 0, 200) . '...';
-                } else {
-                    echo $plain_content;
-                }
-                ?>
-              </div>
-              <div class="blog-meta">
-                <span class="blog-date">
-                  <?php 
-                  $date = $blog['published_at'] ? $blog['published_at'] : $blog['created_at'];
-                  echo date('F j, Y', strtotime($date));
-                  ?>
-                </span>
-              </div>
-              <a href="blogsopen.php?slug=<?php echo htmlspecialchars($blog['slug']); ?>" class="read-more">
-                Read More
-              </a>
-            </div>
-          </article>
-        <?php endforeach; ?>
-      <?php endif; ?>
-    </div>
-  </main>
-  <?php include '../include/footer.php'; ?>
+<?php include 'page-hero.php'; ?>
 
-    <!-- Floating WhatsApp Button -->
-    <a
-      href="https://wa.me/+250788123456?text=Hello! I'd like to know more about Virunga Homestay"
-      class="floating-whatsapp"
-    >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.688"
-        />
-      </svg>
-    </a>
-  <script src="./js/header.js"></script>  
-</body>
-</html>
+<main id="blog-page">
+  <section class="blog-intro">
+    <div class="section-container blog-intro__grid">
+      <div>
+        <div class="section-label">Latest Stories</div>
+        <h2 class="blog-title">Fresh stories from Musanze, crafted for travelers</h2>
+        <p class="blog-lead">
+          Explore local insights, travel tips, and behind-the-scenes stories from Virunga Homestay.
+          Use filters to discover what matches your trip style.
+        </p>
+      </div>
+      <div class="blog-kpis">
+        <div class="blog-kpi"><strong>24</strong><span>Published Posts</span></div>
+        <div class="blog-kpi"><strong>6</strong><span>Topics</span></div>
+        <div class="blog-kpi"><strong>4 min</strong><span>Avg Read Time</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-controls">
+    <div class="section-container blog-controls__row">
+      <div class="blog-filters" role="tablist" aria-label="Blog categories">
+        <button class="blog-filter is-active" data-filter="all" type="button">All</button>
+        <button class="blog-filter" data-filter="guides" type="button">Guides</button>
+        <button class="blog-filter" data-filter="culture" type="button">Culture</button>
+        <button class="blog-filter" data-filter="food" type="button">Food</button>
+        <button class="blog-filter" data-filter="nature" type="button">Nature</button>
+      </div>
+      <label class="blog-search-wrap" for="blogSearch">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="blogSearch" class="blog-search" type="text" placeholder="Search stories" autocomplete="off" />
+      </label>
+    </div>
+  </section>
+
+  <section class="blog-listing">
+    <div class="section-container">
+      <div class="blog-grid" id="blogGrid">
+        <?php
+        require_once __DIR__ . '/../config/db.php';
+        $sqlBlogs = "SELECT * FROM blogs WHERE status = 'published' ORDER BY created_at DESC";
+        $resBlogs = $conn->query($sqlBlogs);
+        if ($resBlogs && $resBlogs->num_rows > 0) {
+            while ($blog = $resBlogs->fetch_assoc()) {
+                $category = htmlspecialchars($blog['category']);
+                $title = htmlspecialchars($blog['title']);
+                // Use a short summary generated from the start of the content if subtitle is empty
+                $cleanContent = strip_tags($blog['content']);
+                $subTitle = !empty($blog['sub_title']) ? htmlspecialchars($blog['sub_title']) : (strlen($cleanContent) > 100 ? substr($cleanContent, 0, 100) . '...' : $cleanContent);
+                $kicker = !empty($blog['kicker']) ? htmlspecialchars($blog['kicker']) : ucfirst($category);
+                $thumbnail = !empty($blog['thumbnail']) ? htmlspecialchars($blog['thumbnail']) : './img/hero/1.jpg';
+                if (strpos($thumbnail, '/') === false && strpos($thumbnail, '\\') === false && strpos($thumbnail, 'http') !== 0) {
+                    $thumbnail = './img/blogs/' . $thumbnail;
+                } elseif (strpos($thumbnail, './') !== 0 && strpos($thumbnail, 'http') !== 0) {
+                    $thumbnail = './' . ltrim($thumbnail, '/');
+                }
+                $datePub = htmlspecialchars($blog['date_published']);
+                $readTime = htmlspecialchars($blog['read_time']);
+                $slug = htmlspecialchars($blog['slug']);
+                
+                $detailUrl = $baseLink('blogdetails') . '?slug=' . urlencode($slug);
+                ?>
+                <a class="blog-card" href="<?php echo $detailUrl; ?>" data-category="<?php echo strtolower(str_replace(' ', '-', $category)); ?>" data-title="<?php echo strtolower($title); ?>">
+                  <div class="blog-card__media">
+                    <img src="<?php echo $thumbnail; ?>" alt="<?php echo $title; ?>" />
+                  </div>
+                  <div class="blog-card__body">
+                    <span class="blog-card__tag"><?php echo $kicker; ?></span>
+                    <h3><?php echo $title; ?></h3>
+                    <p><?php echo $subTitle; ?></p>
+                    <div class="blog-card__meta">
+                      <span><?php echo $datePub; ?></span>
+                      <span><?php echo $readTime; ?></span>
+                    </div>
+                  </div>
+                </a>
+                <?php
+            }
+        }
+        ?>
+      </div>
+
+      <div class="blog-more-wrap">
+        <button id="blogShowMore" class="blog-more-btn" type="button">View more</button>
+      </div>
+
+      <p class="blog-empty" id="blogEmpty" hidden>No stories match your search yet.</p>
+    </div>
+  </section>
+</main>
+
+<?php include 'includes/footer.php'; ?>

@@ -1,0 +1,109 @@
+# Virunga Homestay
+
+> A premium homestay experience at the foot of the Virunga Volcanoes in Musanze, Northern Rwanda. We offer comfortable rooms, authentic community activities, local cuisine, shop, car rentals, and curated travel content for guests seeking genuine cultural connection.
+
+**Website:** https://virungahomestay.com  
+**Location:** Musanze (Ruhengeri), Northern Rwanda  
+**Contact:** +250 784 513 435  
+**Booking:** Direct on WhatsApp or via the website contact form  
+**Languages:** English
+
+---
+
+## Pages
+
+### Home
+- URL: https://virungahomestay.com/
+- Description: Landing page showcasing the homestay's hero, featured rooms, community activities, testimonials, and a booking call to action. Highlights the location near Volcanoes National Park and Gorilla trekking routes.
+
+### About
+- URL: https://virungahomestay.com/about
+- Description: The story of Virunga Homestay — the family behind it, the mission of authentic community-based tourism, and the values that shape every guest's stay.
+
+### Rooms
+- URL: https://virungahomestay.com/rooms
+- Description: Browse all available accommodation options. Each room listing includes photos, a description, bed type, capacity, amenities, price, and a direct booking link. Rooms range from standard doubles to family suites, all styled with Rwandan cultural touches.
+
+### House Rules
+- URL: https://virungahomestay.com/houserules
+- Description: A clear and friendly guide to the house policies — check-in/check-out times, meal schedules, noise guidelines, visitor rules, and safety procedures so guests feel at home from day one.
+
+### Community Activities
+- URL: https://virungahomestay.com/activity
+- Description: A curated catalogue of handpicked community experiences guests can book. Activities include cooking classes, cultural village walks, birdwatching, farm visits, craft workshops, and nature hikes. Each card links to a detail page.
+
+### Activity Detail
+- URL: https://virungahomestay.com/activitydetails?id={id}
+- Description: Full page for each community activity. Includes a hero banner, pricing, duration, group size, age requirements, detailed itinerary content, and direct WhatsApp booking. Related activities shown at the bottom.
+
+### Travel Blog
+- URL: https://virungahomestay.com/blog
+- Description: Practical travel stories, local insight guides, and destination essays about Northern Rwanda. Topics include gorilla trekking, cultural traditions, food, nature, and guest experiences.
+
+### Blog Article
+- URL: https://virungahomestay.com/blogdetails?slug={slug}
+- Description: A full article page with a hero image, rich structured content sections, author card, article metadata (category, read time, publish date), tag chips, and related story recommendations.
+
+### Shop
+- URL: https://virungahomestay.com/shop
+- Description: Browse and order authentic Rwandan handcrafted goods — imigongo art, woven baskets, coffee, tea, and souvenir items. Supports local artisans and community makers.
+
+### Car Rental
+- URL: https://virungahomestay.com/carrent
+- Description: Hire a vehicle for excursions around Musanze and Rwanda. Options include 4×4s for Volcanoes National Park, standard saloons, and minibuses for group travel. Enquiries via WhatsApp.
+
+### Contact
+- URL: https://virungahomestay.com/contact
+- Description: Get in touch for bookings, group enquiries, or travel planning assistance. Includes a contact form, WhatsApp link, email address, and an embedded map showing the homestay location in Musanze.
+
+### Privacy Policy
+- URL: https://virungahomestay.com/privacy
+- Description: How Virunga Homestay collects, uses, and protects visitor data on the website. Covers form submissions, cookies, and third-party services.
+
+---
+
+## Key Information
+
+### Location & Getting There
+Virunga Homestay is situated in Musanze (formerly Ruhengeri), the gateway city to Volcanoes National Park in Northern Rwanda. Musanze is approximately 2–2.5 hours by road from Kigali International Airport (KGL). The homestay can arrange airport transfers on request.
+
+### What Makes Us Unique
+- Family-run property with direct host interaction
+- Walking distance from local markets and community cooperatives
+- Immersive cooking classes using fresh, locally sourced Rwandan ingredients
+- Cultural storytelling evenings and imigongo craft sessions
+- Proximity to gorilla trekking, golden monkey tracking, and volcano hikes
+- Eco-conscious approach supporting local artisans and farmers
+
+### Nearby Attractions
+- **Volcanoes National Park** — Mountain gorilla and golden monkey trekking (permit required)
+- **Twin Lakes (Burera & Ruhondo)** — Scenic lakeside cycling and kayaking
+- **Dian Fossey Gorilla Fund campus** — Research and conservation centre
+- **Musanze Caves** — Underground river cave system
+- **Lake Kivu (2 hrs)** — Beach, boat trips, and lakeside towns Gisenyi/Rubavu
+
+### Room Types
+The homestay offers a range of rooms for solo travellers, couples, and families. All rooms include clean bedding, mosquito nets, a fan or AC, access to shared or en-suite bathrooms, Wi-Fi, and breakfast. Exact availability and pricing are listed on the Rooms page and confirmed via WhatsApp.
+
+### Booking Process
+1. Browse rooms or activities on the website
+2. Click **Book on WhatsApp** or **Contact Us**
+3. Send your preferred dates, number of guests, and room type
+4. Receive a confirmation and payment instructions within 24 hours
+
+### Activities Overview
+| Activity | Duration | Group Size |
+|---|---|---|
+| Rwandan Cooking Class | 3–4 hours | 2–8 guests |
+| Cultural Village Walk | Half day | 1–10 guests |
+| Imigongo Art Workshop | 2–3 hours | 2–8 guests |
+| Farm & Coffee Tour | 4–6 hours | 2–10 guests |
+| Birdwatching Walk | Flexible | 1–6 guests |
+| Sunrise Volcano Viewpoint | Half day | 1–6 guests |
+
+---
+
+## Optional Resources
+
+- Sitemap: https://virungahomestay.com/sitemap.xml
+- Robots: https://virungahomestay.com/robots.txt

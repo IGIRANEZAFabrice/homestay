@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /api/
+Disallow: /vendor/
+
+# Sitemap
+Sitemap: https://virungahomestay.com/sitemap.xml
+
+# LLMs / AI crawlers — markdown mirrors
+# https://virungahomestay.com/llms.txt

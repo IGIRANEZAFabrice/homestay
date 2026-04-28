@@ -1,0 +1,777 @@
+/* ═══════════════════════════════════════════════════════════════
+   bookinginfo.css – premium booking & payment page
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Shared layout ─────────────────────────────────────────────── */
+.bi-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+.bi-section {
+  padding: 90px 0;
+  background: var(--color-cream);
+  color: var(--color-text-on-light);
+}
+
+.bi-section--dark {
+  background: var(--color-sand);
+}
+
+/* ── Section intro ─────────────────────────────────────────────── */
+.bi-intro {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.bi-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-primary-light);
+  margin-bottom: 16px;
+}
+
+.bi-label i {
+  font-size: 14px;
+}
+
+.bi-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 400;
+  color: var(--color-text-on-light);
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.bi-subtitle {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-on-light-2);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIMELINE – booking steps
+   ═══════════════════════════════════════════════════════════════ */
+.bi-timeline {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: 52px;
+}
+
+.bi-timeline__line {
+  position: absolute;
+  left: 23px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 70%,
+    transparent 100%
+  );
+  border-radius: 2px;
+}
+
+.bi-step {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.bi-step:last-child {
+  margin-bottom: 0;
+}
+
+/* Marker (circle on timeline) */
+.bi-step__marker {
+  position: absolute;
+  left: -52px;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.bi-step__num {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--color-dark-2);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary-light);
+  position: relative;
+  z-index: 2;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.bi-step:hover .bi-step__num {
+  background: var(--color-primary);
+  color: var(--color-white);
+  transform: scale(1.1);
+}
+
+.bi-step__marker > i {
+  display: none; /* icon hidden on desktop timeline; used for semantic meaning */
+}
+
+/* Card */
+.bi-step__card {
+  background: var(--color-dark-2);
+  border: 1px solid rgba(200, 113, 26, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.bi-step:hover .bi-step__card {
+  border-color: rgba(200, 113, 26, 0.35);
+  box-shadow: 0 8px 32px rgba(200, 113, 26, 0.08);
+  transform: translateX(4px);
+}
+
+.bi-step__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-white);
+  margin-bottom: 10px;
+}
+
+.bi-step__text {
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--color-text-on-dark-2);
+}
+
+.bi-step__text a {
+  color: var(--color-primary-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bi-step__text a:hover {
+  color: var(--color-white);
+}
+
+.bi-step__text strong {
+  color: var(--color-text-on-dark);
+}
+
+.bi-step__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  background: var(--color-primary);
+  color: var(--color-white);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.bi-step__action:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-amber);
+}
+
+.bi-step__action--wa {
+  background: #25d366;
+  color: #fff;
+}
+
+.bi-step__action--wa:hover {
+  background: #20bd5a;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WHY DIRECT BOOKING
+   ═══════════════════════════════════════════════════════════════ */
+.bi-why-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-sand) 100%);
+}
+
+.bi-why {
+  background: var(--color-primary-subtle);
+  border: 1px solid rgba(200, 113, 26, 0.18);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bi-why::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(200, 113, 26, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.bi-why__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.bi-why__header > i {
+  font-size: 22px;
+  color: var(--color-primary);
+}
+
+.bi-why__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--color-text-on-light);
+}
+
+.bi-why__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.bi-why__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--color-white);
+  border: 1px solid rgba(200, 113, 26, 0.08);
+  transition: border-color var(--transition-base), background var(--transition-base);
+}
+
+.bi-why__item:hover {
+  border-color: rgba(200, 113, 26, 0.25);
+  background: rgba(200, 113, 26, 0.04);
+}
+
+.bi-why__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(200, 113, 26, 0.12);
+  border: 1px solid rgba(200, 113, 26, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bi-why__icon i {
+  font-size: 16px;
+  color: var(--color-primary-light);
+}
+
+.bi-why__item strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary-light);
+  margin-bottom: 4px;
+}
+
+.bi-why__item p {
+  font-size: 13.5px;
+  color: var(--color-text-on-light-2);
+  line-height: 1.6;
+}
+
+.bi-why__footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(200, 113, 26, 0.12);
+  text-align: center;
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--color-text-on-light-2);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CURRENCY BANNER
+   ═══════════════════════════════════════════════════════════════ */
+.bi-currency {
+  margin-bottom: 56px;
+}
+
+.bi-currency__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text-on-light);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.bi-currency__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.bi-currency__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 22px;
+  background: rgba(200, 113, 26, 0.04);
+  border: 1px solid rgba(200, 113, 26, 0.12);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.bi-currency__item:hover {
+  border-color: rgba(200, 113, 26, 0.3);
+  transform: translateY(-3px);
+}
+
+.bi-currency__symbol {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.bi-currency__item strong {
+  display: block;
+  font-size: 14px;
+  color: var(--color-text-on-light);
+  margin-bottom: 3px;
+}
+
+.bi-currency__item p {
+  font-size: 12.5px;
+  color: var(--color-text-on-light-2);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAYMENT METHOD CARDS
+   ═══════════════════════════════════════════════════════════════ */
+.bi-pay-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 56px;
+}
+
+.bi-pay-card {
+  background: var(--color-dark);
+  border: 1px solid rgba(200, 113, 26, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.bi-pay-card:hover {
+  border-color: rgba(200, 113, 26, 0.3);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+}
+
+.bi-pay-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(200, 113, 26, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.bi-pay-card__icon i {
+  font-size: 20px;
+  color: var(--color-primary-light);
+}
+
+.bi-pay-card__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-white);
+  margin-bottom: 16px;
+}
+
+.bi-pay-card__title span {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(200, 113, 26, 0.12);
+  color: var(--color-primary-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+.bi-pay-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bi-pay-card__list li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-text-on-dark-2);
+}
+
+.bi-pay-card__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONDITIONS / TERMS
+   ═══════════════════════════════════════════════════════════════ */
+.bi-conditions {
+  background: var(--color-dark);
+  border: 1px solid rgba(200, 113, 26, 0.12);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  overflow: hidden;
+}
+
+.bi-conditions__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.bi-conditions__header i {
+  font-size: 20px;
+  color: var(--color-primary);
+}
+
+.bi-conditions__header h4 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.bi-conditions__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.bi-conditions__item {
+  text-align: center;
+  padding: 24px 16px;
+  border-radius: var(--radius-lg);
+  background: rgba(200, 113, 26, 0.03);
+  border: 1px solid rgba(200, 113, 26, 0.08);
+  transition: border-color var(--transition-base);
+}
+
+.bi-conditions__item:hover {
+  border-color: rgba(200, 113, 26, 0.22);
+}
+
+.bi-conditions__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  height: 56px;
+  padding: 0 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.bi-conditions__badge i {
+  font-size: 22px;
+}
+
+.bi-conditions__item strong {
+  display: block;
+  font-size: 14px;
+  color: var(--color-primary-light);
+  margin-bottom: 8px;
+}
+
+.bi-conditions__item p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text-on-dark-2);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CTA BANNER
+   ═══════════════════════════════════════════════════════════════ */
+.bi-cta {
+  padding: 80px 0;
+  background: var(--color-cream);
+}
+
+.bi-cta__inner {
+  background: linear-gradient(135deg, rgba(200, 113, 26, 0.08) 0%, rgba(200, 113, 26, 0.02) 100%);
+  border: 1px solid rgba(200, 113, 26, 0.2);
+  border-radius: var(--radius-xl);
+  padding: 52px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.bi-cta__text h3 {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--color-text-on-light);
+  margin-bottom: 8px;
+}
+
+.bi-cta__text p {
+  font-size: 15px;
+  color: var(--color-text-on-light-2);
+}
+
+.bi-cta__actions {
+  display: flex;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.bi-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.bi-cta__btn--primary {
+  background: #25d366;
+  color: #fff;
+}
+
+.bi-cta__btn--primary:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.3);
+}
+
+.bi-cta__btn--outline {
+  background: transparent;
+  color: var(--color-primary-dark);
+  border: 1px solid rgba(200, 113, 26, 0.4);
+}
+
+.bi-cta__btn--outline:hover {
+  background: rgba(200, 113, 26, 0.1);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children of bi-timeline */
+.bi-timeline .bi-step:nth-child(2) { transition-delay: 0.08s; }
+.bi-timeline .bi-step:nth-child(3) { transition-delay: 0.16s; }
+.bi-timeline .bi-step:nth-child(4) { transition-delay: 0.24s; }
+.bi-timeline .bi-step:nth-child(5) { transition-delay: 0.32s; }
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  .bi-currency__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bi-conditions__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bi-cta__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .bi-why__grid {
+    grid-template-columns: 1fr;
+  }
+  .bi-why {
+    padding: 36px 28px;
+  }
+}
+
+@media (max-width: 700px) {
+  .bi-section {
+    padding: 60px 0;
+  }
+
+  .bi-container {
+    padding: 0 var(--space-5);
+  }
+
+  .bi-timeline {
+    padding-left: 44px;
+  }
+
+  .bi-timeline__line {
+    left: 19px;
+  }
+
+  .bi-step__marker {
+    left: -44px;
+  }
+
+  .bi-step__num {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .bi-step__card {
+    padding: 22px 20px;
+  }
+
+  .bi-step__title {
+    font-size: 19px;
+  }
+
+  .bi-title {
+    font-size: 2rem;
+  }
+
+  .bi-currency__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bi-currency__item {
+    padding: 16px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bi-pay-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bi-conditions__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bi-conditions {
+    padding: 28px 20px;
+  }
+
+  .bi-cta__inner {
+    padding: 36px 24px;
+  }
+
+  .bi-cta__text h3 {
+    font-size: 24px;
+  }
+
+  .bi-cta__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .bi-cta__btn {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .bi-currency__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bi-conditions__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bi-why__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .bi-why__title {
+    font-size: 22px;
+  }
+}
