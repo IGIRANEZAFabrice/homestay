@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $meters = (int)($_POST['meters'] ?? 0);
     $guest_number = (int)($_POST['guest_number'] ?? 0);
     $bed_type = $conn->real_escape_string($_POST['bed_type']);
-    $price = (float)($_POST['price'] ?? 0);
+    $price_single = (float)($_POST['price_single'] ?? 0);
+    $price_double = (float)($_POST['price_double'] ?? 0);
     $status = $conn->real_escape_string($_POST['status']);
     
     // Convert paths to raw filenames if needed
@@ -53,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if ($id > 0) {
-        $conn->query("UPDATE rooms SET title='$title', meters=$meters, guest_number=$guest_number, bed_type='$bed_type', price=$price, image='$image', status='$status' WHERE id=$id");
+        $conn->query("UPDATE rooms SET title='$title', meters=$meters, guest_number=$guest_number, bed_type='$bed_type', price_single=$price_single, price_double=$price_double, image='$image', status='$status' WHERE id=$id");
         $msg = "Room updated successfully";
     } else {
-        $conn->query("INSERT INTO rooms (title, meters, guest_number, bed_type, price, image, status) VALUES ('$title', $meters, $guest_number, '$bed_type', $price, '$image', '$status')");
+        $conn->query("INSERT INTO rooms (title, meters, guest_number, bed_type, price_single, price_double, image, status) VALUES ('$title', $meters, $guest_number, '$bed_type', $price_single, $price_double, '$image', '$status')");
         $msg = "Room added successfully";
     }
     // Render list immediately after save
@@ -162,7 +163,8 @@ $currentPage = 'rooms'; // Highlights active sidebar tab
                         <td style="padding:15px; font-size:13px; color:var(--text-2);">
                           <div style="margin-bottom:4px;"><strong style="color:var(--text-1);">Bed:</strong> <?= $row['bed_type'] ? htmlspecialchars($row['bed_type']) : '-' ?></div>
                           <div style="margin-bottom:4px;"><strong style="color:var(--text-1);">Size:</strong> <?= $row['meters'] ? $row['meters'].'m²' : '-' ?></div>
-                          <div><strong style="color:var(--text-1);">Price:</strong> <?= $row['price'] ? '$'.$row['price'] : '-' ?></div>
+                          <div style="margin-bottom:4px;"><strong style="color:var(--text-1);">Single Occ:</strong> <?= $row['price_single'] ? '$'.$row['price_single'] : '-' ?></div>
+                          <div><strong style="color:var(--text-1);">Double Occ:</strong> <?= $row['price_double'] ? '$'.$row['price_double'] : '-' ?></div>
                         </td>
                         <td style="padding:15px;">
                           <a href="rooms.php?action=toggle&id=<?= $row['id'] ?>" style="text-decoration:none;">
@@ -187,7 +189,7 @@ $currentPage = 'rooms'; // Highlights active sidebar tab
                 </div>
 
               <?php elseif ($action === 'add' || $action === 'edit'): 
-                  $r = ['id'=>0,'title'=>'','meters'=>'','guest_number'=>'','bed_type'=>'','price'=>'','image'=>'','status'=>'active'];
+                  $r = ['id'=>0,'title'=>'','meters'=>'','guest_number'=>'','bed_type'=>'','price_single'=>'','price_double'=>'','image'=>'','status'=>'active'];
                   if($action === 'edit' && isset($_GET['id'])) {
                       $res = $conn->query("SELECT * FROM rooms WHERE id=".(int)$_GET['id']);
                       if($res && $res->num_rows>0) $r = $res->fetch_assoc();
@@ -212,14 +214,19 @@ $currentPage = 'rooms'; // Highlights active sidebar tab
                       </div>
                   </div>
                   
+                  <div class="form-group">
+                    <label>Bed Type</label>
+                    <input type="text" name="bed_type" placeholder="e.g. King Bed" value="<?= htmlspecialchars((string)$r['bed_type']) ?>" />
+                  </div>
+                  
                   <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
                       <div class="form-group">
-                        <label>Bed Type</label>
-                        <input type="text" name="bed_type" placeholder="e.g. King Bed" value="<?= htmlspecialchars((string)$r['bed_type']) ?>" />
+                        <label>Single Occupancy / night</label>
+                        <input type="number" step="0.01" name="price_single" placeholder="e.g. 150.00" value="<?= htmlspecialchars((string)$r['price_single']) ?>" />
                       </div>
                       <div class="form-group">
-                        <label>Base Price ($ / night)</label>
-                        <input type="number" step="0.01" name="price" placeholder="e.g. 185.00" value="<?= htmlspecialchars((string)$r['price']) ?>" />
+                        <label>Double Occupancy / night</label>
+                        <input type="number" step="0.01" name="price_double" placeholder="e.g. 185.00" value="<?= htmlspecialchars((string)$r['price_double']) ?>" />
                       </div>
                   </div>
                   

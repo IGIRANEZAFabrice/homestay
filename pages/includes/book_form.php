@@ -30,7 +30,7 @@ $formSource = isset($title) ? htmlspecialchars($title) : (isset($blog['title']) 
         
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
             <button type="submit" class="btn btn-primary" style="border:none; padding:12px; cursor:pointer; font-weight:600; background-color: var(--color-primary); color: #fff; border-radius: 8px;">Book Your Experience</button>
-            <a href="https://wa.me/250781234567?text=Hello!%20I%20am%20interested%20in%20<?php echo rawurlencode($formSource); ?>" target="_blank" class="btn btn-ghost" style="border:1px solid var(--color-primary); padding:12px; border-radius:8px; text-align:center; color:var(--color-primary); text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+            <a href="https://wa.me/250784513435?text=Hello!%20I%20am%20interested%20in%20<?php echo rawurlencode($formSource); ?>" target="_blank" class="btn btn-ghost" style="border:1px solid var(--color-primary); padding:12px; border-radius:8px; text-align:center; color:var(--color-primary); text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp Us
             </a>
         </div>

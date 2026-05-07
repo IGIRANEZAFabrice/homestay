@@ -994,6 +994,116 @@
   transform: none;
 }
 
+/* Quick Booking CTA Section - Modernized */
+#booking-cta {
+  padding: 60px 0;
+  background: var(--color-dark);
+  color: var(--color-white);
+  position: relative;
+  overflow: hidden;
+}
+
+#booking-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 113, 26, 0.4), transparent);
+}
+
+.booking-cta__grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.booking-cta__card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: center;
+  transition: all var(--transition-base);
+  border-radius: var(--radius-md);
+}
+
+.booking-cta__card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(200, 113, 26, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.booking-cta__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(200, 113, 26, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0; /* Changed for horizontal layout */
+}
+
+.booking-cta__icon i {
+  font-size: 18px;
+  color: var(--color-primary-light);
+}
+
+.booking-cta__content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.booking-cta__title {
+  font-family: var(--font-body); /* Changed from display for a cleaner look */
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  color: var(--color-white);
+  letter-spacing: 0.01em;
+}
+
+.booking-cta__text {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color-text-on-dark-2);
+  margin-bottom: 12px;
+  max-width: 280px;
+}
+
+.booking-cta__card .btn-primary,
+.booking-cta__card .btn-outline {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.7rem;
+  width: fit-content;
+}
+
+@media (max-width: 900px) {
+  .booking-cta__grid {
+    flex-direction: column;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-cta__card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+    padding: 24px;
+  }
+}
+
 .testi-card .section-heading {
   margin: 0;
   max-width: 640px;

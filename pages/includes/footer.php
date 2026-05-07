@@ -150,7 +150,7 @@
 
           <div class="footer__badges">
             <span class="badge"
-              ><i class="fa-solid fa-clock"></i> Est. 2015</span
+              ><i class="fa-solid fa-clock"></i> Est. 2020</span
             >
           </div>
         </div>
@@ -165,6 +165,7 @@
             <li><a href="<?php echo $baseLink('shop'); ?>">Shop</a></li>
             <li><a href="<?php echo $baseLink('cars'); ?>">Car Rent</a></li>
             <li><a href="<?php echo $baseLink('activities'); ?>">Community Experience</a></li>
+             <li><a href="<?php echo $baseLink('blog'); ?>">Blogs</a></li>
           </ul>
         </div>
 
@@ -173,10 +174,10 @@
           <h3 class="footer__col-title">Guest Info</h3>
           <ul class="footer__links">
             <li><a href="<?php echo $baseLink('rooms'); ?>">Book a Stay</a></li>
-            <li><a href="<?php echo $baseLink('rules'); ?>">Check-in / Check-out</a></li>
-            <li><a href="<?php echo $baseLink('rules'); ?>">House Rules</a></li>
-            <li><a href="<?php echo $baseLink('faqs'); ?>">FAQ</a></li>
-            <li><a href="">Testimonials</a></li>
+            <li><a href="<?php echo $baseLink('houserules'); ?>">Check-in / Check-out</a></li>
+            <li><a href="<?php echo $baseLink('houserules'); ?>">House Rules</a></li>
+            <li><a href="<?php echo $baseLink('houserules'); ?>">FAQ</a></li>
+            <li><a href="https://www.tripadvisor.com/Hotel_Review-g317075-d20326735-Reviews-Virunga_Homestay_Live_the_Virunga_Experience-Ruhengeri_Musanze_District_Northern_Prov.html">Testimonials</a></li>
           </ul>
         </div>
 
@@ -245,8 +246,8 @@
           © 2025 <span>Virunga Homestay</span>. All rights reserved.</p>
         <ul class="footer__bottom-links">
           <li><a href="<?php echo $baseLink('privacy'); ?>">Privacy Policy</a></li>
-          <li><a href="<?php echo $baseLink('terms'); ?>">Terms of Service</a></li>
-          <li><a href="<?php echo $baseLink('cookies'); ?>">Cookie Policy</a></li>
+          <li><a href="<?php echo $baseLink('privacy'); ?>">Terms of Service</a></li>
+          <li><a href="<?php echo $baseLink('privacy'); ?>">Cookie Policy</a></li>
         </ul>
       </div>
     </footer>

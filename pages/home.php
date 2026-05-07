@@ -40,7 +40,7 @@
                 <div class="slide' . $activeClass . '">
                   <div class="slide-bg" style="background-image: url(\'' . htmlspecialchars($imgAttr) . '\');"></div>
                   <div class="slide-content">
-                    <p class="slide-tag">Live the Virunga Experience</p>
+                    <p class="slide-tag">Stay Locally. Experience the Virunga</p>
                     <h1 class="slide-title">
                       ' . $title . '
                     </h1>
@@ -48,7 +48,7 @@
                       ' . $paragraph . '
                     </p>
                     <div class="slide-actions">
-                      <a href="#rooms" class="btn-primary">Explore Rooms</a>
+                      <a href="#rooms" class="btn-primary">Book your stay</a>
                       <a href="#about" class="btn-outline">Our Story</a>
                     </div>
                   </div>
@@ -141,7 +141,7 @@
             <?php if ($badge3) echo '<span>' . $badge3 . '</span>'; ?>
           </div>
         </div>
-        <div class="about-card" data-reveal>
+        <div class="about-card" id="about" data-reveal>
           <div class="about-card__metric">
             <span class="metric-num" data-count data-target="<?php echo $m1_num; ?>" <?php if($m1_suf) echo 'data-suffix="'.$m1_suf.'"'; ?>>0</span>
             <span class="metric-label"><?php echo $m1_lbl; ?></span>
@@ -171,10 +171,10 @@
             <img src="./img/services/3.jpg" alt="Bedroom" />
           </div>
           <div class="stack-img" id="sImg2">
-            <img src="./img/services/4.jpg" alt="Kitchen" />
+            <img src="./img/hero/paint.jpg" alt="Kitchen" />
           </div>
           <div class="stack-img" id="sImg3">
-            <img src="./img/services/1.JPG" alt="Reading nook" />
+            <img src="./img/hero/cooking.jpg" alt="Reading nook" />
           </div>
           <div class="stack-img" id="sImg4">
             <img src="./img/hero/1.jpg" alt="Garden view" />
@@ -301,31 +301,52 @@
                     $meters = isset($row['meters']) ? (int)$row['meters'] : 0;
                     $guests = isset($row['guest_number']) ? (int)$row['guest_number'] : 2;
                     $bed = isset($row['bed_type']) ? htmlspecialchars($row['bed_type']) : 'King Bed';
-                    $price = isset($row['price']) ? (int)$row['price'] : 0;
+                    $price_single = isset($row['price_single']) ? (int)$row['price_single'] : 0;
+                    $price_double = isset($row['price_double']) ? (int)$row['price_double'] : 0;
                     $tag = isset($tags[$i]) ? $tags[$i] : 'Premium';
                     $i++;
                     
-                    $whatsappMsg = rawurlencode("Hello Francis! I'm interested in the {$title}. Could you share availability and rates?");
+                    $whatsappMsg = rawurlencode("Hello Francis, I would like to book the " . $title . " room");
+                    $whatsappUrl = "https://wa.me/250784513435?text=" . $whatsappMsg;
                     
                     echo '
-                    <div class="room-card">
+                    <a class="room-card" href="' . $whatsappUrl . '" target="_blank" rel="noopener">
                       <img class="room-card__img" src="' . $image . '" alt="' . $title . '" />
                       <div class="room-card__overlay"></div>
                       <span class="room-card__tag">' . $tag . '</span>
                       <div class="room-card__content">
                         <h3 class="room-card__name">' . $title . '</h3>
-                        <div class="room-card__meta">
-                          <span><i class="fa-solid fa-maximize"></i> ' . $meters . ' m²</span>
-                          <span><i class="fa-solid fa-user-group"></i> ' . $guests . ' Guests</span>
-                          <span><i class="fa-solid fa-bed"></i> ' . $bed . '</span>
+                        <div class="room-card__pricing-grid">
+                          <div class="room-card__price">
+                            <span class="amount">$' . $price_single . '</span>
+                            <span class="per">Single Occupancy / night</span>
+                          </div>
+                          <div class="room-card__price">
+                            <span class="amount">$' . $price_double . '</span>
+                            <span class="per">Double Occupancy / night</span>
+                          </div>
                         </div>
-                        <div class="room-card__price">
-                          <span class="amount">$' . $price . '</span>
-                          <span class="per">/ night</span>
+                        <div class="room-card__details-reveal">
+                          <div class="room-card__meta">
+                            <span><i class="fa-solid fa-maximize"></i> ' . $meters . ' m²</span>
+                            <span><i class="fa-solid fa-user-group"></i> ' . $guests . ' Guests</span>
+                            <span><i class="fa-solid fa-bed"></i> ' . $bed . '</span>
+                          </div>
+                          <div class="room-card__amenities">
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-mug-hot"></i> Breakfast included in a stay
+                             </div>
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-wifi"></i> Free High-Speed WiFi
+                             </div>
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-temperature-arrow-up"></i> Hot Shower
+                             </div>
+                           </div>
                         </div>
                       </div>
-                      <a class="room-card__cta" href="' . (isset($baseLink) ? $baseLink('bookinginfo') : 'bookinginfo.php') . '">Book Now <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-                    </div>';
+                      <span class="room-card__cta">Book Now <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+                    </a>';
                 }
             } else {
                 echo '<p style="grid-column: 1 / -1; text-align: center;">No rooms available at the moment.</p>';
@@ -453,6 +474,29 @@
         </div>
       </div>
     </section>
+
+    <!-- ══ QUICK BOOKING CTA ══ -->
+    <section id="booking-cta" class="reveal" data-reveal>
+      <div class="section-container">
+        <div class="booking-cta__grid">
+          <div class="booking-cta__card">
+            <div class="booking-cta__content">
+              <h3 class="booking-cta__title">Ready for a Restful Stay?</h3>
+              <p class="booking-cta__text">Book your private room at Virunga Homestay.</p>
+              <a href="<?php echo $baseLink('rooms'); ?>" class="btn-primary">Book your Stay</a>
+            </div>
+          </div>
+          <div class="booking-cta__card">
+            <div class="booking-cta__content">
+              <h3 class="booking-cta__title">Join Our Activities</h3>
+              <p class="booking-cta__text">Discover Musanze with our guided experiences.</p>
+              <a href="<?php echo $baseLink('activity'); ?>" class="btn-outline">Explore Our CommunityExperiences</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
      <!-- Parallax Image Section -->
     <section class="parallax-section parallax-food">
       <div class="parallax-overlay">
@@ -552,18 +596,6 @@
       </div>
     </section>
 
-    <!-- WHATSAPP FLOATING BUTTON -->
-    <a
-      href="https://wa.me/250781234567"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="wa-float"
-      aria-label="Chat on WhatsApp"
-    >
-      <div class="wa-float__pulse"></div>
-      <div class="wa-float__icon"><i class="fa-brands fa-whatsapp"></i></div>
-      <span class="wa-float__label">Chat with us</span>
-    </a>
     <?php include 'includes/footer.php'; ?>
 
 

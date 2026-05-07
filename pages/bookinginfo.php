@@ -6,24 +6,8 @@
   $pageHeroKey = 'booking';
   $pageScripts = ['bookinginfo.js'];
   include 'includes/header.php';
+  include 'page-hero.php';
 ?>
-
-<!-- ── Page Hero ────────────────────────────────────────────────── -->
-<div class="page-hero" style="min-height: 38vh;">
-  <div class="page-hero-bg" style="background-image:url('./img/hero/2.jpg');"></div>
-  <div class="page-hero-content">
-    <span class="page-tag">Reservations</span>
-    <h1>Booking &amp; <em>Payments</em></h1>
-    <span class="hero-rule"></span>
-  </div>
-</div>
-
-<!-- ── Breadcrumb ────────────────────────────────────────────────── -->
-<nav class="breadcrumb" aria-label="Breadcrumb">
-  <a href="<?php echo $baseLink('home'); ?>">Home</a>
-  <span class="sep">/</span>
-  <span style="color:var(--color-text-on-dark-2);">Booking Information</span>
-</nav>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- HOW TO BOOK                                                    -->

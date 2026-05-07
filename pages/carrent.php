@@ -89,7 +89,11 @@
                     <span class="price-amount">$<?php echo htmlspecialchars(intval($car['price'])); ?></span>
                     <span class="price-per">/ day</span>
                   </div>
-                  <a href="#contact" class="car-card__cta">Book Now</a>
+                  <?php 
+                    $carTitle = htmlspecialchars($car['title']);
+                    $waCarMsg = rawurlencode("hello francis i nedd to book the {$carTitle} vehicle");
+                  ?>
+                  <a href="https://wa.me/250784513435?text=<?php echo $waCarMsg; ?>" class="car-card__cta" target="_blank" rel="noopener">Book Now</a>
                 </div>
               </div>
             </article>
@@ -107,8 +111,8 @@
   <div class="carrent-contact__inner">
     <h3 class="carrent-contact__heading">Ready to Hit the Road?</h3>
     <p class="carrent-contact__sub">Tell us your dates and destination — we'll take care of everything else.</p>
-    <a href="mailto:info@virungahomestay.com" class="carrent-contact__btn">Get in Touch</a>
-    <a href="https://wa.me/250700000000" class="carrent-contact__btn carrent-contact__btn--wa" target="_blank" rel="noopener">
+    <a href="mailto:virungahomestay@gmail.com" class="carrent-contact__btn">Get in Touch</a>
+    <a href="https://wa.me/250784513435" class="carrent-contact__btn carrent-contact__btn--wa" target="_blank" rel="noopener">
       WhatsApp Us
     </a>
   </div>

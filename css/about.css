@@ -41,69 +41,8 @@
         margin: 0 auto;
         padding: 0 var(--space-6);
       }
-      @media (max-width: 768px) {
-        .container {
-          padding: 0 var(--space-4);
-        }
-      }
 
-      .reveal {
-        opacity: 0;
-        transform: translateY(48px);
-        transition:
-          opacity 0.9s var(--ease-out),
-          transform 0.9s var(--ease-out);
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .reveal-left {
-        opacity: 0;
-        transform: translateX(-60px);
-        transition:
-          opacity 0.9s var(--ease-out),
-          transform 0.9s var(--ease-out);
-      }
-      .reveal-left.visible {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .reveal-right {
-        opacity: 0;
-        transform: translateX(60px);
-        transition:
-          opacity 0.9s var(--ease-out),
-          transform 0.9s var(--ease-out);
-      }
-      .reveal-right.visible {
-        opacity: 1;
-        transform: translateX(0);
-      }
-
-      /* â”€â”€ Section Label â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-      .section-label {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-2);
-        font-family: var(--font-body);
-        font-size: var(--text-xs);
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--color-primary);
-        margin-bottom: var(--space-4);
-      }
-      .section-label::before {
-        content: "";
-        width: 28px;
-        height: 1px;
-        background: var(--color-primary);
-      }
-
-      /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   SECTION 1 â€” Manifesto / Intro
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+      /* SECTION 1 — Manifesto / Intro */
       .s-manifesto {
         min-height: 100vh;
         display: flex;

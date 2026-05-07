@@ -16,7 +16,7 @@ $pageHeroConfig = [
   'rooms' => [
     'tag' => 'Stay With Us',
     'title' => 'Cozy <em>rooms</em> with a view',
-    'bg' => './img/rooms/1752288311_7964952.jpg',
+    'bg' => './img/hero/room.jpg',
     'crumb' => 'Rooms'
   ],
   'carrent' => [
@@ -49,9 +49,21 @@ $pageHeroConfig = [
     'bg' => './img/hero/3.jpg',
     'crumb' => 'House Rules'
   ],
+  'booking' => [
+    'tag' => 'Reservations',
+    'title' => 'Booking &amp; <em>Payments</em>',
+    'bg' => './img/hero/2.jpg',
+    'crumb' => 'Booking Information'
+  ],
+  'privacy' => [
+    'tag' => 'Virunga Homestay',
+    'title' => 'Privacy & <em>Policies</em>',
+    'bg' => './img/hero/1.jpg',
+    'crumb' => 'Privacy'
+  ],
 ];
 
-$key = isset($pageHeroKey) && isset($pageHeroConfig[$pageHeroKey]) ? $pageHeroKey : 'contact';
+$key = isset($pageHeroKey) && isset($pageHeroConfig[strtolower($pageHeroKey)]) ? strtolower($pageHeroKey) : 'contact';
 $config = $pageHeroConfig[$key];
 ?>
 <header class="page-hero">

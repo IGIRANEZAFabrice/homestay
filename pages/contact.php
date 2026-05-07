@@ -39,8 +39,8 @@
             <div class="info-text">
               <p class="info-label">Phone &amp; WhatsApp</p>
               <p class="info-value">
-                <a href="tel:+250781234567">+250 781 234 567</a><br />
-                <a href="https://wa.me/250781234567">Chat on WhatsApp &#8599;</a>
+                <a href="tel:+250784513435">+250 784 513 435</a><br />
+                <a href="https://wa.me/250784513435">Chat on WhatsApp &#8599;</a>
               </p>
             </div>
           </div>
@@ -50,7 +50,7 @@
             <div class="info-text">
               <p class="info-label">Email</p>
               <p class="info-value">
-                <a href="mailto:stay@virungahomestay.rw">stay@virungahomestay.rw</a>
+                <a href="mailto:virungahomestay@gmail.com">virungahomestay@gmail.com</a>
               </p>
             </div>
           </div>

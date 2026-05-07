@@ -8,18 +8,22 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
     <meta name="keywords" content="<?php echo isset($pageKeywords) ? $pageKeywords : 'homestay, Virunga, Rwanda, accommodation, travel, nature, volcanoes'; ?>">
-    <link rel="canonical" href="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>">
+    <?php
+      $canonicalSlug = (isset($slug) && $slug !== 'home') ? $slug : '';
+      $canonicalUrl = 'https://virungahomestay.com/' . $canonicalSlug;
+    ?>
+    <link rel="canonical" href="<?php echo $canonicalUrl; ?>">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="og:url" content="<?php echo $canonicalUrl; ?>">
     <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Virunga Homestay'; ?>">
     <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
     <meta property="og:image" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . '/img/logo/logo.png'; ?>">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>">
+    <meta property="twitter:url" content="<?php echo $canonicalUrl; ?>">
     <meta property="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Virunga Homestay'; ?>">
     <meta property="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
     <meta property="twitter:image" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . '/img/logo/logo.png'; ?>">
@@ -65,8 +69,8 @@
 
       <ul class="nav-links">
         <li><a href="<?php echo $baseLink('home'); ?>">Home</a></li>
-        <li><a href="<?php echo $baseLink('rooms'); ?>">Rooms</a></li>
-        <li><a href="<?php echo $baseLink('houserules'); ?>">House Rules</a></li>
+        <li><a href="<?php echo $baseLink('rooms'); ?>">Stay</a></li>
+        <li><a href="<?php echo $baseLink('activity'); ?>">Experiences</a></li>
 
         <!-- -- Services dropdown -- -->
         <li class="has-dropdown">
@@ -79,15 +83,9 @@
             <a href="<?php echo $baseLink('carrent'); ?>" class="dropdown-item" role="menuitem">
               Car Rent
             </a>
-            <div class="dropdown-divider"></div>
-            <a href="<?php echo $baseLink('activity'); ?>" class="dropdown-item" role="menuitem">
-              Community Activities
-            </a>
           </div>
         </li>
         <li><a href="<?php echo $baseLink('about'); ?>">About</a></li>
-        <li><a href="<?php echo $baseLink('blog'); ?>">Blogs</a></li>
-        
         <li class="cta-link"><a href="<?php echo $baseLink('contact'); ?>">Contact Us</a></li>
       </ul>
 
