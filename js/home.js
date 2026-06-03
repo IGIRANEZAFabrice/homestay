@@ -70,61 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   roomCards.forEach((c) => roomObs.observe(c));
 
-  const whyCards = document.querySelectorAll(".why-card");
-  const whyObs = new IntersectionObserver(
-    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
-    { threshold: 0.15 },
-  );
-  whyCards.forEach((c) => whyObs.observe(c));
-
-  // Why-intro interactive points
-  const introPoints = document.querySelectorAll("[data-intro-point]");
-  const setIntroActive = (activePoint) => {
-    introPoints.forEach((point) => point.classList.toggle("is-active", point === activePoint));
-  };
-  introPoints.forEach((point, idx) => {
-    if (idx === 0 && !point.classList.contains("is-active")) point.classList.add("is-active");
-    point.addEventListener("mouseenter", () => setIntroActive(point));
-    point.addEventListener("focus", () => setIntroActive(point));
-    point.addEventListener("click", () => setIntroActive(point));
-    point.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        setIntroActive(point);
-      }
-    });
-  });
-
-  // Experience cards interactivity (activate on hover/click/focus)
-  const experienceCards = document.querySelectorAll("[data-exp-card]");
-  const setActiveExperience = (activeCard) => {
-    experienceCards.forEach((card) => card.classList.toggle("is-active", card === activeCard));
-  };
-
-  experienceCards.forEach((card, index) => {
-    if (index === 0 && !card.classList.contains("is-active")) card.classList.add("is-active");
-
-    card.addEventListener("mouseenter", () => setActiveExperience(card));
-    card.addEventListener("focus", () => setActiveExperience(card));
-    card.addEventListener("click", (e) => {
-      if (e.target.closest("a")) return;
-      setActiveExperience(card);
-    });
-    card.addEventListener("keydown", (e) => {
-      if ((e.key === "Enter" || e.key === " ") && !e.target.closest("a")) {
-        e.preventDefault();
-        setActiveExperience(card);
-      }
-    });
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty("--mx", `${x}%`);
-      card.style.setProperty("--my", `${y}%`);
-    });
-  });
-
   // Scroll driver for stacked hero
   const heroPin = document.getElementById("hero-pin");
   const centerImg = document.getElementById("centerImg");

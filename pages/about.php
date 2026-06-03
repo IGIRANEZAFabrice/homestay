@@ -22,7 +22,7 @@
                   max-width: 52ch;
                 "
               >
-                The best memories aren't made in hotels — they're made in homes
+                The best memories aren't made in hotels they're made in homes
                 where someone was genuinely glad you came.
               </blockquote>
               <div
@@ -71,18 +71,11 @@
         </div>
       </section>
 
-      <!-- ── SECTION 2: SCROLL VIDEO ──────────────────────────────── -->
+      <!-- ── SECTION 2: SCROLL FRAMES ──────────────────────────────── -->
       <!-- s-video-scroll is 400vh tall — the sticky child sticks inside it -->
       <section class="s-video-scroll" id="videoSection">
         <div class="video-sticky-wrap" id="videoSticky">
-          <video
-            class="video-bg"
-            id="scrollVideo"
-            src="./img/home/homestayc.mp4"
-            muted
-            playsinline
-            preload="auto"
-          ></video>
+          <canvas id="scrollCanvas" class="video-bg"></canvas>
           <div class="video-fallback"></div>
           <div class="video-overlay"></div>
 
@@ -118,7 +111,7 @@
         <div class="container">
           <div class="about-refined-head reveal">
             <div class="section-label">
-              <i class="fa-solid fa-circle-info"></i> About Virunga Homestay
+              About Virunga Homestay
             </div>
             <h2>Live the Virunga Experience</h2>
           </div>
@@ -134,14 +127,14 @@
               </p>
             </article>
 
-            <article class="about-refined-card reveal">
+            <article class="about-refined-card about-refined-card--primary reveal">
               <h3>Why We Exist</h3>
               <p>
                 We exist to transform the way people experience Rwanda by moving beyond traditional accommodation. Our purpose is to create meaningful connections between travelers and local life through immersive, human-centered home experiences.
               </p>
             </article>
 
-            <article class="about-refined-card reveal">
+            <article class="about-refined-card about-refined-card--primary reveal">
               <h3>What We Offer</h3>
               <p>
                 We provide carefully designed home experiences that include:
@@ -172,6 +165,16 @@
               </p>
             </article>
 
+            <article class="about-refined-card about-refined-card--primary reveal">
+              <h3>Community & Sustainability</h3>
+              <p>
+                We are deeply committed to the well-being of our local community in Musanze. By choosing to stay with us, you directly support local livelihoods and contribute to community-led initiatives.
+              </p>
+              <p>
+                We prioritize sustainable practices and promote cultural preservation, ensuring that your journey leaves a positive footprint on both the environment and the people of the Virunga.
+              </p>
+            </article>
+
             <article class="about-refined-card about-refined-card--closing reveal">
               <p>
                 At Virunga Homestay, you don't just visit Rwanda - you live it through real people, real stories, and real home experiences.
@@ -182,7 +185,50 @@
         </div>
       </section>
 
-            <!-- ── SECTION 4: VALUES BENTO ──────────────────────────────── -->
+            <!-- ── SECTION: WHY CHOOSE US ────────────────────────────────── -->
+      <section id="why" class="s-why">
+        <div class="container">
+          <h2 class="section-heading reveal" style="text-align: center; margin-bottom: var(--space-8);">
+            Why choose Virunga Homestay as your experience
+          </h2>
+          <div class="experience-intro reveal">
+            <p class="experience-intro__kicker">Virunga Homestay - Live the Virunga Experience</p>
+            <p class="experience-intro__point is-active">
+              Choose Virunga Homestay because it is more than a place to stay - it is a real home experience in Musanze where you are welcomed like family and immersed in daily local life.
+            </p>
+            <p class="experience-intro__point">
+              You don't just visit the Virunga region; you live it. From shared meals and authentic conversations to cultural moments with your host, every stay is designed to feel personal, warm, and meaningful.
+            </p>
+            <p class="experience-intro__point">
+              This is the difference: instead of a standard accommodation, you get a guided way of experiencing the Virunga through people, stories, and connection.
+            </p>
+          </div>
+          <div class="why-grid" id="whyGrid">
+            <?php
+            require_once __DIR__ . '/../config/db.php';
+            $sqlWhy = "SELECT * FROM home_why WHERE status = 'active' ORDER BY display_order ASC";
+            $resWhy = $conn->query($sqlWhy);
+            
+            if ($resWhy && $resWhy->num_rows > 0) {
+                while ($rowWhy = $resWhy->fetch_assoc()) {
+                    $icon = htmlspecialchars($rowWhy['icon']);
+                    $title = htmlspecialchars($rowWhy['title']);
+                    $bodyText = htmlspecialchars($rowWhy['body']);
+                    
+                    echo '
+                    <div class="why-card reveal">
+                      <div class="why-icon"><i class="' . $icon . '"></i></div>
+                      <h3 class="why-title">' . $title . '</h3>
+                      <p class="why-body">' . $bodyText . '</p>
+                    </div>';
+                }
+            }
+            ?>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SECTION 4: VALUES BENTO ──────────────────────────────── -->
       <section class="s-values">
         <div class="container">
           <div class="values-header">
@@ -365,9 +411,9 @@
         <div class="parallax-overlay">
           <div class="parallax-content">
             <div>
-              <h2 class="parallax-title reveal">Experience Local Cuisine</h2>
+              <h2 class="parallax-title reveal">A Taste of Rwanda, Shared at Home</h2>
               <p class="parallax-text reveal">
-                Savor authentic Rwandan dishes prepared with locally-sourced ingredients
+                Enjoy traditional Rwandan dishes prepared with fresh local ingredients and served in the warmth of our family home.
               </p>
             </div>
           </div>
@@ -380,7 +426,7 @@
           <h2 class="cta-title reveal">Ready to feel<br /><em>at home?</em></h2>
           <p class="cta-subtitle reveal">
             Whether you're a traveller looking for a real local experience, or a
-            host ready to open your door — we'd love to welcome you.
+            host ready to open your door we'd love to welcome you.
           </p>
           <div class="cta-buttons reveal">
             <a href="#" class="btn-primary"> Book A Stay </a>

@@ -134,7 +134,7 @@
     <div class="act-wrap">
       <div class="related-head">
         <span>More Experiences</span>
-        <h2>Activities you may also enjoy</h2>
+        <h2>Other Experiences You May Be Drawn To</h2>
       </div>
 
       <div class="related-grid">

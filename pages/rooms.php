@@ -1,6 +1,6 @@
 <?php
   $pageTitle = 'Virunga Homestay - Rooms';
-  $pageCss = ['page-hero.css','room-cards.css','room.css'];
+  $pageCss = ['page-hero.css','rooms-list.css','room.css'];
   $pageHeroKey = 'rooms';
   $pageScripts = ['home.js'];
   include 'includes/header.php';
@@ -61,7 +61,7 @@
           <div class="rooms-grid" id="roomsGrid">
             <?php
             require_once __DIR__ . '/../config/db.php';
-            $sql = "SELECT * FROM rooms WHERE status = 'active'";
+            $sql = "SELECT * FROM rooms WHERE status = 'active' ORDER BY id DESC";
             $result = $conn->query($sql);
 
             if ($result && $result->num_rows > 0) {
@@ -87,12 +87,12 @@
                     // Generate a default tag
                     $tag = 'Premium';
                     
-                    $whatsappMsg = rawurlencode("Hello Francis, I would like to book the " . $title . " room");
+                    $whatsappMsg = rawurlencode("Hello ! I would like to book the " . $title . " room");
                     $whatsappUrl = "https://wa.me/250784513435?text=" . $whatsappMsg;
                     
                     echo '
                     <a class="room-card" href="' . $whatsappUrl . '" target="_blank" rel="noopener">
-                      <img class="room-card__img" src="' . $image . '" alt="' . $title . '" />
+                      <img class="room-card__img" src="' . $image . '" alt="' . $title . ' - Virunga Homestay Room" loading="lazy" />
                       <div class="room-card__overlay"></div>
                       <span class="room-card__tag">' . $tag . '</span>
                       <div class="room-card__content">
@@ -135,10 +135,7 @@
             ?>
           </div>
         <div class="rooms-actions" id="roomsActions">
-          <button class="btn-primary" onclick="window.location.href=\'<?php echo isset($baseLink) ? $baseLink('rooms') : 'rooms.php'; ?>\'">
-            <i class="fa-solid fa-grid-2 fa-xs"></i> View All Rooms
-          </button>
-          <a class="btn-ghost" href="<?php echo isset($baseLink) ? $baseLink('bookinginfo') : 'bookinginfo.php'; ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+          <a class="btn-ghost" href="<?php echo $baseLink('bookinginfo'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
             Booking Information
           </a>
         </div>

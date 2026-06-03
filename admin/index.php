@@ -12,16 +12,15 @@ if ($basePath !== '' && strpos($path, $basePath) === 0) {
 }
 $subPath = trim($path, '/');
 
-$isAuthenticated = isset($_SESSION['admin_authenticated']) && $_SESSION['admin_authenticated'] === true;
+$isAuthenticated = isset($_SESSION['admin_auth']) && $_SESSION['admin_auth'] === true;
 
 // Handle logout
 if ($subPath === 'logout') {
-    session_destroy();
-    header('Location: ' . ($basePath === '' ? '/admin' : $basePath));
+    header('Location: logout.php');
     exit;
 }
 
-// Simple, hardcoded credentials (replace with a real user table as needed)
+// Simple, hardcoded credentials (fallback if login.php is bypassed)
 $validUser = 'admin';
 $validPass = 'admin123';
 
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $subPath === '') {
     $user = $_POST['username'] ?? '';
     $pass = $_POST['password'] ?? '';
     if ($user === $validUser && $pass === $validPass) {
-        $_SESSION['admin_authenticated'] = true;
+        $_SESSION['admin_auth'] = true;
         header('Location: ' . ($basePath === '' ? '/admin/dashboard' : $basePath . '/dashboard'));
         exit;
     }

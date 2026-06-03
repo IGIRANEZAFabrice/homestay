@@ -1,12 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['admin_auth']) || $_SESSION['admin_auth'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
+require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/../config/db.php';
 
 $action  = $_GET['action'] ?? 'list';
@@ -72,8 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $badge = $conn->real_escape_string(trim($_POST['badge'] ?? ''));
     $title = $conn->real_escape_string(trim($_POST['title'] ?? ''));
     $description = $conn->real_escape_string(trim($_POST['description'] ?? ''));
-    $buttonText = $conn->real_escape_string(trim($_POST['button_text'] ?? 'Explore Experiences'));
-    $buttonLink = $conn->real_escape_string(trim($_POST['button_link'] ?? 'activity.php'));
+    
+    // Handle dynamic features list
+    $features_arr = $_POST['features'] ?? [];
+    if (is_array($features_arr)) {
+        $features_arr = array_map('trim', $features_arr);
+        $features_arr = array_filter($features_arr); // remove empty
+        $features_str = implode('|', $features_arr);
+    } else {
+        $features_str = '';
+    }
+    $features = $conn->real_escape_string($features_str);
+    
     $displayOrder = (int)($_POST['display_order'] ?? 1);
     $status = $conn->real_escape_string(trim($_POST['status'] ?? 'active'));
     $image = $conn->real_escape_string(trim($_POST['existing_image'] ?? ''));
@@ -106,9 +109,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 badge='$badge',
                 title='$title',
                 description='$description',
+                features='$features',
                 image='$image',
-                button_text='$buttonText',
-                button_link='$buttonLink',
                 display_order=$displayOrder,
                 status='$status'
                 WHERE id=$id";
@@ -116,9 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $msg = 'Experience updated successfully.';
         } else {
             $sql = "INSERT INTO home_experience
-                (eyebrow, badge, title, description, image, button_text, button_link, display_order, status)
+                (eyebrow, badge, title, description, features, image, display_order, status)
                 VALUES
-                ('$eyebrow', '$badge', '$title', '$description', '$image', '$buttonText', '$buttonLink', $displayOrder, '$status')";
+                ('$eyebrow', '$badge', '$title', '$description', '$features', '$image', $displayOrder, '$status')";
             $conn->query($sql);
             $msg = 'Experience added successfully.';
         }
@@ -246,6 +248,59 @@ $currentPage = 'home-experience';
       @media (max-width: 640px) {
         .form-row-2 { grid-template-columns: 1fr; }
       }
+      
+      /* Dynamic Features Styles */
+      .features-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+      }
+      .feature-item {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .feature-item input {
+        flex: 1;
+      }
+      .btn-remove-feature {
+        background: var(--surface-3);
+        color: var(--danger);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-remove-feature:hover {
+        background: var(--danger);
+        color: #fff;
+      }
+      .btn-add-feature {
+        margin-top: 10px;
+        background: var(--surface-3);
+        color: var(--text-1);
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+      }
+      .btn-add-feature:hover {
+        border-color: var(--amber);
+        color: var(--amber);
+      }
     </style>
   </head>
   <body>
@@ -314,7 +369,6 @@ $currentPage = 'home-experience';
                           <p class="exp-card__desc"><?= htmlspecialchars($item['description']) ?></p>
                           <div class="exp-card__meta">
                             <span class="exp-chip">Order #<?= (int)$item['display_order'] ?></span>
-                            <span class="exp-chip"><?= htmlspecialchars($item['button_text']) ?></span>
                             <span class="exp-chip"><?= htmlspecialchars($item['status']) ?></span>
                           </div>
                         </div>
@@ -345,6 +399,7 @@ $currentPage = 'home-experience';
                     'badge' => '',
                     'title' => '',
                     'description' => '',
+                    'features' => '',
                     'image' => '',
                     'button_text' => 'Explore Experiences',
                     'button_link' => 'activity.php',
@@ -379,7 +434,26 @@ $currentPage = 'home-experience';
 
                   <div class="form-group">
                     <label>Description *</label>
-                    <textarea name="description" maxlength="1000" required placeholder="Description shown on home page"><?= htmlspecialchars($r['description']) ?></textarea>
+                    <textarea name="description" maxlength="1000" required placeholder="Short overview paragraph"><?= htmlspecialchars($r['description']) ?></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Experience Highlights (List)</label>
+                    <div id="featuresContainer" class="features-container">
+                      <?php 
+                      $feats = !empty($r['features']) ? explode('|', $r['features']) : [''];
+                      foreach ($feats as $f): 
+                      ?>
+                        <div class="feature-item">
+                          <input type="text" name="features[]" value="<?= htmlspecialchars(trim($f)) ?>" placeholder="e.g. Guided village visit">
+                          <button type="button" class="btn-remove-feature" onclick="this.parentElement.remove()" title="Remove highlight"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                      <?php endforeach; ?>
+                    </div>
+                    <button type="button" class="btn-add-feature" id="btnAddFeature">
+                      <i class="fa-solid fa-plus"></i> Add Another Highlight
+                    </button>
+                    <small style="color:var(--text-3)">Add as many highlights as you need for this experience.</small>
                   </div>
 
                   <div class="form-group">
@@ -388,17 +462,6 @@ $currentPage = 'home-experience';
                     <?php if (!empty($r['image'])): ?>
                       <small style="color:var(--text-3)">Current: <?= htmlspecialchars($r['image']) ?></small>
                     <?php endif; ?>
-                  </div>
-
-                  <div class="form-row-2">
-                    <div class="form-group">
-                      <label>Button Text</label>
-                      <input type="text" name="button_text" maxlength="120" value="<?= htmlspecialchars($r['button_text']) ?>">
-                    </div>
-                    <div class="form-group">
-                      <label>Button Link</label>
-                      <input type="text" name="button_link" maxlength="255" value="<?= htmlspecialchars($r['button_link']) ?>">
-                    </div>
                   </div>
 
                   <div class="form-row-2">
@@ -426,6 +489,25 @@ $currentPage = 'home-experience';
       </main>
     </div>
     <script src="js/index.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const btnAddFeature = document.getElementById('btnAddFeature');
+        const featuresContainer = document.getElementById('featuresContainer');
+        
+        if (btnAddFeature && featuresContainer) {
+          btnAddFeature.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.className = 'feature-item';
+            div.innerHTML = `
+              <input type="text" name="features[]" placeholder="e.g. Guided village visit">
+              <button type="button" class="btn-remove-feature" onclick="this.parentElement.remove()" title="Remove highlight"><i class="fa-solid fa-trash-can"></i></button>
+            `;
+            featuresContainer.appendChild(div);
+            div.querySelector('input').focus();
+          });
+        }
+      });
+    </script>
   </body>
 </html>
 

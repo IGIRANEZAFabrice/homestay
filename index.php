@@ -42,10 +42,12 @@ $pages = [
     'blogs'   => __DIR__ . '/pages/blog.php',
     'blogdetails' => __DIR__ . '/pages/blogdetails.php',
     'activitydetails' => __DIR__ . '/pages/activitydetails.php',
+    'eventdetails' => __DIR__ . '/pages/eventdetails.php',
     'privacy' => __DIR__ . '/pages/privacy.php',
-    'terms' => __DIR__ . '/pages/terms.php',
-    'cookies' => __DIR__ . '/pages/cookies.php',
+    'terms' => __DIR__ . '/pages/privacy.php',
+    'cookies' => __DIR__ . '/pages/privacy.php',
     'bookinginfo' => __DIR__ . '/pages/bookinginfo.php',
+    'rules' => __DIR__ . '/pages/houserules.php',
 ];
 
 // If the request is for /admin, let the admin front controller handle it
@@ -65,7 +67,16 @@ if (isset($pages[$slug]) && file_exists($pages[$slug])) {
     exit;
 }
 
-// Anything else: redirect to home
-http_response_code(302);
-header('Location: ' . $link(''));
+// Handle 404
+http_response_code(404);
+$pageTitle = '404 - Page Not Found';
+$baseLink = $link;
+// If you have a custom 404 page, include it here.
+// Otherwise, just show a simple message or redirect to home with 404 status
+if (file_exists(__DIR__ . '/pages/404.php')) {
+    include __DIR__ . '/pages/404.php';
+} else {
+    // Fallback: show home page but with 404 status to avoid "Soft 404"
+    include __DIR__ . '/pages/home.php';
+}
 exit;

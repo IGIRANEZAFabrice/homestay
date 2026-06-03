@@ -54,7 +54,7 @@ html {
 
 .logo-full {
   padding-top: 10px;
-  height: 150px;
+  height: 80px;
   display: block;
   transition: opacity var(--transition-base);
 }
@@ -197,7 +197,7 @@ html {
   gap: var(--space-3);
   padding: 0.65rem 1.2rem;
   text-decoration: none;
-  color: var(--color-text-on-white);
+  color: var(--color-text-on-light);
   font-size: var(--text-xs);
   font-weight: 400;
   letter-spacing: 0.06em;

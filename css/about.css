@@ -278,6 +278,9 @@
         height: 100%;
         object-fit: cover;
         will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: translateZ(0);
       }
 
       .video-overlay {
@@ -440,6 +443,21 @@
       }
       .bento-card.bc-4 {
         grid-column: span 4;
+        background: var( --color-primary);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      .bento-card.bc-4 .bento-title,
+      .bento-card.bc-4 .bento-text,
+      .bento-card.bc-4 .bento-label,
+      .bento-card.bc-4 .bento-number {
+        color: var(--color-white);
+      }
+      .bento-card.bc-4 .bento-icon {
+        background: rgba(255, 255, 255, 0.15);
+        color: var(--color-white);
+      }
+      .bento-card.bc-4 .bento-number {
+        opacity: 0.2;
       }
       .bento-card.bc-5 {
         grid-column: span 4;
@@ -915,6 +933,135 @@
   color: var(--color-text-on-light);
   position: relative;
 }
+
+/* --- WHY CHOOSE US (MOVED FROM HOME) --- */
+.s-why {
+  background: var(--color-sand);
+  padding: 120px 0;
+  font-family: var(--font-body);
+}
+
+.s-why .section-heading {
+  text-align: center;
+  margin-bottom: 64px;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: var(--color-dark);
+  font-weight: 400;
+  font-family: var(--font-display);
+}
+
+.experience-intro {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.experience-intro__kicker {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.experience-intro__point {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-text-on-light-2);
+  margin-bottom: 20px;
+  font-weight: 300;
+  display: none;
+}
+
+.experience-intro__point.is-active {
+  display: block;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 30px;
+  transition: background 0.4s ease;
+  position: relative;
+}
+
+.why-card:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.why-card:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.why-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.why-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--color-dark);
+  margin-bottom: 14px;
+}
+
+.why-body {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-text-on-light-2);
+  font-weight: 300;
+}
+
+@media (max-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .why-card:nth-child(2)::after {
+    display: none;
+  }
+  .why-card {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+}
+
+@media (max-width: 600px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+  .why-card::after {
+    display: none;
+  }
+}
+/* --- END WHY CHOOSE US --- */
+
 .s-about-refined::before {
   content: '"Live it, don\'t just visit"';
   font-family: var(--font-display);
@@ -1087,6 +1234,29 @@
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 2vw, 1.6rem);
   font-weight: 400;
+}
+
+/* Primary Variant */
+.about-refined-card--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.about-refined-card--primary h3 {
+  color: var(--color-white);
+}
+.about-refined-card--primary h3::before {
+  background: var(--color-white);
+}
+.about-refined-card--primary p,
+.about-refined-card--primary li {
+  color: rgba(255, 255, 255, 0.9);
+}
+.about-refined-card--primary li::before {
+  color: var(--color-white);
+}
+.about-refined-card--primary::after {
+  color: var(--color-white);
+  opacity: 0.15;
 }
 
 @media (max-width: 960px) {

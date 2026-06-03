@@ -80,7 +80,7 @@
         <a href="site-settings.php" class="dropdown-item"><i class="fa-solid fa-gear"></i> Preferences</a>
         <a href="site-settings.php" class="dropdown-item"><i class="fa-solid fa-shield-halved"></i> Security</a>
         <hr class="dropdown-divider"/>
-        <a href="logout" class="dropdown-item dropdown-item--danger"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+        <a href="logout.php" class="dropdown-item dropdown-item--danger"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
       </div>
     </div>
   </div>

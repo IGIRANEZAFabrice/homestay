@@ -474,8 +474,8 @@
       <span>Subtotal</span>
       <strong id="spCartTotal">$0.00</strong>
     </div>
-    <a href="checkout.php" class="sp-btn sp-btn--primary" style="width:100%;justify-content:center;">
-      <i class="fa-solid fa-lock"></i> Checkout Securely
+    <a href="<?php echo $baseLink('contact'); ?>" class="sp-btn sp-btn--primary" style="width:100%;justify-content:center;">
+      <i class="fa-solid fa-lock"></i> Proceed to Inquire
     </a>
     <button class="sp-btn sp-btn--ghost" style="width:100%;justify-content:center;margin-top:.75rem;" id="spClearCart">
       <i class="fa-solid fa-trash"></i> Clear Cart

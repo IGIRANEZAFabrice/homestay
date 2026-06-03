@@ -1,0 +1,218 @@
+/* Specific CSS for Rooms Page List - Staggered Layout */
+
+#rooms {
+  background: var(--color-cream);
+  padding: 120px 0 100px;
+  font-family: var(--font-body);
+}
+
+.section-container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 15px;
+  display: block;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--color-dark);
+  margin-bottom: 40px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 60px 40px;
+  align-items: flex-start;
+  margin-top: 80px;
+}
+
+.room-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-dark);
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Staggered effect: every second card (right column) is pushed down */
+.room-card:nth-child(even) {
+  margin-top: 100px;
+}
+
+.room-card__img {
+  width: 100%;
+  aspect-ratio: 4/5; /* Slightly taller for rooms page */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+  filter: brightness(0.85);
+}
+
+.room-card:hover .room-card__img {
+  transform: scale(1.05);
+  filter: brightness(0.7);
+}
+
+.room-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15, 8, 2, 0.85) 0%,
+    rgba(15, 8, 2, 0.2) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.room-card__tag {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background: var(--color-primary);
+  padding: 5px 12px;
+  z-index: 5;
+}
+
+.room-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.room-card__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.room-card__pricing-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.room-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.room-card__price .amount {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.room-card__price .per {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.room-card__details-reveal {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.room-card:hover .room-card__details-reveal {
+  max-height: 400px;
+  opacity: 1;
+  margin-top: 20px;
+}
+
+.room-card__meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.room-card__meta span {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.room-card__meta span i {
+  color: var(--color-primary-light);
+  font-size: 0.7rem;
+}
+
+.room-card__amenities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.room-card__amenity {
+  font-size: 0.8rem;
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-card__cta {
+  position: absolute;
+  bottom: 32px;
+  right: 32px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.4s ease;
+}
+
+.room-card:hover .room-card__cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 900px) {
+  .rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .room-card:nth-child(even) {
+    margin-top: 0;
+  }
+}

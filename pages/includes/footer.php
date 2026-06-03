@@ -143,7 +143,7 @@
             alt="Virunga Homestay"
             class="footer__logo"
           />
-          <p class="footer__tagline">Where Virunga meets home.</p>
+          <p class="footer__tagline">Where Virunga Becomes Personal.</p>
           <p class="footer__desc">
            Live the Virunga in a real home through people, stories, and shared moments that stay with you.
           </p>
@@ -160,11 +160,11 @@
           <h3 class="footer__col-title">Explore</h3>
           <ul class="footer__links">
             <li><a href="<?php echo $baseLink('home'); ?>">Home</a></li>
-            <li><a href="<?php echo $baseLink('about'); ?>">About the Homestay</a></li>
-            <li><a href="<?php echo $baseLink('rooms'); ?>">Our Rooms</a></li>
+            <li><a href="<?php echo $baseLink('about'); ?>">Our Story</a></li>
+            <li><a href="<?php echo $baseLink('rooms'); ?>">Our Stays</a></li>
             <li><a href="<?php echo $baseLink('shop'); ?>">Shop</a></li>
             <li><a href="<?php echo $baseLink('cars'); ?>">Car Rent</a></li>
-            <li><a href="<?php echo $baseLink('activities'); ?>">Community Experience</a></li>
+            <li><a href="<?php echo $baseLink('activities'); ?>">Experiences</a></li>
              <li><a href="<?php echo $baseLink('blog'); ?>">Blogs</a></li>
           </ul>
         </div>
@@ -174,8 +174,9 @@
           <h3 class="footer__col-title">Guest Info</h3>
           <ul class="footer__links">
             <li><a href="<?php echo $baseLink('rooms'); ?>">Book a Stay</a></li>
+             <li><a href="<?php echo $baseLink('contact#location'); ?>">Location</a></li>
             <li><a href="<?php echo $baseLink('houserules'); ?>">Check-in / Check-out</a></li>
-            <li><a href="<?php echo $baseLink('houserules'); ?>">House Rules</a></li>
+            <li><a href="<?php echo $baseLink('houserules'); ?>">Our Homestay Rules</a></li>
             <li><a href="<?php echo $baseLink('houserules'); ?>">FAQ</a></li>
             <li><a href="https://www.tripadvisor.com/Hotel_Review-g317075-d20326735-Reviews-Virunga_Homestay_Live_the_Virunga_Experience-Ruhengeri_Musanze_District_Northern_Prov.html">Testimonials</a></li>
           </ul>

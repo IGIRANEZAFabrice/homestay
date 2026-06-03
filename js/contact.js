@@ -49,46 +49,76 @@ document.addEventListener("DOMContentLoaded", () => {
     required.forEach(({ id, check }) => {
       const el = document.getElementById(id);
       if (!el) return;
-      const grp = el.closest(".form-group");
+      
+      // Look for both old and new structure classes
+      const grp = el.closest(".form-group") || el.closest(".form-minimal-group");
+      
       if (!check(el.value)) {
         grp?.classList.add("error");
+        grp?.classList.add("has-error"); // For new layout compatibility
         ok = false;
       } else {
         grp?.classList.remove("error");
+        grp?.classList.remove("has-error");
       }
     });
 
     const consent = document.getElementById("consent");
     if (consent) {
+      const wrap = consent.closest(".checkbox-group");
       if (!consent.checked) {
         ok = false;
-        const wrap = consent.closest(".checkbox-group");
-        if (wrap) wrap.style.outline = "1.5px solid #E05A4A";
+        if (wrap) {
+          wrap.style.outline = "1.5px solid #E05A4A";
+          wrap.style.padding = "5px";
+          wrap.style.borderRadius = "4px";
+        }
       } else {
-        const wrap = consent.closest(".checkbox-group");
-        if (wrap) wrap.style.outline = "none";
+        if (wrap) {
+          wrap.style.outline = "none";
+          wrap.style.padding = "0";
+        }
       }
     }
+    
+    if (!ok) {
+        // Scroll to the first error
+        const firstError = document.querySelector(".error, .has-error");
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    
     return ok;
   };
 
   if (form) {
-    ["fname", "lname", "email", "subject", "message"].forEach((id) => {
+    ["fname", "lname", "email", "subject", "message", "consent"].forEach((id) => {
       const el = document.getElementById(id);
-      el?.addEventListener("blur", validate);
-      el?.addEventListener("input", () => {
-        el.closest(".form-group")?.classList.remove("error");
-      });
+      if (!el) return;
+      
+      el.addEventListener("change", validate);
+      el.addEventListener("blur", validate);
+      
+      if (el.type !== "checkbox") {
+          el.addEventListener("input", () => {
+            const grp = el.closest(".form-group") || el.closest(".form-minimal-group");
+            grp?.classList.remove("error");
+            grp?.classList.remove("has-error");
+          });
+      }
     });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!validate()) return;
 
-      const btn = form.querySelector(".btn-submit");
+      // Select button by either class used in the project
+      const btn = form.querySelector(".btn-submit") || form.querySelector(".btn-journey");
       if (btn instanceof HTMLButtonElement) {
         btn.classList.add("btn-loading");
         btn.disabled = true;
+        btn.innerHTML = 'SENDING... <i class="fa-solid fa-circle-notch fa-spin"></i>';
       }
 
       const formData = new FormData(form);
@@ -96,28 +126,34 @@ document.addEventListener("DOMContentLoaded", () => {
       formData.set('name', name.trim());
       formData.set('source', 'Contact Form: ' + (formData.get('subject') || 'General'));
 
-      // Auto-resolve API path (assuming /homestayV2/ is base)
-      const apiPath = window.location.pathname.includes('/homestayV2/') ? '/homestayV2/api/send_mail.php' : '/api/send_mail.php';
+      // Use root-relative path for API
+      const apiPath = './api/send_mail.php';
 
       fetch(apiPath, {
           method: 'POST',
           body: formData
       }).then(r => r.json()).then(data => {
           if(data.status === 'success') {
-              form.style.display = "none";
-              if (formSuccess) formSuccess.style.display = "flex";
+              // Hide the entire form container including headline
+              const formContainer = document.getElementById("contactFormContainer");
+              if (formContainer) formContainer.style.display = "none";
+              
+              if (formSuccess) formSuccess.style.display = "block";
           } else {
               alert("Error: " + data.message);
               if (btn instanceof HTMLButtonElement) {
                   btn.classList.remove("btn-loading");
                   btn.disabled = false;
+                  btn.innerHTML = 'SEND MESSAGE';
               }
           }
       }).catch(err => {
+          console.error("Submission error:", err);
           alert("Network error. Please try WhatsApp directly.");
           if (btn instanceof HTMLButtonElement) {
               btn.classList.remove("btn-loading");
               btn.disabled = false;
+              btn.innerHTML = 'SEND MESSAGE';
           }
       });
     });

@@ -1,7 +1,7 @@
 RewriteEngine On
-RewriteBase /homestayv2/admin/
+RewriteBase /admin/
 
 # Route everything inside /admin to admin/index.php unless the file/folder exists
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^.*$ /homestayv2/admin/index.php [L]
+RewriteRule ^.*$ index.php [L]

@@ -1,12 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['admin_auth']) || $_SESSION['admin_auth'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
+require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/../config/db.php';
 
 $action = $_GET['action'] ?? 'list';
@@ -42,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $group_size = $conn->real_escape_string($_POST['group_size']);
     $characteristics = $conn->real_escape_string($_POST['characteristics']);
     $price = $conn->real_escape_string($_POST['price']);
+    $category_id = isset($_POST['category_id']) && $_POST['category_id'] !== '' ? (int)$_POST['category_id'] : 'NULL';
     $display_order = (int)($_POST['display_order'] ?? 1);
     $status = $conn->real_escape_string($_POST['status']);
     $is_active = $status === 'active' ? 1 : 0;
@@ -63,21 +57,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($id > 0) {
-        $conn->query("UPDATE activities SET 
+        $res = $conn->query("UPDATE activities SET 
                       title='$title', tag='$tag', short_description='$short_desc', 
                       long_description='$long_desc', duration='$duration', age_group='$age_group', 
                       group_size='$group_size', characteristics='$characteristics', price='$price', 
-                      image='$image', display_order=$display_order, is_active=$is_active, status='$status' 
+                      category_id=$category_id, image='$image', display_order=$display_order, is_active=$is_active, status='$status' 
                       WHERE id=$id");
-        $msg = "Activity updated successfully";
+        if ($res) {
+            $msg = "Activity updated successfully";
+            $action = 'list';
+        } else {
+            $msg = "Error updating activity: " . $conn->error;
+            $action = 'edit';
+        }
     } else {
-        $conn->query("INSERT INTO activities 
-                      (title, tag, short_description, long_description, duration, age_group, group_size, characteristics, price, image, display_order, is_active, status) 
-                      VALUES 
-                      ('$title', '$tag', '$short_desc', '$long_desc', '$duration', '$age_group', '$group_size', '$characteristics', '$price', '$image', $display_order, $is_active, '$status')");
-        $msg = "Activity added successfully";
+        if (empty($image)) {
+            $msg = "Error: Please upload a cover image for the new activity.";
+            $action = 'add';
+        } else {
+            $res = $conn->query("INSERT INTO activities 
+                          (title, tag, short_description, long_description, duration, age_group, group_size, characteristics, price, category_id, image, display_order, is_active, status) 
+                          VALUES 
+                          ('$title', '$tag', '$short_desc', '$long_desc', '$duration', '$age_group', '$group_size', '$characteristics', '$price', $category_id, '$image', $display_order, $is_active, '$status')");
+            if ($res) {
+                $msg = "Activity added successfully";
+                $action = 'list';
+            } else {
+                $msg = "Error adding activity: " . $conn->error;
+                $action = 'add';
+            }
+        }
     }
-    $action = 'list';
 }
 
 $pageTitle = 'Activities Management — Virunga Homestay CMS';
@@ -209,11 +219,20 @@ $currentPage = 'activities';
                     'id'=>0, 'title'=>'', 'tag'=>'Experience', 'short_description'=>'', 'long_description'=>'',
                     'duration'=>'', 'age_group'=>'All ages welcome', 'group_size'=>'1-6 guests',
                     'characteristics'=>'Practical and interactive', 'price'=>'From $— per guest',
-                    'image'=>'', 'display_order'=>1, 'status'=>'active'
+                    'category_id'=>null, 'image'=>'', 'display_order'=>1, 'status'=>'active'
                   ];
                   if($action === 'edit' && isset($_GET['id'])) {
                       $res = $conn->query("SELECT * FROM activities WHERE id=".(int)$_GET['id']);
                       if($res && $res->num_rows>0) $r = $res->fetch_assoc();
+                  }
+
+                  // Fetch categories from home_experience
+                  $categories = [];
+                  $catRes = $conn->query("SELECT id, title FROM home_experience WHERE status = 'active' ORDER BY title ASC");
+                  if ($catRes) {
+                      while ($catRow = $catRes->fetch_assoc()) {
+                          $categories[] = $catRow;
+                      }
                   }
               ?>
                 <form method="POST" action="activities.php" class="crud-form" enctype="multipart/form-data">
@@ -230,31 +249,43 @@ $currentPage = 'activities';
                         <input type="text" name="tag" placeholder="e.g. Experience" value="<?= htmlspecialchars((string)$r['tag']) ?>" />
                       </div>
                       <div class="form-group">
-                        <label>Base Price / Cost</label>
-                        <input type="text" name="price" placeholder="e.g. From $45 per guest" value="<?= htmlspecialchars((string)$r['price']) ?>" />
+                        <label>Linked Experience (Category) *</label>
+                        <select name="category_id" required>
+                          <option value="">-- Select an Experience --</option>
+                          <?php foreach ($categories as $cat): ?>
+                            <option value="<?= $cat['id'] ?>" <?= $r['category_id'] == $cat['id'] ? 'selected' : '' ?>>
+                              <?= htmlspecialchars($cat['title']) ?>
+                            </option>
+                          <?php endforeach; ?>
+                        </select>
                       </div>
                   </div>
 
                   <div class="flex-row-gap">
+                      <div class="form-group">
+                        <label>Base Price / Cost</label>
+                        <input type="text" name="price" placeholder="e.g. From $45 per guest" value="<?= htmlspecialchars((string)$r['price']) ?>" />
+                      </div>
                       <div class="form-group">
                         <label>Duration</label>
                         <input type="text" name="duration" placeholder="e.g. Half-Day, 3 Hours" value="<?= htmlspecialchars((string)$r['duration']) ?>" />
                       </div>
-                      <div class="form-group">
-                        <label>Group Size</label>
-                        <input type="text" name="group_size" placeholder="e.g. 1-6 guests" value="<?= htmlspecialchars((string)$r['group_size']) ?>" />
-                      </div>
                   </div>
 
                   <div class="flex-row-gap">
                       <div class="form-group">
+                        <label>Group Size</label>
+                        <input type="text" name="group_size" placeholder="e.g. 1-6 guests" value="<?= htmlspecialchars((string)$r['group_size']) ?>" />
+                      </div>
+                      <div class="form-group">
                         <label>Age Requirement</label>
                         <input type="text" name="age_group" placeholder="e.g. All ages welcome" value="<?= htmlspecialchars((string)$r['age_group']) ?>" />
                       </div>
-                      <div class="form-group">
-                        <label>Characteristics</label>
-                        <input type="text" name="characteristics" placeholder="e.g. Practical and interactive" value="<?= htmlspecialchars((string)$r['characteristics']) ?>" />
-                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label>Characteristics</label>
+                    <input type="text" name="characteristics" placeholder="e.g. Practical and interactive" value="<?= htmlspecialchars((string)$r['characteristics']) ?>" />
                   </div>
 
                   <div class="form-group">
@@ -269,13 +300,13 @@ $currentPage = 'activities';
                         <button type="button" class="b-btn" onclick="addLeadBtn()"><i class="fa-solid fa-paragraph"></i> Add Lead Section</button>
                         <button type="button" class="b-btn" onclick="addStdBtn()"><i class="fa-solid fa-heading"></i> Add Standard Section</button>
                     </div>
-                    <textarea name="long_description" id="actualLongDesc" style="display:none;" required><?= htmlspecialchars((string)$r['long_description']) ?></textarea>
+                    <textarea name="long_description" id="actualLongDesc" style="display:none;"><?= htmlspecialchars((string)$r['long_description']) ?></textarea>
                   </div>
 
                   <div class="flex-row-gap">
                      <div class="form-group">
                        <label>Cover Image <?= empty($r['image']) ? '*' : '' ?></label>
-                       <input type="file" name="image" accept="image/*" <?= empty($r['image']) ? 'required' : '' ?> />
+                       <input type="file" name="image" accept="image/*" />
                        <input type="hidden" name="existing_image" value="<?= htmlspecialchars($r['image']) ?>" />
                        <?php if($r['image']): ?>
                            <small style="color:var(--text-3); font-size:12px;">Current File: <code><?= htmlspecialchars($r['image']) ?></code> (Leave empty to keep current)</small>
@@ -383,9 +414,11 @@ $currentPage = 'activities';
         window.addStdBtn = () => createStandardBlock();
 
         // Serialize on submit
-        form.addEventListener('submit', () => {
+        form.addEventListener('submit', (e) => {
             let htmlStr = '';
-            builderContainer.querySelectorAll('.b-block').forEach(block => {
+            const blocks = builderContainer.querySelectorAll('.b-block');
+            
+            blocks.forEach(block => {
                 if (block.dataset.type === 'lead') {
                     let text = block.querySelector('.b-lead-text').value.trim();
                     if (!text) return;
@@ -413,6 +446,13 @@ $currentPage = 'activities';
                     htmlStr += out;
                 }
             });
+
+            if (!htmlStr.trim()) {
+                e.preventDefault();
+                alert('Please add some content to the Full Activity Content section.');
+                return;
+            }
+
             hiddenTextarea.value = htmlStr;
         });
     });

@@ -63,38 +63,124 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->isHTML(true);
         $mail->Subject = "New Website Inquiry: " . $subject;
-        $mail->Body    = "
-            <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
-                <h2 style='color: #2eb8a0;'>New Inquiry Received</h2>
-                <p><strong>From:</strong> {$name} ({$email})</p>
-                <p><strong>Phone:</strong> {$phone}</p>
-                <p><strong>Subject:</strong> {$subject}</p>
-                <p><strong>Source:</strong> {$source}</p>
-                <hr style='border: 0; border-top: 1px solid #eee;'>
-                <p><strong>Message:</strong><br/>" . nl2br(htmlspecialchars($message)) . "</p>
-            </div>
-        ";
-        $mail->AltBody = "New Inquiry Received\n\nName: {$name}\nEmail: {$email}\nPhone: {$phone}\nSubject: {$subject}\nSource: {$source}\n\nMessage:\n{$message}";
-
-        $mail->send();
-
-        // --- 2. SEND CONFIRMATION TO USER ---
-        $mail->clearAddresses();
-        $mail->clearReplyTos();
-        $mail->addAddress($email, $name);
-        $mail->setFrom('fabrdaa@gmail.com', BUSINESS_NAME);
         
-        $mail->Subject = "We've received your inquiry - " . BUSINESS_NAME;
-        $mail->Body    = "
-            <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333;'>
-                <h2 style='color: #2eb8a0;'>Hello {$name},</h2>
-                <p>Thank you for reaching out to <strong>" . BUSINESS_NAME . "</strong>. We have received your inquiry regarding <em>'{$subject}'</em>.</p>
-                <p>Our team will review your message and get back to you within 24 hours.</p>
-                <p>If you need immediate assistance, feel free to contact us on WhatsApp at <strong>+250 781 234 567</strong>.</p>
-                <br/>
-                <p>Warm regards,<br/>The Virunga Homestay Team</p>
-                <hr style='border: 0; border-top: 1px solid #eee;'>
-                <p style='font-size: 12px; color: #999;'>This is an automated confirmation. Please do not reply directly to this email.</p>
+        // Admin Email Template
+         $mail->Body = "
+             <div style='max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background: #fdfaf7; border: 1px solid #eee; border-radius: 12px; overflow: hidden;'>
+                 <div style='background: #f8d7b6ff; padding: 25px 30px;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <tr>
+                            <td style='vertical-align: middle; text-align: left;'>
+                                <img src='https://virungahomestay.com/img/logo/logo.png' alt='Virunga Homestay' style='max-width: 120px;'>
+                            </td>
+                            <td style='vertical-align: middle; text-align: right; color: #000000ff; font-size: 20px; font-weight: 300; letter-spacing: 0.05em;'>
+                                Virunga Homestay
+                            </td>
+                        </tr>
+                    </table>
+                 </div>
+                 <div style='padding: 40px 30px; background: #ffffff;'>
+                     <h2 style='color: #150f0b; margin-top: 0;'>New Inquiry Received</h2>
+                     <p style='color: #666; font-size: 14px; margin-bottom: 30px;'>You have a new message from your website contact form.</p>
+                     
+                     <table style='width: 100%; border-collapse: collapse;'>
+                         <tr>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #888; width: 100px;'>From:</td>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333; font-weight: bold;'>{$name}</td>
+                         </tr>
+                         <tr>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #888;'>Email:</td>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0;'><a href='mailto:{$email}' style='color: #c8711a; text-decoration: none;'>{$email}</a></td>
+                         </tr>
+                         <tr>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #888;'>Phone:</td>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333;'>{$phone}</td>
+                         </tr>
+                         <tr>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #888;'>Subject:</td>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333;'>{$subject}</td>
+                         </tr>
+                         <tr>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #888;'>Source:</td>
+                             <td style='padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #333;'>{$source}</td>
+                         </tr>
+                     </table>
+                     
+                     <div style='margin-top: 30px; padding: 20px; background: #f9f4ef; border-radius: 8px; color: #444; line-height: 1.6;'>
+                         <strong style='display: block; margin-bottom: 10px; color: #150f0b;'>Message:</strong>
+                         " . nl2br(htmlspecialchars($message)) . "
+                     </div>
+                 </div>
+                 <div style='background: #fdfaf7; padding: 20px; text-align: center; font-size: 12px; color: #999;'>
+                     This inquiry was sent from the Virunga Homestay website contact form.
+                 </div>
+             </div>
+         ";
+         $mail->AltBody = "New Inquiry Received\n\nName: {$name}\nEmail: {$email}\nPhone: {$phone}\nSubject: {$subject}\nSource: {$source}\n\nMessage:\n{$message}";
+
+         $mail->send();
+
+         // --- 2. SEND CONFIRMATION TO USER ---
+         $mail->clearAddresses();
+         $mail->clearReplyTos();
+         $mail->addAddress($email, $name);
+         $mail->setFrom('fabrdaa@gmail.com', BUSINESS_NAME);
+         
+         $mail->Subject = "We've received your inquiry - " . BUSINESS_NAME;
+         
+         // User Confirmation Email Template
+         $mail->Body = "
+             <div style='max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background: #fdfaf7; border: 1px solid #eee; border-radius: 12px; overflow: hidden;'>
+                 <div style='background: #150f0b; padding: 25px 30px;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <tr>
+                            <td style='vertical-align: middle; text-align: left;'>
+                                <img src='https://virungahomestay.com/img/logo/logo.png' alt='Virunga Homestay' style='max-width: 120px;'>
+                            </td>
+                            <td style='vertical-align: middle; text-align: right; color: #ffffff; font-size: 20px; font-weight: 300; letter-spacing: 0.05em;'>
+                                Virunga Homestay
+                            </td>
+                        </tr>
+                    </table>
+                 </div>
+                 <div style='padding: 40px 30px; background: #ffffff;'>
+                     <h2 style='color: #150f0b; font-weight: 300; margin-top: 0;'>Hello {$name},</h2>
+                     <p style='color: #444; line-height: 1.8; font-size: 16px;'>
+                         Thank you for reaching out to <strong>" . BUSINESS_NAME . "</strong>. We have successfully received your inquiry regarding <em>'{$subject}'</em>.
+                     </p>
+                     <p style='color: #444; line-height: 1.8; font-size: 16px;'>
+                         Our team is currently reviewing your message and we will get back to you with a personal response within the next 24 hours.
+                     </p>
+                     
+                     <div style='background: #f9f4ef; border-left: 4px solid #c8711a; padding: 20px; margin: 30px 0; border-radius: 4px;'>
+                         <p style='margin: 0; color: #555; font-size: 15px; font-style: italic;'>
+                             \"Your journey to the heart of Rwanda is important to us. We're excited to help you plan your perfect stay.\"
+                         </p>
+                     </div>
+                     
+                     <p style='color: #444; line-height: 1.8; font-size: 16px;'>
+                         In the meantime, feel free to explore our curated experiences or check out our rooms.
+                     </p>
+                     
+                     <div style='margin-top: 40px; text-align: center;'>
+                         <a href='https://virungahomestay.com/rooms' style='background: #c8711a; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 50px 50px 0 0; font-weight: 600; display: inline-block; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; margin: 5px;'>Explore Rooms</a>
+                         <a href='https://virungahomestay.com/activity' style='background: #150f0b; color: #ffffff; padding: 16px 32px; text-decoration: none; border-radius: 50px; font-weight: 600; display: inline-block; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; margin: 5px;'>Community Experiences</a>
+                     </div>
+                 </div>
+                
+                <div style='background: #fdfaf7; padding: 30px; text-align: center; border-top: 1px solid #eee;'>
+                    <p style='margin: 0 0 15px; color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600;'>Get in touch</p>
+                    <div style='display: inline-block; margin: 0 10px; color: #150f0b; font-size: 13px;'>
+                        <span style='color: #c8711a;'>Phone:</span> +250 784 513 435
+                    </div>
+                    <div style='display: inline-block; margin: 0 10px; color: #150f0b; font-size: 13px;'>
+                        <span style='color: #c8711a;'>Email:</span> virungahomestay@gmail.com
+                    </div>
+                    <p style='margin-top: 25px; color: #999; font-size: 11px; line-height: 1.5;'>
+                        Musanze, Northern Province, Rwanda<br>
+                        &copy; " . date('Y') . " Virunga Homestay. All rights reserved.
+                    </p>
+                </div>
             </div>
         ";
         $mail->AltBody = "Hello {$name},\n\nThank you for reaching out to Virunga Homestay. We have received your inquiry regarding '{$subject}'. Our team will get back to you within 24 hours.\n\nWarm regards,\nThe Virunga Homestay Team";

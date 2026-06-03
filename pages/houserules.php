@@ -239,7 +239,7 @@
       <p>Our team is happy to help — reach out before your arrival.</p>
     </div>
     <div class="hr-cta-strip__actions">
-      <a href="contact.php" class="hr-btn hr-btn--primary">
+      <a href="<?php echo $baseLink('contact'); ?>" class="hr-btn hr-btn--primary">
         <i class="fa-solid fa-envelope"></i> Contact Us
       </a>
     </div>

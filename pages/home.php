@@ -176,18 +176,8 @@
           <div class="stack-img" id="sImg3">
             <img src="./img/hero/cooking.jpg" alt="Reading nook" />
           </div>
-          <div class="stack-img" id="sImg4">
-            <img src="./img/hero/1.jpg" alt="Garden view" />
-          </div>
-          <div class="stack-img" id="sImg5">
-            <img src="./img/hero/2.jpg" alt="Poolside" />
-          </div>
-          <div class="stack-img" id="sImg6">
-            <img src="./img/hero/3.jpg" alt="Terrace" />
-          </div>
-
           <div class="hero-title" id="heroTitle">
-            <h1 style="color: #e08a2f; font-weight:700;">Your ComfortPlace</h1>
+            <h2 style="color: #e08a2f; font-weight:700; font-size: 3rem; margin: 0;">Your ComfortPlace</h2>
             <span style="color: #e08a2f; font-weight:700;" class="sub" id="heroSub">
               where warmth lives
             </span>
@@ -196,7 +186,7 @@
       </div>
     </section>
 
-    <section id="experience" class="experience-section" data-reveal>
+    <section id="experience" class="experience-section">
       <div class="section-container">
         <?php
         require_once __DIR__ . '/../config/db.php';
@@ -208,21 +198,23 @@
             }
         }
         ?>
-        <div class="experience-head" data-reveal>
-          <p class="section-label">Curated Adventures</p>
-          <h2 class="section-heading">Explore Our Signature Experiences</h2>
-          <p class="experience-subtitle">Choose an experience to preview details, then continue to all activities.</p>
-        </div>
-        <div class="experience-list">
+        <div class="experience-rows">
           <?php if (!empty($expItems)): ?>
             <?php foreach ($expItems as $idx => $exp): ?>
               <?php
-              $expEyebrow = !empty($exp['eyebrow']) ? htmlspecialchars($exp['eyebrow']) : 'Explore Musanze through guided local insights and hidden cultural gems.';
-              $expTitle = !empty($exp['title']) ? htmlspecialchars($exp['title']) : 'Virunga Gateway Experience';
-              $expDescription = !empty($exp['description']) ? htmlspecialchars($exp['description']) : 'Easy access to adventures around the Virunga Massif region.';
-              $expButtonText = !empty($exp['button_text']) ? htmlspecialchars($exp['button_text']) : 'Explore Experiences';
-              $expButtonLink = !empty($exp['button_link']) ? htmlspecialchars($exp['button_link']) : (isset($baseLink) ? $baseLink('activity') : 'activity.php');
+              $expEyebrow = !empty($exp['eyebrow']) ? htmlspecialchars($exp['eyebrow']) : 'Heritage';
+              $expTitle = !empty($exp['title']) ? htmlspecialchars($exp['title']) : 'Experience Title';
+              
+              $raw_exp_desc = !empty($exp['description']) ? $exp['description'] : 'Description goes here...';
+              if (mb_strlen($raw_exp_desc) > 200) {
+                  $expDescription = htmlspecialchars(mb_substr($raw_exp_desc, 0, 200)) . '...';
+              } else {
+                  $expDescription = htmlspecialchars($raw_exp_desc);
+              }
+
+              $expFeatures = !empty($exp['features']) ? explode('|', $exp['features']) : [];
               $expImgVal = !empty($exp['image']) ? $exp['image'] : 'hero/2.jpg';
+              
               if (strpos($expImgVal, 'http') === 0) {
                   $expImage = $expImgVal;
               } else {
@@ -233,37 +225,33 @@
                   $expImage = './img/' . $expImgVal;
               }
               $expImage = htmlspecialchars($expImage);
+              $isEven = ($idx % 2 === 0);
               ?>
-              <article class="experience-card<?php echo $idx === 0 ? ' is-active' : ''; ?>" data-reveal data-exp-card tabindex="0">
-                <div class="experience-media">
-                  <img src="<?php echo $expImage; ?>" alt="<?php echo $expTitle; ?>" />
+              <div class="exp-row <?php echo $isEven ? 'exp-row--normal' : 'exp-row--reverse'; ?>">
+                <div class="exp-row__media">
+                  <img src="<?php echo $expImage; ?>" alt="<?php echo $expTitle; ?>" loading="lazy" />
                 </div>
-                <div class="experience-copy">
-                  <p class="experience-eyebrow"><?php echo $expEyebrow; ?></p>
-                  <h2 class="experience-title">
-                    <?php echo $expTitle; ?>
-                  </h2>
-                  <p class="experience-body"><?php echo $expDescription; ?></p>
-                  <a class="btn-primary experience-cta" href="<?php echo $expButtonLink; ?>">
-                    <i class="fa-solid fa-arrow-right"></i> <?php echo $expButtonText; ?>
-                  </a>
+                <div class="exp-row__content">
+                  <p class="exp-row__eyebrow"><?php echo $expEyebrow; ?></p>
+                  <h2 class="exp-row__title"><?php echo $expTitle; ?></h2>
+                  <p class="exp-row__body"><?php echo $expDescription; ?></p>
+                  
+                  <?php if (!empty($expFeatures)): ?>
+                    <ul class="exp-row__list">
+                      <?php foreach ($expFeatures as $feature): ?>
+                        <li><?php echo trim(htmlspecialchars($feature)); ?></li>
+                      <?php endforeach; ?>
+                    </ul>
+                  <?php endif; ?>
+                  
+                  <div class="exp-row__actions">
+                    <a href="<?php echo $baseLink('activity'); ?>?category=<?php echo $exp['id']; ?>" class="btn-view-more">
+                      VIEW MORE <i class="fa-solid fa-arrow-right fa-xs"></i>
+                    </a>
+                  </div>
                 </div>
-              </article>
+              </div>
             <?php endforeach; ?>
-          <?php else: ?>
-            <article class="experience-card is-active" data-reveal data-exp-card tabindex="0">
-              <div class="experience-media">
-                <img src="./img/hero/2.jpg" alt="Virunga Gateway Experience" />
-              </div>
-              <div class="experience-copy">
-                <p class="experience-eyebrow">Explore Musanze through guided local insights and hidden cultural gems.</p>
-                <h2 class="experience-title">Virunga Gateway Experience</h2>
-                <p class="experience-body">Easy access to adventures around the Virunga Massif region.</p>
-                <a class="btn-primary experience-cta" href="<?php echo isset($baseLink) ? $baseLink('activity') : 'activity.php'; ?>">
-                  <i class="fa-solid fa-arrow-right"></i> Explore Experiences
-                </a>
-              </div>
-            </article>
           <?php endif; ?>
         </div>
       </div>
@@ -306,12 +294,12 @@
                     $tag = isset($tags[$i]) ? $tags[$i] : 'Premium';
                     $i++;
                     
-                    $whatsappMsg = rawurlencode("Hello Francis, I would like to book the " . $title . " room");
+                    $whatsappMsg = rawurlencode("Hello ! I would like to book the " . $title . " room");
                     $whatsappUrl = "https://wa.me/250784513435?text=" . $whatsappMsg;
                     
                     echo '
                     <a class="room-card" href="' . $whatsappUrl . '" target="_blank" rel="noopener">
-                      <img class="room-card__img" src="' . $image . '" alt="' . $title . '" />
+                      <img class="room-card__img" src="' . $image . '" alt="' . $title . ' - Virunga Homestay Room" loading="lazy" />
                       <div class="room-card__overlay"></div>
                       <span class="room-card__tag">' . $tag . '</span>
                       <div class="room-card__content">
@@ -355,10 +343,10 @@
           </div>
         </div>
         <div class="rooms-actions" id="roomsActions">
-          <a class="btn-primary" href="<?php echo isset($baseLink) ? $baseLink('rooms') : 'rooms.php'; ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+          <a class="btn-primary" href="<?php echo $baseLink('rooms'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
            <i class="fa-solid fa-grid-2 fa-xs"></i> View All Rooms
           </a>
-          <a class="btn-ghost" href="<?php echo isset($baseLink) ? $baseLink('bookinginfo') : 'bookinginfo.php'; ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+          <a class="btn-ghost" href="<?php echo $baseLink('bookinginfo'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
             Booking Information
           </a>
         </div>
@@ -366,22 +354,27 @@
     </section>
 
     <!-- ══ ACTIVITIES ══ -->
-    <section id="activities">
+    <section id="curated-experiences" class="curated-section">
       <div class="section-container">
-        <div class="section-label">Our Community Experiences</div>
-        <div class="activities-header">
-          <h2 class="section-heading">Experience Life at Virunga Homestay</h2>
-          <p class="section-sub">
-            Guided walks, local cuisine, culture, and nature unforgettable moments await.
-          </p>
+        <div class="curated-header">
+          <div class="curated-header__left">
+            <p class="curated-eyebrow">Featured</p>
+            <h2 class="section-heading">Curated Experiences</h2>
+          </div>
+          <div class="curated-header__right">
+            <a href="<?php echo $baseLink('activity'); ?>" class="view-all-link">VIEW ALL</a>
+          </div>
         </div>
-        <div class="activities-grid">
+        
+        <div class="curated-grid">
           <?php
           require_once __DIR__ . '/../config/db.php';
-          $sqlAct = "SELECT * FROM activities WHERE status = 'active' LIMIT 3";
+          // Fetch only 3 activities
+          $sqlAct = "SELECT * FROM activities WHERE status = 'active' ORDER BY display_order ASC LIMIT 3";
           $resAct = $conn->query($sqlAct);
 
           if ($resAct && $resAct->num_rows > 0) {
+              $idx = 0;
               while ($rowAct = $resAct->fetch_assoc()) {
                   $imgVal = !empty($rowAct['image']) ? $rowAct['image'] : 'services/2.jpg';
                   if (strpos($imgVal, 'http') === 0) {
@@ -394,105 +387,78 @@
                       $image = './img/' . $imgVal;
                   }
                   $image = htmlspecialchars($image);
-                  
                   $title = htmlspecialchars($rowAct['title']);
-                  $tag = htmlspecialchars($rowAct['tag']);
-                  $duration = htmlspecialchars($rowAct['duration'] ?? '');
-                  $char = htmlspecialchars($rowAct['characteristics'] ?? '');
-                  $price = !empty($rowAct['price']) ? htmlspecialchars($rowAct['price']) : '';
+                  
+                  // Truncate short description to ~120 characters
+                  $raw_desc = $rowAct['short_description'] ?? '';
+                  if (mb_strlen($raw_desc) > 120) {
+                      $short_desc = htmlspecialchars(mb_substr($raw_desc, 0, 120)) . '...';
+                  } else {
+                      $short_desc = htmlspecialchars($raw_desc);
+                  }
+                  
                   $detailLink = $baseLink('activitydetails') . (strpos($baseLink('activitydetails'), '?') !== false ? '&' : '?') . 'id=' . $rowAct['id'];
-                  $priceHtml = $price ? '<div class="room-card__price"><span class="amount">' . $price . '</span></div>' : '';
-
+                  
                   echo '
-                  <a class="room-card" href="' . $detailLink . '">
-                    <img class="room-card__img" src="' . $image . '" alt="' . $title . '" />
-                    <div class="room-card__overlay"></div>
-                    <span class="room-card__tag">' . $tag . '</span>
-                    <div class="room-card__content">
-                      <h3 class="room-card__name">' . $title . '</h3>
-                      <div class="room-card__meta">
-                        <span><i class="fa-solid fa-seedling"></i> ' . $char . '</span>
-                        <span><i class="fa-solid fa-clock"></i> ' . $duration . '</span>
+                  <div class="curated-card curated-card--' . $idx . '">
+                    <a href="' . $detailLink . '" class="curated-card__link">
+                      <div class="curated-card__media">
+                        <img src="' . $image . '" alt="' . $title . '" loading="lazy" />
                       </div>
-                      ' . $priceHtml . '
-                    </div>
-                    <span class="room-card__cta">View Details <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-                  </a>';
+                      <div class="curated-card__content">
+                        <h3 class="curated-card__title">' . $title . '</h3>
+                        <p class="curated-card__text">' . $short_desc . '</p>
+                      </div>
+                    </a>
+                  </div>';
+                  $idx++;
               }
-          } else {
-              echo '<p style="grid-column: 1 / -1; text-align: center;">No activities available at the moment.</p>';
           }
           ?>
-        </div>
-        <div class="activities-actions">
-          <a class="btn-primary" href="<?php echo isset($baseLink) ? $baseLink('activity') : 'activity.php'; ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
-           <i class="fa-solid fa-grid-2 fa-xs"></i> Show More Activities
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- ══ WHY CHOOSE US ══ -->
-    <section id="why">
+    <!-- ══ THREE WAYS TO EXPERIENCE ══ -->
+    <section class="ways-section">
       <div class="section-container">
-        <h2 class="section-heading" id="whyHeading">
-          Why choose Virunga Homestay as your experience
-        </h2>
-        <div class="experience-intro" data-reveal>
-          <p class="experience-intro__kicker">Virunga Homestay - Live the Virunga Experience</p>
-          <p class="experience-intro__point is-active" data-intro-point tabindex="0">
-            Choose Virunga Homestay because it is more than a place to stay - it is a real home experience in Musanze where you are welcomed like family and immersed in daily local life.
-          </p>
-          <p class="experience-intro__point" data-intro-point tabindex="0">
-            You don't just visit the Virunga region; you live it. From shared meals and authentic conversations to cultural moments with your host, every stay is designed to feel personal, warm, and meaningful.
-          </p>
-          <p class="experience-intro__point" data-intro-point tabindex="0">
-            This is the difference: instead of a standard accommodation, you get a guided way of experiencing the Virunga through people, stories, and connection.
-          </p>
+        <div class="ways-header">
+          <p class="ways-eyebrow">WHY VIRUNGA</p>
+          <h2 class="ways-title">Three ways to experience the region.</h2>
         </div>
-        <div class="why-grid" id="whyGrid">
-          <?php
-          require_once __DIR__ . '/../config/db.php';
-          $sqlWhy = "SELECT * FROM home_why WHERE status = 'active' ORDER BY display_order ASC";
-          $resWhy = $conn->query($sqlWhy);
-          
-          if ($resWhy && $resWhy->num_rows > 0) {
-              while ($rowWhy = $resWhy->fetch_assoc()) {
-                  $icon = htmlspecialchars($rowWhy['icon']);
-                  $title = htmlspecialchars($rowWhy['title']);
-                  $bodyText = htmlspecialchars($rowWhy['body']);
-                  
-                  echo '
-                  <div class="why-card">
-                    <div class="why-icon"><i class="' . $icon . '"></i></div>
-                    <h3 class="why-title">' . $title . '</h3>
-                    <p class="why-body">' . $bodyText . '</p>
-                  </div>';
-              }
-          }
-          ?>
+        <div class="ways-grid">
+          <div class="way-item">
+            <div class="way-line"></div>
+            <p class="way-number">01</p>
+            <h3 class="way-name">Cultural Living</h3>
+            <p class="way-text">Wake up in a real Rwandan homestead where daily life reflects tradition, hospitality, and simplicity.</p>
+          </div>
+          <div class="way-item">
+            <div class="way-line"></div>
+            <p class="way-number">02</p>
+            <h3 class="way-name">Park Gateway</h3>
+            <p class="way-text">Perfectly located for gorilla trekking, golden monkey encounters, and forest exploration.</p>
+          </div>
+          <div class="way-item">
+            <div class="way-line"></div>
+            <p class="way-number">03</p>
+            <h3 class="way-name">Local Connection</h3>
+            <p class="way-text">Share meals, stories, and moments with hosts who bring the Virunga region to life.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ══ QUICK BOOKING CTA ══ -->
-    <section id="booking-cta" class="reveal" data-reveal>
+    <section id="booking-cta" class="journey-section">
       <div class="section-container">
-        <div class="booking-cta__grid">
-          <div class="booking-cta__card">
-            <div class="booking-cta__content">
-              <h3 class="booking-cta__title">Ready for a Restful Stay?</h3>
-              <p class="booking-cta__text">Book your private room at Virunga Homestay.</p>
-              <a href="<?php echo $baseLink('rooms'); ?>" class="btn-primary">Book your Stay</a>
-            </div>
-          </div>
-          <div class="booking-cta__card">
-            <div class="booking-cta__content">
-              <h3 class="booking-cta__title">Join Our Activities</h3>
-              <p class="booking-cta__text">Discover Musanze with our guided experiences.</p>
-              <a href="<?php echo $baseLink('activity'); ?>" class="btn-outline">Explore Our CommunityExperiences</a>
-            </div>
-          </div>
+        <div class="journey-header">
+          <p class="journey-eyebrow">BEGIN</p>
+          <h2 class="journey-title">Begin Your <span>Virunga</span> Journey.</h2>
+          <p class="journey-subtitle">Book your stay and experience Rwanda beyond the ordinary.</p>
+        </div>
+        <div class="journey-actions">
+          <a href="<?php echo $baseLink('rooms'); ?>" class="btn-journey">PLAN MY STAY</a>
         </div>
       </div>
     </section>
@@ -502,9 +468,9 @@
       <div class="parallax-overlay">
         <div class="parallax-content">
           <div>
-            <h2 class="parallax-title">Experience Local Cuisine</h2>
+            <h2 class="parallax-title">A Taste of Rwanda, Shared at Home</h2>
             <p class="parallax-text">
-              Savor authentic Rwandan dishes prepared with locally-sourced ingredients
+              Enjoy traditional Rwandan dishes prepared with fresh local ingredients and served in the warmth of our family home
             </p>
           </div>
         </div>
@@ -575,22 +541,22 @@
         </div>
 
         <div class="guest-reviews__summary" data-reveal>
-          <h3>More Than a Stay - A Real Connection</h3>
+          <h3>More Than a Stay, A Genuine Connection</h3>
           <p>
-            Virunga Homestay offers more than accommodation. It is a living experience in the heart of Musanze, where guests are welcomed into a real home and local way of life.
+            Virunga Homestay is more than a place to sleep. It is an intimate stay in the heart of Musanze, where guests are welcomed into a real family home and invited to experience Rwanda through everyday life, shared meals, and meaningful encounters.
           </p>
           <div class="guest-reviews__points">
             <span>Authentic Rwandan hospitality in a family home</span>
             <span>Personal guidance from knowledgeable local hosts</span>
             <span>Cultural immersion through food, stories, and daily life</span>
-            <span>Easy access to the Virunga Massif region and surrounding attractions</span>
+            <span>Easy access to Volcanoes National Park and the wider Virunga region</span>
           </div>
           <p>
-            Every visit is supported by a warm, locally rooted hosting experience designed to make your journey meaningful, comfortable, and unforgettable.
+            Every stay is thoughtfully hosted to make your journey personal, comfortable, and memorable.
           </p>
           <h4>Why Travelers Choose Virunga Homestay</h4>
           <p class="guest-reviews__belonging">
-            Because they are not just looking for a place to stay - they are looking for a place to belong.
+            Because they are not simply looking for accommodation they are looking for a place where they feel genuinely welcomed.
           </p>
         </div>
       </div>

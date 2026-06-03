@@ -33,7 +33,7 @@ $pageHeroConfig = [
   ],
   'activity' => [
     'tag' => 'Local Experiences',
-    'title' => 'Community <em>activities</em> and culture',
+    'title' => 'Heritage Stories <em>&</em> Local Connections',
     'bg' => './img/services/3.jpg',
     'crumb' => 'Community Activities'
   ],
@@ -80,3 +80,22 @@ $config = $pageHeroConfig[$key];
   <span class="sep">&#8250;</span>
   <span style="color: white;"><?php echo $config['crumb']; ?></span>
 </div>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://virungahomestay.com/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "<?php echo $config['crumb']; ?>",
+    "item": "<?php echo $canonicalUrl; ?>"
+  }]
+}
+</script>

@@ -1,12 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-if (!isset($_SESSION['admin_auth']) || $_SESSION['admin_auth'] !== true) {
-    header("Location: login.php");
-    exit;
-}
-
+require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/../config/db.php';
 
 $msg = '';

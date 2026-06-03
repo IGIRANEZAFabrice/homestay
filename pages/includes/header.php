@@ -3,11 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo isset($pageTitle) ? $pageTitle : 'Virunga Homestay'; ?></title>
+    <title><?php 
+      $displayTitle = isset($pageTitle) ? $pageTitle : 'Virunga Homestay';
+      if (isset($slug) && $slug !== 'home') {
+        echo $displayTitle . ' | Virunga Homestay - Musanze Rwanda';
+      } else {
+        echo 'Virunga Homestay | Best Accommodation in Musanze, Rwanda';
+      }
+    ?></title>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
-    <meta name="keywords" content="<?php echo isset($pageKeywords) ? $pageKeywords : 'homestay, Virunga, Rwanda, accommodation, travel, nature, volcanoes'; ?>">
+    <meta name="description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience authentic Rwandan hospitality at Virunga Homestay in Musanze. Perfect for gorilla trekking, volcano hikes, and cultural immersion. Book your stay today!'; ?>">
+    <meta name="keywords" content="<?php echo isset($pageKeywords) ? $pageKeywords : 'homestay Musanze, Virunga accommodation, Rwanda gorilla trekking stay, Volcanoes National Park lodging, authentic Rwanda travel'; ?>">
     <?php
       $canonicalSlug = (isset($slug) && $slug !== 'home') ? $slug : '';
       $canonicalUrl = 'https://virungahomestay.com/' . $canonicalSlug;
@@ -19,18 +26,20 @@
     <meta property="og:url" content="<?php echo $canonicalUrl; ?>">
     <meta property="og:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Virunga Homestay'; ?>">
     <meta property="og:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
-    <meta property="og:image" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . '/img/logo/logo.png'; ?>">
+    <meta property="og:image" content="<?php echo 'https://virungahomestay.com/img/hero/room.jpg'; ?>">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="<?php echo $canonicalUrl; ?>">
     <meta property="twitter:title" content="<?php echo isset($pageTitle) ? $pageTitle : 'Virunga Homestay'; ?>">
-    <meta property="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience the best stay at Virunga Homestay. Your perfect sanctuary in the heart of nature near Virunga volcanoes.'; ?>">
-    <meta property="twitter:image" content="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . '/img/logo/logo.png'; ?>">
+    <meta property="twitter:description" content="<?php echo isset($pageDescription) ? $pageDescription : 'Experience authentic Rwandan hospitality at Virunga Homestay in Musanze. Perfect for gorilla trekking, volcano hikes, and cultural immersion. Book your stay today!'; ?>">
+    <meta property="twitter:image" content="<?php echo 'https://virungahomestay.com/img/hero/room.jpg'; ?>">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/logo/logo-small.png">
     <link rel="shortcut icon" href="img/logo/logo-small.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#c8711a">
 
     <!-- Webmaster Tools Verification -->
     <meta name="google-site-verification" content="lJq7E1iB-kVBSsouRewk9b9SRn0d2aBHCe3D7C96HPo" />
@@ -50,6 +59,56 @@
     <?php if (!empty($pageCss) && is_array($pageCss)) foreach ($pageCss as $css): ?>
       <link rel="stylesheet" href="./css/<?php echo $css; ?>" />
     <?php endforeach; ?>
+
+    <!-- JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LodgingBusiness",
+      "name": "Virunga Homestay",
+      "image": "https://virungahomestay.com/img/logo/logo.png",
+      "@id": "https://virungahomestay.com",
+      "url": "https://virungahomestay.com",
+      "telephone": "+250784513435",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Musanze",
+        "addressLocality": "Musanze",
+        "addressRegion": "Northern Province",
+        "addressCountry": "RW"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.5000,
+        "longitude": 29.6333
+      },
+      "url": "https://virungahomestay.com",
+      "priceRange": "$$",
+      "description": "Premium homestay experience at the foot of the Virunga Volcanoes in Musanze, Rwanda.",
+      "amenityFeature": [
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Free WiFi",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Breakfast Included",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Private Bathroom",
+          "value": true
+        },
+        {
+          "@type": "LocationFeatureSpecification",
+          "name": "Hot Shower",
+          "value": true
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- --- NAV -------------------------------------------------- -->
@@ -85,8 +144,8 @@
             </a>
           </div>
         </li>
-        <li><a href="<?php echo $baseLink('about'); ?>">About</a></li>
-        <li class="cta-link"><a href="<?php echo $baseLink('contact'); ?>">Contact Us</a></li>
+        <li><a href="<?php echo $baseLink('about'); ?>">Story</a></li>
+        <li class="cta-link"><a href="<?php echo $baseLink('contact'); ?>">Book Stay</a></li>
       </ul>
 
       <button
@@ -102,8 +161,8 @@
     <!-- -- mobile drawer -- -->
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <ul>
-        <li><a href="/home">Home</a></li>
-        <li><a href="<?php echo $baseLink('about'); ?>">About</a></li>
+        <li><a href="<?php echo $baseLink('home'); ?>">Home</a></li>
+        <li><a href="<?php echo $baseLink('about'); ?>">Story</a></li>
         <li><a href="<?php echo $baseLink('rooms'); ?>">Rooms</a></li>
 
         <!-- Services accordion -->
