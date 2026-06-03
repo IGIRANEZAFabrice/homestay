@@ -486,13 +486,13 @@ html {
 .imigongo--tl {
   top: -10px;
   right: -10px;
-  width: 280px;
+  width: 180px;
   transform: rotate(0deg);
 }
 .imigongo--br {
   bottom: 40px;
   left: -10px;
-  width: 240px;
+  width: 160px;
   transform: rotate(180deg);
 }
 

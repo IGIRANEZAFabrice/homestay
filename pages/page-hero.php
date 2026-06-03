@@ -61,6 +61,12 @@ $pageHeroConfig = [
     'bg' => './img/hero/1.jpg',
     'crumb' => 'Privacy'
   ],
+  'impact' => [
+    'tag' => 'Tourism for Good',
+    'title' => 'Our <em>Impact</em> in Rwanda',
+    'bg' => './img/impact/HO2A0333.jpg.jpeg',
+    'crumb' => 'Impact'
+  ],
 ];
 
 $key = isset($pageHeroKey) && isset($pageHeroConfig[strtolower($pageHeroKey)]) ? strtolower($pageHeroKey) : 'contact';

@@ -48,6 +48,7 @@ $pages = [
     'cookies' => __DIR__ . '/pages/privacy.php',
     'bookinginfo' => __DIR__ . '/pages/bookinginfo.php',
     'rules' => __DIR__ . '/pages/houserules.php',
+    'impact' => __DIR__ . '/pages/impact.php',
 ];
 
 // If the request is for /admin, let the admin front controller handle it

@@ -130,7 +130,7 @@
         <li><a href="<?php echo $baseLink('home'); ?>">Home</a></li>
         <li><a href="<?php echo $baseLink('rooms'); ?>">Stay</a></li>
         <li><a href="<?php echo $baseLink('activity'); ?>">Experiences</a></li>
-
+        <li><a href="<?php echo $baseLink('impact'); ?>">Impact</a></li>
         <!-- -- Services dropdown -- -->
         <li class="has-dropdown">
           <a href="" tabindex="0">
@@ -162,6 +162,7 @@
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
       <ul>
         <li><a href="<?php echo $baseLink('home'); ?>">Home</a></li>
+        <li><a href="<?php echo $baseLink('impact'); ?>">Impact</a></li>
         <li><a href="<?php echo $baseLink('about'); ?>">Story</a></li>
         <li><a href="<?php echo $baseLink('rooms'); ?>">Rooms</a></li>
 

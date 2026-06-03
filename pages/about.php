@@ -40,9 +40,9 @@
                 >
               </h1>
               <p class="manifesto-body reveal">
-                Virunga Homestay offers an authentic, organized, and safe Rwanda home experience in Musanze, combining warm local hospitality, cultural connection, and guided nature-based activities in the Virunga region. Guests stay in a real home, engage with local life, and explore northern Rwanda through meaningful, well-structured experiences.
+                Virunga Homestay was created to offer travelers a deeper connection with Rwanda through authentic experiences, local hospitality, and meaningful encounters that go beyond traditional tourism.
               </p>
-              <a href="#story" class="manifesto-cta reveal">
+              <a href="' . $baseLink('activity') . '" class="manifesto-cta reveal">
                 Discover our journey <i class="fa-solid fa-arrow-right"></i>
               </a>
             </div>
@@ -116,7 +116,21 @@
             <h2>Live the Virunga Experience</h2>
           </div>
 
-          <div class="about-refined-grid">
+          <div class="about-refined-grid reveal">
+            <article class="about-refined-card about-refined-card--primary reveal">
+              <h3>Vision</h3>
+              <p>
+                To become a trusted gateway for authentic Rwanda experiences.
+              </p>
+            </article>
+
+            <article class="about-refined-card reveal">
+              <h3>Mission</h3>
+              <p>
+                To connect travelers with Rwanda’s people, culture, conservation stories, and landscapes through immersive and responsible travel experiences.
+              </p>
+            </article>
+
             <article class="about-refined-card reveal">
               <h3>Who We Are</h3>
               <p>
@@ -124,13 +138,6 @@
               </p>
               <p>
                 We are a home experience - rooted in culture, connection, and genuine hospitality.
-              </p>
-            </article>
-
-            <article class="about-refined-card about-refined-card--primary reveal">
-              <h3>Why We Exist</h3>
-              <p>
-                We exist to transform the way people experience Rwanda by moving beyond traditional accommodation. Our purpose is to create meaningful connections between travelers and local life through immersive, human-centered home experiences.
               </p>
             </article>
 
@@ -148,24 +155,14 @@
               <p>Each stay is simple, authentic, and personally hosted.</p>
             </article>
 
-            <article class="about-refined-card reveal">
-              <h3>Why We Are Different</h3>
-              <p>
-                Virunga Homestay is defined by experience, not accommodation.
-              </p>
-              <p>
-                We do not simply offer rooms - we offer connection. Every guest becomes part of a living home environment where interaction, culture, and everyday life create a truly immersive stay.
-              </p>
-            </article>
-
-            <article class="about-refined-card reveal">
+            <article class="about-refined-card about-refined-card--primary reveal">
               <h3>Trust & Hospitality</h3>
               <p>
                 We are committed to providing a safe, well-organized, and welcoming environment for every guest. Our hospitality is personal, attentive, and rooted in respect, ensuring comfort and peace of mind throughout your stay.
               </p>
             </article>
 
-            <article class="about-refined-card about-refined-card--primary reveal">
+            <article class="about-refined-card reveal">
               <h3>Community & Sustainability</h3>
               <p>
                 We are deeply committed to the well-being of our local community in Musanze. By choosing to stay with us, you directly support local livelihoods and contribute to community-led initiatives.

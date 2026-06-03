@@ -165,6 +165,7 @@
             <li><a href="<?php echo $baseLink('shop'); ?>">Shop</a></li>
             <li><a href="<?php echo $baseLink('cars'); ?>">Car Rent</a></li>
             <li><a href="<?php echo $baseLink('activities'); ?>">Experiences</a></li>
+            <li><a href="<?php echo $baseLink('impact'); ?>">Our Impact</a></li>
              <li><a href="<?php echo $baseLink('blog'); ?>">Blogs</a></li>
           </ul>
         </div>

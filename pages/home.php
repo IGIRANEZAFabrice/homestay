@@ -40,7 +40,7 @@
                 <div class="slide' . $activeClass . '">
                   <div class="slide-bg" style="background-image: url(\'' . htmlspecialchars($imgAttr) . '\');"></div>
                   <div class="slide-content">
-                    <p class="slide-tag">Stay Locally. Experience the Virunga</p>
+                    <p class="slide-tag">More than a stay — a real connection to Rwanda</p>
                     <h1 class="slide-title">
                       ' . $title . '
                     </h1>
@@ -48,8 +48,8 @@
                       ' . $paragraph . '
                     </p>
                     <div class="slide-actions">
-                      <a href="#rooms" class="btn-primary">Book your stay</a>
-                      <a href="#about" class="btn-outline">Our Story</a>
+                      <a href="' . $baseLink('rooms') . '" class="btn-primary">Book a Stay</a>
+                      <a href="' . $baseLink('activity') . '" class="btn-outline">Explore Experiences</a>
                     </div>
                   </div>
                 </div>';
@@ -69,8 +69,8 @@
                   panoramic views and absolute tranquility.
                 </p>
                 <div class="slide-actions">
-                  <a href="#rooms" class="btn-primary">Explore Rooms</a>
-                  <a href="#about" class="btn-outline">Our Story</a>
+                  <a href="' . $baseLink('rooms') . '" class="btn-primary">Rooms</a>
+                  <a href="' . $baseLink('activity') . '" class="btn-outline">Explore Experiences</a>
                 </div>
               </div>
             </div>';
@@ -157,34 +157,7 @@
         </div>
       </div>
     </section>
-    <section id="hero-pin">
-      <div id="hero-sticky">
-        <div class="stack-wrapper" id="stackWrapper">
-          <div class="center-img" id="centerImg">
-            <img src="./img/services/1.JPG" alt="Main interior" />
-          </div>
 
-          <div class="stack-img" id="sImg0">
-            <img src="./img/services/2.jpg" alt="Living space" />
-          </div>
-          <div class="stack-img" id="sImg1">
-            <img src="./img/services/3.jpg" alt="Bedroom" />
-          </div>
-          <div class="stack-img" id="sImg2">
-            <img src="./img/hero/paint.jpg" alt="Kitchen" />
-          </div>
-          <div class="stack-img" id="sImg3">
-            <img src="./img/hero/cooking.jpg" alt="Reading nook" />
-          </div>
-          <div class="hero-title" id="heroTitle">
-            <h2 style="color: #e08a2f; font-weight:700; font-size: 3rem; margin: 0;">Your ComfortPlace</h2>
-            <span style="color: #e08a2f; font-weight:700;" class="sub" id="heroSub">
-              where warmth lives
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="experience" class="experience-section">
       <div class="section-container">
@@ -256,103 +229,6 @@
         </div>
       </div>
     </section>
-
-    <!-- ══ ROOMS ══ -->
-    <section id="rooms">
-      <div class="section-container">
-        <h2 class="section-heading" id="roomsHeading">Our Stay Experience</h2>
-        <p class="section-sub rooms-intro" data-reveal>
-          At Virunga Homestay, we welcome you to a space of comfort, warmth, and authentic local living. Our private rooms offer a peaceful retreat after your Virunga adventures, within a genuine home environment where every guest feels at home.
-        </p>
-        <div class="rooms-grid" id="roomsGrid">
-            <?php
-            require_once __DIR__ . '/../config/db.php';
-            $sql = "SELECT * FROM rooms WHERE status = 'active' LIMIT 3";
-            $result = $conn->query($sql);
-
-            if ($result && $result->num_rows > 0) {
-                $i = 0;
-                $tags = ['Most Popular', 'New', 'Suite'];
-                while ($row = $result->fetch_assoc()) {
-                    $imgVal = !empty($row['image']) ? $row['image'] : 'services/1.JPG';
-                    if (strpos($imgVal, 'http') === 0) {
-                        $image = $imgVal;
-                    } else {
-                        $imgVal = preg_replace('/^(\.\/)?img\//', '', ltrim($imgVal, '/'));
-                        if (strpos($imgVal, '/') === false) {
-                            $imgVal = 'rooms/' . $imgVal;
-                        }
-                        $image = './img/' . $imgVal;
-                    }
-                    $image = htmlspecialchars($image);
-                    $title = htmlspecialchars($row['title']);
-                    $meters = isset($row['meters']) ? (int)$row['meters'] : 0;
-                    $guests = isset($row['guest_number']) ? (int)$row['guest_number'] : 2;
-                    $bed = isset($row['bed_type']) ? htmlspecialchars($row['bed_type']) : 'King Bed';
-                    $price_single = isset($row['price_single']) ? (int)$row['price_single'] : 0;
-                    $price_double = isset($row['price_double']) ? (int)$row['price_double'] : 0;
-                    $tag = isset($tags[$i]) ? $tags[$i] : 'Premium';
-                    $i++;
-                    
-                    $whatsappMsg = rawurlencode("Hello ! I would like to book the " . $title . " room");
-                    $whatsappUrl = "https://wa.me/250784513435?text=" . $whatsappMsg;
-                    
-                    echo '
-                    <a class="room-card" href="' . $whatsappUrl . '" target="_blank" rel="noopener">
-                      <img class="room-card__img" src="' . $image . '" alt="' . $title . ' - Virunga Homestay Room" loading="lazy" />
-                      <div class="room-card__overlay"></div>
-                      <span class="room-card__tag">' . $tag . '</span>
-                      <div class="room-card__content">
-                        <h3 class="room-card__name">' . $title . '</h3>
-                        <div class="room-card__pricing-grid">
-                          <div class="room-card__price">
-                            <span class="amount">$' . $price_single . '</span>
-                            <span class="per">Single Occupancy / night</span>
-                          </div>
-                          <div class="room-card__price">
-                            <span class="amount">$' . $price_double . '</span>
-                            <span class="per">Double Occupancy / night</span>
-                          </div>
-                        </div>
-                        <div class="room-card__details-reveal">
-                          <div class="room-card__meta">
-                            <span><i class="fa-solid fa-maximize"></i> ' . $meters . ' m²</span>
-                            <span><i class="fa-solid fa-user-group"></i> ' . $guests . ' Guests</span>
-                            <span><i class="fa-solid fa-bed"></i> ' . $bed . '</span>
-                          </div>
-                          <div class="room-card__amenities">
-                             <div class="room-card__amenity">
-                               <i class="fa-solid fa-mug-hot"></i> Breakfast included in a stay
-                             </div>
-                             <div class="room-card__amenity">
-                               <i class="fa-solid fa-wifi"></i> Free High-Speed WiFi
-                             </div>
-                             <div class="room-card__amenity">
-                               <i class="fa-solid fa-temperature-arrow-up"></i> Hot Shower
-                             </div>
-                           </div>
-                        </div>
-                      </div>
-                      <span class="room-card__cta">Book Now <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-                    </a>';
-                }
-            } else {
-                echo '<p style="grid-column: 1 / -1; text-align: center;">No rooms available at the moment.</p>';
-            }
-            ?>
-          </div>
-        </div>
-        <div class="rooms-actions" id="roomsActions">
-          <a class="btn-primary" href="<?php echo $baseLink('rooms'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
-           <i class="fa-solid fa-grid-2 fa-xs"></i> View All Rooms
-          </a>
-          <a class="btn-ghost" href="<?php echo $baseLink('bookinginfo'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
-            Booking Information
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- ══ ACTIVITIES ══ -->
     <section id="curated-experiences" class="curated-section">
       <div class="section-container">
@@ -445,6 +321,112 @@
             <h3 class="way-name">Local Connection</h3>
             <p class="way-text">Share meals, stories, and moments with hosts who bring the Virunga region to life.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ EXPLORE EXPERIENCES CTA ══ -->
+    <section class="explore-cta">
+      <div class="section-container">
+        <div class="explore-cta__content" data-reveal>
+          <h2 class="explore-cta__title">Explore Experiences</h2>
+          <a href="<?php echo $baseLink('activity'); ?>" class="btn-primary">View All Activities</a>
+        </div>
+      </div>
+    </section>
+
+<!-- ══ ROOMS ══ -->
+    <section id="rooms">
+      <div class="section-container">
+        <h2 class="section-heading" id="roomsHeading">Our Stay Experience</h2>
+        <p class="section-sub rooms-intro" data-reveal>
+          At Virunga Homestay, we welcome you to a space of comfort, warmth, and authentic local living. Our private rooms offer a peaceful retreat after your Virunga adventures, within a genuine home environment where every guest feels at home.
+        </p>
+        <div class="rooms-grid" id="roomsGrid">
+            <?php
+            require_once __DIR__ . '/../config/db.php';
+            $sql = "SELECT * FROM rooms WHERE status = 'active' LIMIT 3";
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                $i = 0;
+                $tags = ['Most Popular', 'New', 'Suite'];
+                while ($row = $result->fetch_assoc()) {
+                    $imgVal = !empty($row['image']) ? $row['image'] : 'services/1.JPG';
+                    if (strpos($imgVal, 'http') === 0) {
+                        $image = $imgVal;
+                    } else {
+                        $imgVal = preg_replace('/^(\.\/)?img\//', '', ltrim($imgVal, '/'));
+                        if (strpos($imgVal, '/') === false) {
+                            $imgVal = 'rooms/' . $imgVal;
+                        }
+                        $image = './img/' . $imgVal;
+                    }
+                    $image = htmlspecialchars($image);
+                    $title = htmlspecialchars($row['title']);
+                    $meters = isset($row['meters']) ? (int)$row['meters'] : 0;
+                    $guests = isset($row['guest_number']) ? (int)$row['guest_number'] : 2;
+                    $bed = isset($row['bed_type']) ? htmlspecialchars($row['bed_type']) : 'King Bed';
+                    $price_single = isset($row['price_single']) ? (int)$row['price_single'] : 0;
+                    $price_double = isset($row['price_double']) ? (int)$row['price_double'] : 0;
+                    $tag = isset($tags[$i]) ? $tags[$i] : 'Premium';
+                    $i++;
+                    
+                    $whatsappMsg = rawurlencode("Hello ! I would like to book the " . $title . " room");
+                    $whatsappUrl = "https://wa.me/250784513435?text=" . $whatsappMsg;
+                    
+                    echo '
+                    <a class="room-card" href="' . $whatsappUrl . '" target="_blank" rel="noopener">
+                      <img class="room-card__img" src="' . $image . '" alt="' . $title . ' - Virunga Homestay Room" loading="lazy" />
+                      <div class="room-card__overlay"></div>
+                      <span class="room-card__tag">' . $tag . '</span>
+                      <div class="room-card__content">
+                        <h3 class="room-card__name">' . $title . '</h3>
+                        <div class="room-card__pricing-grid">
+                          <div class="room-card__price">
+                            <span class="amount">$' . $price_single . '</span>
+                            <span class="per">Single Occupancy / night</span>
+                          </div>
+                          <div class="room-card__price">
+                            <span class="amount">$' . $price_double . '</span>
+                            <span class="per">Double Occupancy / night</span>
+                          </div>
+                        </div>
+                        <div class="room-card__details-reveal">
+                          <div class="room-card__meta">
+                            <span><i class="fa-solid fa-maximize"></i> ' . $meters . ' m²</span>
+                            <span><i class="fa-solid fa-user-group"></i> ' . $guests . ' Guests</span>
+                            <span><i class="fa-solid fa-bed"></i> ' . $bed . '</span>
+                          </div>
+                          <div class="room-card__amenities">
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-mug-hot"></i> Breakfast included in a stay
+                             </div>
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-wifi"></i> Free High-Speed WiFi
+                             </div>
+                             <div class="room-card__amenity">
+                               <i class="fa-solid fa-temperature-arrow-up"></i> Hot Shower
+                             </div>
+                           </div>
+                        </div>
+                      </div>
+                      <span class="room-card__cta">Book Now <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+                    </a>';
+                }
+            } else {
+                echo '<p style="grid-column: 1 / -1; text-align: center;">No rooms available at the moment.</p>';
+            }
+            ?>
+          </div>
+        </div>
+        <div class="rooms-actions" id="roomsActions">
+          <a class="btn-primary" href="<?php echo $baseLink('rooms'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+           <i class="fa-solid fa-grid-2 fa-xs"></i> View All Rooms
+          </a>
+          <a class="btn-ghost" href="<?php echo $baseLink('bookinginfo'); ?>" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">
+            Booking Information
+          </a>
         </div>
       </div>
     </section>
